@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { ICourse, IImages, IRoadmap, IVideos } from '~/interfaces/course.interface'
+import { ICourses, ICourse, IImages, IRoadmap, IVideos } from '~/interfaces/course.interface'
 
 const imageSchema = new Schema<IImages>({
   _id: { type: String },
@@ -12,18 +12,28 @@ const videoSchema = new Schema<IVideos>({
   duration: { type: Number }
 })
 const roadmapSchema = new Schema<IRoadmap>({
-  time: { type: String },
-  skill: [{ type: String }],
-  knowledge: [{ type: String }]
+  startTime: { type: String },
+  endTime: { type: String },
+  skill: { type: String },
+  knowledge: { type: String }
 })
 const course = new Schema<ICourse>({
   title: { type: String },
   description: { type: String },
+  image: { type: String },
   images: [imageSchema],
+  video: { type: String },
   videos: [videoSchema],
   roadmaps: [roadmapSchema],
   price: { type: Number },
   discountPrice: { type: Number },
-  discountPercentage: { type: Number }
+  discountPercentage: { type: Number },
+  timeCreate: { type: String },
+  timeUpdate: { type: String }
 })
-export default mongoose.model('Courses', course)
+
+const courses = new Schema<ICourses>({
+  totalCourseCurrent: { type: Number },
+  Items: [course]
+})
+export default mongoose.model('Courses', courses)
