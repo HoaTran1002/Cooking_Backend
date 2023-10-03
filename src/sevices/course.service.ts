@@ -1,7 +1,9 @@
-export const remove = async (): Promise<void> => {
-  try {
-    throw new Error('failed')
-  } catch (error) {
-    console.log('use service failed!!')
-  }
+export const remove = async (req: Request, res: Response): Promise<void> => {
+  console.log('use service remove succesed!!')
+}
+export const find = async (req: Request, res: Response): Promise<void> => {
+  console.log('use service find succesed!!')
+}
+export const create = async (req: Request, res: Response): Promise<void> => {
+  console.log('use service remove succesed!!')
 }
