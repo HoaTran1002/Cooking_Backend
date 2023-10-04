@@ -1,7 +1,10 @@
-import { NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { IResonseObject } from '~/interfaces/response.interface'
 import { remove } from '~/sevices/course.service'
-export const getAll = async (): Promise<void> => {
+export const getAll = async (
+  req: Request<unknown, unknown, unknown>,
+  res: Response
+): Promise<void | IResonseObject> => {
   console.log('success')
   try {
     const a = 10
@@ -12,6 +15,12 @@ export const getAll = async (): Promise<void> => {
 }
 
 export const findOneById = async (req: Request, res: Response): Promise<void | IResonseObject> => {}
-export const courseCreate = async (req: Request, res: Response): Promise<void | IResonseObject> => {}
+export const courseCreate = async (req: Request, res: Response): Promise<void | IResonseObject> => {
+  try {
+    console.log('hi hi ha ha')
+  } catch (error) {
+    console.log(error)
+  }
+}
 export const courseRemove = async (): Promise<void> => {}
 export const courseUpdate = async (): Promise<void> => {}

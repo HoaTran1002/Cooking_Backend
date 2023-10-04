@@ -4,6 +4,6 @@ import { asyncHandelError } from '~/middlewares/error.middlewear'
 
 const router = Router()
 
-router.get('/', getAll)
-router.post('/course/create')
+router.get('/', asyncHandelError(getAll))
+router.post('/create', asyncHandelError(courseCreate))
 export default router
