@@ -32,8 +32,8 @@ const course = new Schema<ICourse>({
   timeUpdate: { type: String }
 })
 
-const courses = new Schema<ICourses>({
-  totalCourseCurrent: { type: Number },
-  Items: [course]
-})
-export default mongoose.model('Courses', courses)
+// const courses = new Schema<ICourses>({
+//   totalCourseCurrent: { type: Number },
+//   Items: [course]
+// })
+export default mongoose.model('Courses', course)

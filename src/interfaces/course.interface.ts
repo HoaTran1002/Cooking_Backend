@@ -14,13 +14,13 @@ export interface IRoadmap {
   skill: string
 }
 export interface ICourse {
-  title: string
-  description: string
-  image: string
-  images: IImages[]
-  video: string
-  videos: IVideos[]
-  roadmaps: IRoadmap[]
+  title?: string
+  description?: string
+  image?: string
+  images?: IImages[]
+  video?: string
+  videos?: IVideos[]
+  roadmaps?: IRoadmap[]
   price?: number
   discountPrice?: number
   discountPercentage?: number
