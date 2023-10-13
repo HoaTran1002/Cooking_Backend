@@ -1,15 +1,17 @@
-export interface IImages {
-  _id: string
+export interface IParams {
+  courseId: string
+}
+export interface IImage {
   url: string
 }
-export interface IVideos {
-  _id: string
+export interface IVideo {
   url: string
-  duration: number
+  duration?: number
 }
 export interface IRoadmap {
-  startTime: string
-  endTime: string
+  name: string
+  startTime: Date
+  endTime: Date
   knowledge: string
   skill: string
 }
@@ -17,9 +19,9 @@ export interface ICourse {
   title?: string
   description?: string
   image?: string
-  images?: IImages[]
+  images?: IImage[]
   video?: string
-  videos?: IVideos[]
+  videos?: IVideo[]
   roadmaps?: IRoadmap[]
   price?: number
   discountPrice?: number

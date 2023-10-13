@@ -5,6 +5,7 @@ import useRoutes from './routes/index.route'
 import bodyParser from 'body-parser'
 const app = express()
 
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 connnectDB()
 useRoutes(app)

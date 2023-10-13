@@ -1,46 +1,57 @@
 import { Request, Response } from 'express'
 import { drive } from '~/config/cloud/google.cloud'
-import multer from 'multer'
+import multer, { ErrorCode } from 'multer'
 import fs from 'fs'
 interface IMedia {
   mimeType: string
   body: fs.ReadStream
 }
+interface IRequestBody {
+  name: string
+  fields: string
+}
 interface IMetaData {
   name: string
   mimeType: string
 }
-
-export const uploadFile = async (req: Request, res: Response) => {
-  const fileReq = req.file
-  console.log('uploaddata:', req.body)
-  if (fileReq) {
-    const media: IMedia = {
-      mimeType: fileReq.mimetype,
-      body: fs.createReadStream(fileReq.destination + '/' + fileReq.originalname)
-    }
-    const fileMetadata: IMetaData = {
-      name: fileReq.originalname.substring(0, fileReq.originalname.lastIndexOf('.')),
-      mimeType: fileReq.destination + '/' + fileReq.originalname
-    }
-    try {
-      await fs.promises.rename(
-        fileReq.destination + '/' + fileReq.filename,
-        fileReq.destination + '/' + fileReq.originalname
-      )
-      const response = await drive.files.create({
-        requestBody: fileMetadata,
-        media: media,
-        fields: 'id'
-      })
-      return response.data
-    } catch (error) {
-      console.error('Error uploading file:', error)
-      res.status(500).json({ error: 'An error occurred while uploading the file' })
-    }
-  }
-  res.status(401).json({ error: 'null' })
+export interface IFile {
+  fieldname: string
+  originalname: string
+  encoding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
 }
-export const uploadFiles = () => {}
+export interface IFileResponseObject {
+  id: string
+  mimeType: string
+}
+export const uploadFileToDrive = async (file: IFile): Promise<IFileResponseObject> => {
+  const requestBody: IRequestBody = {
+    name: file.originalname,
+    fields: 'id,mimeType'
+  }
+  const media: IMedia = {
+    mimeType: file.mimetype,
+    body: fs.createReadStream(file.destination + '/' + file.originalname)
+  }
+  try {
+    const file = await drive.files.create({
+      requestBody,
+      media: media
+    })
+    const response: IFileResponseObject = {
+      id: file?.data?.id || 'null',
+      mimeType: file?.data?.mimeType || 'null'
+    }
+
+    return response
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+//export const uploadFiles = () => {}
 export const deleteFile = () => {}
 export const deleteFiles = () => {}

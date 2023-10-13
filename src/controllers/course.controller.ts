@@ -1,16 +1,22 @@
 import { NextFunction, Request, Response } from 'express'
-import { ICourse } from '~/interfaces/course.interface'
+import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/interfaces/course.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import { remove } from '~/sevices/course.service'
-import { uploadFile } from '~/sevices/drive.service'
+import Courses from '~/models/course.models'
+import { Error } from 'mongoose'
+import { IFile, IFileResponseObject, uploadFileToDrive } from '~/sevices/drive.service'
 export const getAll = async (
-  req: Request<unknown, unknown, unknown>,
+  req: Request<unknown, unknown, ICourse>,
   res: Response
-): Promise<void | IResonseObject> => {
-  console.log('success')
+): Promise<Response<IResonseObject> | void> => {
   try {
-    const a = 10
-    remove
+    const course = await Courses.find({})
+    const response: IResonseObject = {
+      message: 'get all sucess!',
+      status: 200,
+      data: course
+    }
+    return res.status(200).json(response)
   } catch (error) {
     console.log(error)
   }
@@ -19,18 +25,100 @@ export const getAll = async (
 export const courseCreate = async (
   req: Request<unknown, unknown, ICourse>,
   res: Response
-): Promise<void | IResonseObject> => {
-  console.log(req.body)
-  res.json(req.body)
+): Promise<Response<IResonseObject> | void | IResonseObject> => {
+  try {
+    const course = await Courses.create(req.body)
+    const response: IResonseObject = {
+      message: 'create sucess!',
+      status: 200,
+      data: course
+    }
+    return res.status(200).json(response)
+  } catch (error: any) {
+    throw new Error(error.message)
+  }
+}
+
+export const courseCreateRoadmap = async (
+  req: Request<any, unknown, IRoadmap>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  const response: IResonseObject = {
+    message: ''
+  }
+  const params: IParams = req.params
+  const roadmap: IRoadmap = req.body
+  const fillter = { _id: params.courseId }
+  const update = { $push: { roadmaps: roadmap } }
+  const options = { new: true }
+  const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
+  if (course) {
+    response.message = 'created roadmap'
+    response.data = course
+    response.status = 201
+  }
+  return res.status(201).json({ course: course })
 }
 export const courseUpFiles = async (
-  req: Request<unknown, unknown, ICourse>,
+  req: Request<any, unknown, ICourse>,
   res: Response
-): Promise<void | IResonseObject> => {
-  console.log(req.files)
-  res.json(req.files)
+): Promise<void | Response<IResonseObject>> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params: IParams = req.params
+    if (!params) {
+      response.message = 'courseId not exist'
+
+      return res.status(404).json(response)
+    }
+    if (!req.files) {
+      response.message = 'files not exist'
+      return res.status(404).json(response)
+    }
+    if (Array.isArray(req.files)) {
+      const files: IFile[] = req.files
+      const fillter = { _id: params.courseId }
+      const options = { new: true }
+
+      const course = await Courses.findById(fillter)
+      if (!course) {
+        response.message = 'course not exist'
+        return res.status(404).json(response)
+      }
+      for (const file of files) {
+        const fileUploaded: IFileResponseObject = await uploadFileToDrive(file)
+        if (fileUploaded.mimeType == 'jpe/png') {
+          const image: IImage = {
+            url: fileUploaded.id
+          }
+          const update = { $push: { images: image } }
+          await course.updateOne(update, options)
+        }
+        if (fileUploaded.mimeType == 'videos/mp4') {
+          const video: IVideo = {
+            url: fileUploaded.id
+          }
+          const update = { $push: { videos: video } }
+          await course.updateOne(update, options)
+        }
+      }
+      const image = course.images?.pop || 'null'
+      const video = course.videos?.pop || 'null'
+      const updateCourse = { $set: { image: image, video: video } }
+      const updated = await course.updateOne(updateCourse, options)
+      if (updated) {
+        response.message = 'uploaded success'
+        response.data = updated
+        response.status = 201
+      }
+      return res.status(201).json(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
 }
-export const courseRoadmap = async (req: Request, res: Response): Promise<void | IResonseObject> => {}
 export const courseRemove = async (): Promise<void> => {}
 export const courseUpdate = async (): Promise<void> => {}
 export const findOneById = async (req: Request, res: Response): Promise<void | IResonseObject> => {}

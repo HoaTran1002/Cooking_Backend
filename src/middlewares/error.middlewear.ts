@@ -11,7 +11,7 @@ export const asyncHandelError = (
 }
 const handleErrorTrusted = (err: any): IResonseObject => {
   const responseErr: IResonseObject = {
-    message: 'Internal Server Error',
+    message: err.message || 'Internal Server Error',
     status: 500
   }
   if (err && typeof err === 'object' && 'message' in err && 'status' in err) {
