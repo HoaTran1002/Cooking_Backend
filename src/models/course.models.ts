@@ -10,18 +10,18 @@ const videoSchema = new Schema<IVideo>({
   duration: { type: Number }
 })
 const roadmapSchema = new Schema<IRoadmap>({
-  name: { type: String, default: '' },
-  startTime: { type: Date, default: Date.now },
-  endTime: { type: Date, default: Date.now },
-  skill: { type: String, default: '' },
-  knowledge: { type: String, default: '' }
+  name: { type: String, default: 'null' },
+  startTime: { type: Date },
+  endTime: { type: Date },
+  skill: { type: String, default: 'null' },
+  knowledge: { type: String, default: 'null' }
 })
 const course = new Schema<ICourse>({
-  title: { type: String, default: '' },
-  description: { type: String, default: '' },
-  image: { type: String, default: '' },
+  title: { type: String, default: 'null' },
+  description: { type: String, default: 'null' },
+  image: { type: String, default: 'null' },
   images: [imageSchema],
-  video: { type: String, default: '' },
+  video: { type: String, default: 'null' },
   videos: [videoSchema],
   roadmaps: [roadmapSchema],
   price: { type: Number, default: 0 },

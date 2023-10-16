@@ -5,23 +5,8 @@ import { remove } from '~/sevices/course.service'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
 import { IFile, IFileResponseObject, uploadFileToDrive } from '~/sevices/drive.service'
-export const getAll = async (
-  req: Request<unknown, unknown, ICourse>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
-  try {
-    const course = await Courses.find({})
-    const response: IResonseObject = {
-      message: 'get all sucess!',
-      status: 200,
-      data: course
-    }
-    return res.status(200).json(response)
-  } catch (error) {
-    console.log(error)
-  }
-}
 
+//create
 export const courseCreate = async (
   req: Request<unknown, unknown, ICourse>,
   res: Response
@@ -52,6 +37,9 @@ export const courseCreateRoadmap = async (
   const update = { $push: { roadmaps: roadmap } }
   const options = { new: true }
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
+  if (!course) {
+    return res.status(404).send('Course not found')
+  }
   if (course) {
     response.message = 'created roadmap'
     response.data = course
@@ -108,17 +96,190 @@ export const courseUpFiles = async (
       const video = course.videos?.pop || 'null'
       const updateCourse = { $set: { image: image, video: video } }
       const updated = await course.updateOne(updateCourse, options)
+      if (!updated) {
+        return res.status(404).send('Course  not found')
+      }
       if (updated) {
         response.message = 'uploaded success'
         response.data = updated
         response.status = 201
       }
+      //thiếu giải phóng file khi thêm
       return res.status(201).json(response)
     }
   } catch (error: any) {
     throw new Error(error)
   }
 }
-export const courseRemove = async (): Promise<void> => {}
-export const courseUpdate = async (): Promise<void> => {}
+//update
+export const courseUpdateById = async (
+  req: Request<any, unknown, ICourse>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const params = req.params
+    const fillter = { _id: params?.courseId }
+    const upadate: ICourse = req.body
+    const options = { new: true }
+    const response: IResonseObject = {
+      message: ''
+    }
+    if (!params.courseId) {
+      response.message = 'not exist courseId'
+      response.status = 401
+      return res.status(401).json(response)
+    }
+    const course = await Courses.findOneAndUpdate(fillter, upadate, options)
+    if (!course) {
+      return res.status(404).send('Course not found')
+    }
+    if (course) {
+      response.message = 'updated course success'
+      response.status = 200
+      response.data = course
+      return res.status(200).json(course)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+export const updateRoadmapById = async (
+  req: Request<any, unknown, IRoadmap>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const params = req.params
+    const fillter = { _id: params.courseId, 'roadmaps._id': params.roadmapId }
+    const roadmap: IRoadmap = req.body
+    const update = {
+      $set: {
+        'roadmaps.$.name': roadmap.name,
+        'roadmaps.$.startTime': roadmap.startTime,
+        'roadmaps.$.endTime': roadmap.endTime,
+        'roadmaps.$.knowledge': roadmap.knowledge,
+        'roadmaps.$.skill': roadmap.skill
+      }
+    }
+    const options = { new: true }
+    const response: IResonseObject = {
+      message: ''
+    }
+    const course = await Courses.findOneAndUpdate(fillter, update, options)
+    if (!course) {
+      return res.status(404).send('Course or roadmap not found')
+    }
+    if (course) {
+      response.message = 'updated roadmap success'
+      response.status = 200
+      response.data = course
+      return res.status(200).json(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+//remove
+export const removeRoadmapById = async (
+  req: Request<any, unknown, unknown>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params = req.params
+    const filter = { _id: params.courseId }
+    const update = {
+      $pull: {
+        roadmaps: { _id: params.roadmapId }
+      }
+    }
+
+    const options = { new: true }
+    const updatedCourse = await Courses.findOneAndUpdate(filter, update, options)
+    if (!updatedCourse) {
+      return res.status(404).send('Course or roadmap not found')
+    } else {
+      response.message = 'deleted roadmap success'
+      response.status = 204
+      response.data = updatedCourse
+      return res.status(204).json(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+export const removeRoadmaps = async (
+  req: Request<any, unknown, unknown>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params = req.params
+    const filter = { _id: params.courseId }
+    const update = {
+      $pull: {
+        roadmaps: { _id: params.roadmapId }
+      }
+    }
+
+    const options = { new: true }
+    const updatedCourse = await Courses.findOneAndUpdate(filter, update, options)
+    if (!updatedCourse) {
+      return res.status(404).send('Course or roadmap not found')
+    } else {
+      response.message = 'deleted roadmap success'
+      response.status = 204
+      response.data = updatedCourse
+      return res.status(204).json(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+export const removeCourseById = async (
+  req: Request<any, unknown, unknown>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params = req.params
+    const filter = { _id: params.courseId }
+
+    const udeletedCourse = await Courses.findByIdAndDelete(filter)
+    if (!udeletedCourse) {
+      return res.status(404).send('Course  not found')
+    } else {
+      response.message = 'deleted Course success'
+      response.status = 204
+      response.data = udeletedCourse
+      return res.status(204).send('ok')
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+//queries
+export const getAll = async (
+  req: Request<unknown, unknown, ICourse>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const course = await Courses.find({})
+    const response: IResonseObject = {
+      message: 'get all sucess!',
+      status: 200,
+      data: course
+    }
+    return res.status(200).json(response)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export const findOneById = async (req: Request, res: Response): Promise<void | IResonseObject> => {}
