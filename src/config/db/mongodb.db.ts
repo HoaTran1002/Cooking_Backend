@@ -1,12 +1,13 @@
-import mongoose from 'mongoose'
+import mongoose, { Error } from 'mongoose'
 
 export const connnectDB = () => {
+  const mongoDbUri = 'mongodb://mongo_db:27017/Cooking'
   mongoose
-    .connect('mongodb://root:29102002@localhost:27017', { dbName: 'Cooking' })
+    .connect(mongoDbUri)
     .then((): void => {
       console.log('connect success!')
     })
-    .catch((): void => {
-      console.log('connect failed')
+    .catch((err: Error): void => {
+      console.log('connect failed:', err)
     })
 }

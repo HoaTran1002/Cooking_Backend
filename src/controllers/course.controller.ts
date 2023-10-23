@@ -18,7 +18,12 @@ export const courseCreate = async (
       status: 200,
       data: course
     }
-    return res.status(200).json(response)
+    if (!course) {
+      response.message = 'create failed'
+      response.status = 400
+    }
+
+    return res.status(response.status ? response.status : 400).json(response)
   } catch (error: any) {
     throw new Error(error.message)
   }
