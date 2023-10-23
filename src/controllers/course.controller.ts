@@ -19,7 +19,7 @@ export const courseCreate = async (
       data: course
     }
     if (!course) {
-      response.message = 'create failed!'
+      response.message = 'create failed!!'
       response.status = 400
     }
 
