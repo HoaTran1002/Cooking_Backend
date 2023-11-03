@@ -13,9 +13,9 @@ const router = Router()
 router.get('/', asyncHandelError(getAll))
 router.get('/:id', asyncHandelError(getById))
 router.post('/create', asyncHandelError(createCategory))
-router.delete('/remove/:id', asyncHandelError(removeCategory))
-router.put('/update/:id', asyncHandelError(updateCategory))
 router.post('/:id/addCourseById/:idCourse', asyncHandelError(addCourseById))
+router.put('/update/:id', asyncHandelError(updateCategory))
+router.delete('/remove/:id', asyncHandelError(removeCategory))
 router.delete('/:id/removeCourseById/:idCourse', asyncHandelError(removeCourseById))
 
 export default router
