@@ -1,7 +1,7 @@
 import mongoose, { Error } from 'mongoose'
 
 export const connnectDB = () => {
-  const mongoDbUri = 'mongodb://mongo_db:27017/Cooking'
+  const mongoDbUri = 'mongodb://127.0.0.1:27017/Cooking'
   mongoose
     .connect(mongoDbUri)
     .then((): void => {

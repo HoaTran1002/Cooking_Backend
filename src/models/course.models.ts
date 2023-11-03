@@ -16,7 +16,7 @@ const roadmapSchema = new Schema<IRoadmap>({
   skill: { type: String, default: 'null' },
   knowledge: { type: String, default: 'null' }
 })
-const course = new Schema<ICourse>({
+export const course = new Schema<ICourse>({
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
   image: { type: String, default: 'null' },

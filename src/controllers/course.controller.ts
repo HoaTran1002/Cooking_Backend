@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/interfaces/course.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
-import { remove } from '~/sevices/course.service'
+import { remove } from '~/services/course.service'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
-import { IFile, IFileResponseObject, uploadFileToDrive } from '~/sevices/drive.service'
+import { IFile, IFileResponseObject, uploadFileToDrive } from '~/services/drive.service'
 
 //create
 export const courseCreate = async (
