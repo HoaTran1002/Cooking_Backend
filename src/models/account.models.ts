@@ -1,16 +1,25 @@
 import mongoose, { Schema } from 'mongoose'
-interface IAccount {
-  userName?: string
-  passWord?: string
-  email?: string
-  address?: string
-  role?: string
-}
+import bcrypt from 'bcrypt'
+import { IAccount } from '~/interfaces/account.interface'
+
 const account = new Schema<IAccount>({
-  userName: { type: String, required: 'không bỏ trống' },
-  passWord: { type: String, required: 'không bỏ trống' },
-  email: { type: String, required: 'không bỏ trống' },
-  address: [{ type: String }],
+  fullName: { type: String },
+  birthday: { type: Date },
+  address: { type: String },
+  gmail: { type: String },
+  phoneNumber: { type: String },
+  gender: { type: String },
+  userName: { type: String, unique: true },
+  password: { type: String, required: true },
   role: { type: String, required: 'không bỏ trống' }
 })
+const saltRounds = 8
+account.pre('save', async function (next) {
+  const user = this
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, saltRounds)
+  }
+  next()
+})
+
 export default mongoose.model('AccountModel', account)
