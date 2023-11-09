@@ -1,10 +1,23 @@
-import { Request, Response } from 'express'
+import e, { Request, Response } from 'express'
 import { IAccount } from '~/interfaces/account.interface'
 import Account from '~/models/account.models'
 import { IResonseObject } from '~/interfaces/response.interface'
 import { accountValid } from '~/services/auth.service'
-import { IUser, generateAccessToken, generateRefreshToken } from '~/services/jwt.service'
+import {
+  IUserToken,
+  checkedAccessToken,
+  decodeRefreshToken,
+  generateAccessToken,
+  generateRefreshToken,
+  getRefreshToken,
+  replaceRefreshToken
+} from '~/services/jwt.service'
 import refreshtokenModels, { IRefreshToken } from '~/models/refreshtoken.models'
+import { env } from '~/config/env.config'
+export const register = async (
+  req: Request<unknown, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {}
 export const login = async (
   req: Request<unknown, unknown, IAccount>,
   res: Response
@@ -36,13 +49,42 @@ export const login = async (
   const accessToken = generateAccessToken(user)
   const refreshToken = generateRefreshToken(user)
 
-  const createRefreshTokenDocument: IRefreshToken = { token: refreshToken, user: account }
+  const createRefreshTokenDocument: IRefreshToken = {
+    token: refreshToken,
+    user: account
+  }
   await refreshtokenModels.create({ createRefreshTokenDocument })
   res.setHeader('Authorization', accessToken)
-  res.cookie('_MOM_COOKING_RF', refreshToken)
+  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken)
   return res.status(200).json({
     message: 'login success',
     accessToken,
     refreshToken
   })
+}
+export const requestRefereshToken = async (req: Request<unknown, unknown, IAccount>, res: Response) => {
+  try {
+    const token = await req.cookies(env.NAME_REFRESH_TOKEN_IN_COOKIE)
+    const response: IResonseObject = {
+      message: 'refresh success',
+      status: 201
+    }
+    const refreshToken: string = await getRefreshToken(token)
+    const user: IUserToken = decodeRefreshToken<IUserToken>(refreshToken)
+    if (refreshToken) {
+      const newRefreshToken = generateRefreshToken(user)
+      const replaced: IRefreshToken = await replaceRefreshToken(token, newRefreshToken)
+      if (!replaced) {
+        response.message = 'invalid refresh token '
+        response.status = 401
+        return res.status(401).json(response)
+      }
+      res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken)
+      return res.status(201).json(response)
+    }
+  } catch (error: any) {
+    error.status = 401
+    error.name = 'TokenError'
+    throw error
+  }
 }

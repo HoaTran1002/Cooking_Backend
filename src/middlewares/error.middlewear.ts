@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { IResonseObject } from '~/interfaces/response.interface'
 
 export const asyncHandelError = (
-  callback: (req: Request, res: Response) => Promise<IResonseObject | Response | void | unknown>
+  callback: (req: Request, res: Response, next?: NextFunction) => Promise<IResonseObject | Response | void | unknown>
 ) => {
   const handleErr = (request: Request, response: Response, next: NextFunction) => {
     callback(request, response).catch(next)
