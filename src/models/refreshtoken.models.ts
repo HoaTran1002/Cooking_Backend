@@ -1,12 +1,11 @@
 import mongoose, { Schema } from 'mongoose'
-import { IAccount } from '~/interfaces/account.interface'
 
 export interface IRefreshToken {
   token: string
-  user: IAccount
+  idUser: string
 }
 const refreshToken = new Schema<IRefreshToken>({
-  token: { type: String },
-  user: { type: Schema.Types.ObjectId, ref: 'AccountModel' }
+  token: { type: String, required: true },
+  idUser: { type: String, required: true }
 })
 export default mongoose.model('RefreshToken', refreshToken)

@@ -13,7 +13,8 @@ export const generateAccessToken = (user: IUserToken) => {
   return token
 }
 export const generateRefreshToken = (user: IUserToken) => {
-  const token = jwt.sign(user, env.SECRET_KEY_REFRESH_TOKEN, {
+  const payload: IUserToken = { _id: user._id, userName: user.userName }
+  const token = jwt.sign(payload, env.SECRET_KEY_REFRESH_TOKEN, {
     expiresIn: env.EXPIRES_SETCRECT_KEY_REFRESH_TOKEN
   })
   return token
@@ -65,8 +66,9 @@ export const getRefreshToken = async (token: string) => {
   if (!token) {
     throw 'Token is missing'
   }
-
-  const refreshToken = await RefreshToken.findOne({ token })
+  console.log('token:', token)
+  const fillter = { token: token }
+  const refreshToken = await RefreshToken.findOne(fillter)
   if (!refreshToken) throw 'Invalid token'
   return refreshToken.token
 }
@@ -80,5 +82,8 @@ export const replaceRefreshToken = async (
   }
   const options = { new: true }
   const record = await RefreshToken.findOneAndUpdate(fillter, update, options)
+  console.log(refreshToken)
+  console.log(newRefreshToken)
+  console.log(record)
   return record
 }

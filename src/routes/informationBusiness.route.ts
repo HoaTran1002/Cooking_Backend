@@ -9,7 +9,7 @@ import {
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 
 const router = Router()
-router.get('/', asyncHandelError(getAll))
+router.get('/getAll', asyncHandelError(getAll))
 router.get('/getById/:id', asyncHandelError(getById))
 router.post('/create', asyncHandelError(createInformationBusiness))
 router.delete('/remove/:id', asyncHandelError(removeById))

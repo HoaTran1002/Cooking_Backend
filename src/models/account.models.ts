@@ -11,7 +11,7 @@ const account = new Schema<IAccount>({
   gender: { type: String },
   userName: { type: String, unique: true },
   password: { type: String, required: true },
-  role: { type: String, required: 'không bỏ trống' }
+  role: { type: String, default: 'STUDENT' }
 })
 const saltRounds = 8
 account.pre('save', async function (next) {

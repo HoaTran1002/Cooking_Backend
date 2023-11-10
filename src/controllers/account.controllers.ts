@@ -56,7 +56,7 @@ export const findAllAccount = async (
   req: Request<any, unknown, IAccount>,
   res: Response
 ): Promise<void | Response<IResonseObject>> => {
-  const data = Account.find()
+  const data = await Account.find({})
   const response: IResonseObject = {
     message: 'got all data success',
     data

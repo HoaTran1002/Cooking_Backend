@@ -1,5 +1,5 @@
 Arguments: 
-  /opt/homebrew/Cellar/node/21.1.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @types/dayjs
+  /opt/homebrew/Cellar/node/21.1.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add jsonweb
 
 PATH: 
   /Users/hoatran/anaconda3/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/hoatran/anaconda3/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fdayjs: Not found
+  Error: https://registry.yarnpkg.com/jsonweb: Not found
       at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
       at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
       at Request.emit (node:events:515:28)
@@ -65,7 +65,6 @@ npm manifest:
     "dependencies": {
       "@google-cloud/local-auth": "^2.1.0",
       "@types/bcrypt": "^5.0.1",
-      "@types/jsonwebtoken": "^9.0.4",
       "bcrypt": "^5.1.1",
       "dayjs": "^1.11.10",
       "dotenv": "^16.3.1",
@@ -328,7 +327,7 @@ Lockfile:
   
   "@types/jsonwebtoken@^9.0.4":
     version "9.0.4"
-    resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-9.0.4.tgz#8b74bbe87bde81a3469d4b32a80609bec62c23ec"
+    resolved "https://registry.npmjs.org/@types/jsonwebtoken/-/jsonwebtoken-9.0.4.tgz"
     integrity sha512-8UYapdmR0QlxgvJmyE8lP7guxD0UGVMfknsdtCFZh4ovShdBl3iOI4zdvqBHrB/IS+xUj3PSx73Qkey1fhWz+g==
     dependencies:
       "@types/node" "*"
@@ -838,7 +837,7 @@ Lockfile:
   
   dayjs@^1.11.10:
     version "1.11.10"
-    resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
+    resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz"
     integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
   
   debug@2.6.9:
