@@ -34,10 +34,10 @@ export const register = async (
   }
   const account = await createAccount(body)
   const user = {
-    _id: account._id.toString('base64'),
+    _id: account._id.toString(),
     userName: account.userName ? account.userName : 'no name'
   }
-
+  console.log('user:', user)
   const accessToken = generateAccessToken(user)
   const refreshToken = generateRefreshToken(user)
 
@@ -46,7 +46,6 @@ export const register = async (
     idUser: account._id.toString()
   }
   const frtokenDocument = await refreshtokenModels.create(RefreshTokenDocument)
-  console.log('refreshtoken:', frtokenDocument)
   res.setHeader('Authorization', `Bearer ${accessToken}`)
   res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken)
   return res.status(200).json({
@@ -76,7 +75,7 @@ export const login = async (
     response.message = 'invalid account'
     return res.status(401).json(response)
   }
-  //đảm bảo người dùng chỉ có duy nhất một refreshtoken, xoá tất cả refresktoken của user trước đăng nhập
+  //đảm bảo người dùng chỉ có duy nhất một refreshtoken, xoá tất cả refresktoken của user trước đăng nh
   const fillterRefreshToken = { idUser: account._id.toString() }
   await refreshtokenModels.deleteMany(fillterRefreshToken)
   const valid = await accountValid(body)
@@ -85,7 +84,7 @@ export const login = async (
     return res.status(401).json(response)
   }
   const user = {
-    _id: account._id.toString('base64'),
+    _id: account._id.toString(),
     userName: account.userName ? account.userName : 'no name'
   }
 
@@ -119,23 +118,36 @@ export const requestRefereshToken = async (req: Request<unknown, unknown, IAccou
       ;(response.message = 'not found refreshtoken'), (response.status = 401)
       return res.status(401).json(response)
     }
+    const refreshTokenValid: IRefreshToken | any = refreshtokenModels.findOne({ token: refreshToken })
     const user: IUserToken = decodeRefreshToken<IUserToken>(refreshToken)
-
-    if (refreshToken) {
+    if (!user) {
+      response.message = 'invalid token'
+      response.status = 401
+      return res.status(401).json(response)
+    }
+    if (!refreshTokenValid) {
+      response.message = 'invalid token'
+      response.status = 401
+      return res.status(401).json(response)
+    }
+    if (refreshTokenValid) {
       const newRefreshToken = generateRefreshToken(user)
-      const replaced: IRefreshToken = await replaceRefreshToken(refreshToken, newRefreshToken)
 
+      const replaced: IRefreshToken = await replaceRefreshToken(refreshToken, newRefreshToken)
       if (!replaced) {
-        response.message = 'invalid refresh token '
+        response.message = 'invalid  token '
         response.status = 401
         return res.status(401).json(response)
       }
-      const accessToken = generateAccessToken(user)
-      res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken)
-      res.setHeader('Authorization', `Bearer ${accessToken}`)
-      response.message = 'refresh token success'
-      response.data = { accessToken, refreshToken }
-      return res.status(201).json(response)
+      if (replaced) {
+        const accessToken = generateAccessToken(user)
+        res.setHeader('Authorization', `Bearer ${accessToken}`)
+        res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken)
+        response.message = 'refresh token success'
+        response.data = { accessToken, refreshToken }
+
+        return res.status(201).json(response)
+      }
     }
   } catch (error: any) {
     error.status = 401

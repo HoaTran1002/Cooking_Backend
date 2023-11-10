@@ -2,10 +2,15 @@ import { NextFunction, Request, Response } from 'express'
 import { IResonseObject } from '~/interfaces/response.interface'
 
 export const asyncHandelError = (
-  callback: (req: Request, res: Response, next?: NextFunction) => Promise<IResonseObject | Response | void | unknown>
+  // eslint-disable-next-line prettier/prettier
+  callback: (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => Promise<IResonseObject | Response | void | unknown>
 ) => {
   const handleErr = (request: Request, response: Response, next: NextFunction) => {
-    callback(request, response).catch(next)
+    callback(request, response, next).catch(next)
   }
   return handleErr
 }

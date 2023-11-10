@@ -8,14 +8,15 @@ import {
   getAll,
   getById
 } from '~/controllers/category.controllers'
+import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 const router = Router()
-router.get('/', asyncHandelError(getAll))
-router.get('/:id', asyncHandelError(getById))
-router.post('/create', asyncHandelError(createCategory))
-router.post('/:id/addCourseById/:idCourse', asyncHandelError(addCourseById))
-router.put('/update/:id', asyncHandelError(updateCategory))
-router.delete('/remove/:id', asyncHandelError(removeCategory))
-router.delete('/:id/removeCourseById/:idCourse', asyncHandelError(removeCourseById))
+router.get('/', authorize(), asyncHandelError(getAll))
+router.get('/:id', authorize(), asyncHandelError(getById))
+router.post('/create', authorize(), asyncHandelError(createCategory))
+router.post('/:id/addCourseById/:idCourse', authorize(), asyncHandelError(addCourseById))
+router.put('/update/:id', authorize(), asyncHandelError(updateCategory))
+router.delete('/remove/:id', authorize(), asyncHandelError(removeCategory))
+router.delete('/:id/removeCourseById/:idCourse', authorize(), asyncHandelError(removeCourseById))
 
 export default router

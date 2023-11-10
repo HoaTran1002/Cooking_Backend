@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { IAccount } from '~/interfaces/account.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import Account from '~/models/account.models'
@@ -44,12 +44,13 @@ export const findAccountById = async (
   req: Request<any, unknown, IAccount>,
   res: Response
 ): Promise<void | Response<IResonseObject>> => {
-  const _id = req.params.id
-  const data = await Account.findOne({ id: _id })
+  const id = req.params.id
+  const data = await Account.findOne({ _id: id })
   const response: IResonseObject = {
     message: 'got data success',
     data
   }
+
   return res.status(200).json(response)
 }
 export const findAllAccount = async (
@@ -57,9 +58,10 @@ export const findAllAccount = async (
   res: Response
 ): Promise<void | Response<IResonseObject>> => {
   const data = await Account.find({})
+
   const response: IResonseObject = {
     message: 'got all data success',
-    data
+    data: data
   }
   return res.status(200).json(response)
 }
