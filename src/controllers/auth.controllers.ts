@@ -5,15 +5,18 @@ import { IResonseObject } from '~/interfaces/response.interface'
 import { accountValid, createAccount } from '~/services/auth.service'
 import {
   IUserToken,
-  checkedAccessToken,
   decodeRefreshToken,
   generateAccessToken,
   generateRefreshToken,
-  getRefreshToken,
   replaceRefreshToken
 } from '~/services/jwt.service'
 import refreshtokenModels, { IRefreshToken } from '~/models/refreshtoken.models'
 import { env } from '~/config/env.config'
+const cookiesOptions = {
+  expires: new Date(Date.now() + 86400000),
+  httpOnly: false,
+  secure: false
+}
 export const register = async (
   req: Request<unknown, unknown, IAccount>,
   res: Response
@@ -39,15 +42,15 @@ export const register = async (
   }
   console.log('user:', user)
   const accessToken = generateAccessToken(user)
-  const refreshToken = generateRefreshToken(user)
+  const refreshToken: string = generateRefreshToken(user)
 
   const RefreshTokenDocument: IRefreshToken = {
     token: refreshToken,
     idUser: account._id.toString()
   }
-  const frtokenDocument = await refreshtokenModels.create(RefreshTokenDocument)
+  await refreshtokenModels.create(RefreshTokenDocument)
   res.setHeader('Authorization', `Bearer ${accessToken}`)
-  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken)
+  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
   return res.status(200).json({
     message: 'register success',
     accessToken,
@@ -100,9 +103,11 @@ export const login = async (
   const refreshs = await refreshtokenModels.find()
   console.log(refreshs)
   res.setHeader('Authorization', `Bearer ${accessToken}`)
-  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken)
+  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
+
   return res.status(200).json({
     message: 'login success',
+    profile: account,
     accessToken,
     refreshToken
   })
@@ -142,7 +147,7 @@ export const requestRefereshToken = async (req: Request<unknown, unknown, IAccou
       if (replaced) {
         const accessToken = generateAccessToken(user)
         res.setHeader('Authorization', `Bearer ${accessToken}`)
-        res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken)
+        res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken, cookiesOptions)
         response.message = 'refresh token success'
         response.data = { accessToken, refreshToken }
 

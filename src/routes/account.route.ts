@@ -8,7 +8,6 @@ import {
 } from '~/controllers/account.controllers'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-
 const router = Router()
 router.get('/getAll', authorize(), asyncHandelError(findAllAccount))
 router.get('/findAccountById/:id', authorize(), asyncHandelError(findAccountById))
