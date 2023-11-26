@@ -6,9 +6,11 @@ export interface IParams {
 
 export interface IImage {
   url: string
+  key: string
 }
 export interface IVideo {
   url: string
+  key: string
 }
 export interface IRoadmap {
   name: string

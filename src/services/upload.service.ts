@@ -3,19 +3,22 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { env } from '~/config/env.config'
 import { s3 } from '~/config/s3.config'
 import crypto from 'crypto'
+import { IImage } from '~/interfaces/course.interface'
 
-export const uploadImageS3 = async (file: Express.Multer.File): Promise<string> => {
+export const uploadImageS3 = async (file: Express.Multer.File): Promise<IImage> => {
   const randomImageName = () => crypto.randomBytes(16).toString('hex')
+  const imageName: string = randomImageName()
   const command = new PutObjectCommand({
     Bucket: env.AWS_BUCKET_NAME,
-    Key: randomImageName(),
+    Key: imageName,
     Body: file.buffer,
     ContentType: 'image/jpg'
   })
   await s3.send(command)
-  const commandGetUrl = new GetObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: file.originalname })
+  const commandGetUrl = new GetObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: imageName })
   const url = await getSignedUrl(s3, commandGetUrl, { expiresIn: 360 })
-  return url
+  const objectImage: IImage = { url: url, key: imageName }
+  return objectImage
 }
 export const getImageS3 = async (objectKey: string): Promise<any> => {
   const command = new GetObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: objectKey })
@@ -28,3 +31,4 @@ export const deleteImageS3 = async (objectKey: string): Promise<any> => {
   console.log(result)
   return result
 }
+export const deleteAllImageS3 = async (images: IImage[]) => {}

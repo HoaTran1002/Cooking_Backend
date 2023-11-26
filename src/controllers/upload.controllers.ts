@@ -3,8 +3,8 @@ import { IResonseObject } from '~/interfaces/response.interface'
 import { deleteImageS3, getImageS3, uploadImageS3 } from '~/services/upload.service'
 import Course from '~/models/course.models'
 import { ICourse, IImage } from '~/interfaces/course.interface'
-import { addImageToCourse, updateImageFromPopImages } from '~/services/course.service'
-export const uploadImageFromLocalToS3 = async (
+import { addImageToCourse, getAllImages, updateImageFromPopImages } from '~/services/course.service'
+export const uploadImageFromLocalToS3ByCourseId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
@@ -22,47 +22,55 @@ export const uploadImageFromLocalToS3 = async (
     return res.status(400).send('Không có file được tải lên.')
   }
   if (file) {
-    const urlImage: string = await uploadImageS3(file)
-    if (!urlImage) {
-      return res.status(500).json({ message: 'upload image failed', urlImage: urlImage })
+    const imageObject: IImage = await uploadImageS3(file)
+    if (!imageObject) {
+      return res.status(500).json({ message: 'upload image failed', imageObject: imageObject })
     }
-    const image: IImage = {
-      url: urlImage
-    }
-    const addImage = await addImageToCourse(idCourse, image)
 
-    if (!addImage) {
+    const Images = await addImageToCourse(idCourse, imageObject)
+
+    if (!Images) {
       return res.status(500).json({ message: 'upload image failed' })
     }
     if (!course.image) {
-      const update = await updateImageFromPopImages(idCourse, addImage)
-      if (!update) {
+      const courseUpdate = await updateImageFromPopImages(idCourse, Images)
+      if (!courseUpdate) {
         return res.status(500).json({ message: 'update image failed' })
       }
     }
 
-    return res.status(200).json({ message: 'upload image success', result: addImage })
+    return res.status(200).json({ message: 'upload image success', result: Images })
   } else {
     return res.status(400).json({ message: 'File not provided or invalid' })
   }
 }
-export const getImageFromS3Storage = async (
+export const getAllImageFromS3ByCourseId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const ressult = await getImageS3('hinhdep.jpg')
-  if (!ressult) {
-    return res.status(400).json({ message: 'get failed', ressult: ressult })
+  const idCourse = req.params.idCourse
+  if (idCourse) {
+    const result = await getAllImages(idCourse)
+    if (!result) {
+      return res.status(400).json({ message: 'invalid params' })
+    }
+    return res.status(200).json({ message: 'get all images success', images: result })
+  } else if (!idCourse) {
+    return res.status(400).json({ message: 'invalid params' })
   }
-  return res.status(200).json({ message: 'get success', ressult: ressult })
 }
-export const deleteImageFromS3Storage = async (
+export const deleteAllImageFromS3ByCourseId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const result = deleteImageS3('hinhdep.jpg')
-  if (!result) {
-    return res.status(400).json({ message: 'delete failed', result: result })
+  const idCourse = req.params.idCourse
+  if (idCourse) {
+    const result = deleteImageS3('hinhdep.jpg')
+    if (!result) {
+      return res.status(400).json({ message: 'delete failed', result: result })
+    }
+    return res.status(200).json({ message: 'delete success', result: result })
+  } else if (!idCourse) {
+    return res.status(400).json({ message: 'invalid params' })
   }
-  return res.status(200).json({ message: 'delete success', result: result })
 }

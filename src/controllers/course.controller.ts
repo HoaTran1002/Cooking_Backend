@@ -52,70 +52,7 @@ export const courseCreateRoadmap = async (
   }
   return res.status(201).json({ course: course })
 }
-export const courseUpFiles = async (
-  req: Request<any, unknown, ICourse>,
-  res: Response
-): Promise<void | Response<IResonseObject>> => {
-  try {
-    const response: IResonseObject = {
-      message: ''
-    }
-    const params: IParams = req.params
-    if (!params) {
-      response.message = 'courseId not exist'
 
-      return res.status(404).json(response)
-    }
-    if (!req.files) {
-      response.message = 'files not exist'
-      return res.status(404).json(response)
-    }
-    if (Array.isArray(req.files)) {
-      const files: IFile[] = req.files
-      const fillter = { _id: params.courseId }
-      const options = { new: true }
-
-      const course = await Courses.findById(fillter)
-      if (!course) {
-        response.message = 'course not exist'
-        return res.status(404).json(response)
-      }
-      for (const file of files) {
-        const fileUploaded: IFileResponseObject = await uploadFileToDrive(file)
-        if (fileUploaded.mimeType == 'jpe/png') {
-          const image: IImage = {
-            url: fileUploaded.id
-          }
-          const update = { $push: { images: image } }
-          await course.updateOne(update, options)
-        }
-        if (fileUploaded.mimeType == 'videos/mp4') {
-          const video: IVideo = {
-            url: fileUploaded.id
-          }
-          const update = { $push: { videos: video } }
-          await course.updateOne(update, options)
-        }
-      }
-      const image = course.images?.pop || 'null'
-      const video = course.videos?.pop || 'null'
-      const updateCourse = { $set: { image: image, video: video } }
-      const updated = await course.updateOne(updateCourse, options)
-      if (!updated) {
-        return res.status(404).send('Course  not found')
-      }
-      if (updated) {
-        response.message = 'uploaded success'
-        response.data = updated
-        response.status = 201
-      }
-      //thiếu giải phóng file khi thêm
-      return res.status(201).json(response)
-    }
-  } catch (error: any) {
-    throw new Error(error)
-  }
-}
 //update
 export const courseUpdateById = async (
   req: Request<any, unknown, ICourse>,

@@ -11,7 +11,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 }
 export const updateImageFromPopImages = async (courseId: string, imageArray: IImage[]) => {
   const fillter = { _id: courseId }
-  const update = { image: imageArray[0].url }
+  const update = { image: imageArray[0] }
   const options = { new: true }
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
   return course
@@ -22,4 +22,9 @@ export const addImageToCourse = async (courseId: string, image: IImage) => {
   const options = { new: true }
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
   return course?.images
+}
+export const getAllImages = async (idCourse: string): Promise<IImage[]> => {
+  const fillter = { _id: idCourse }
+  const course = await Courses.findOne<ICourse>(fillter)
+  return course?.images || []
 }

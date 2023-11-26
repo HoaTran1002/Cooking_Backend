@@ -2,11 +2,13 @@ import mongoose, { Schema } from 'mongoose'
 import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 
 const imageSchema = new Schema<IImage>({
-  url: { type: String }
+  url: { type: String },
+  key: { type: String }
 })
 
 const videoSchema = new Schema<IVideo>({
-  url: { type: String }
+  url: { type: String },
+  key: { type: String }
 })
 const roadmapSchema = new Schema<IRoadmap>({
   name: { type: String, default: 'null' },
@@ -20,7 +22,7 @@ export const course = new Schema<ICourse>({
   leve: { type: String },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
-  image: { type: String, default: 'null' },
+  image: imageSchema,
   images: [imageSchema],
   video: { type: String, default: 'null' },
   videos: [videoSchema],
