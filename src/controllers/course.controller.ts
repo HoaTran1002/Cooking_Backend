@@ -85,6 +85,7 @@ export const courseUpdateById = async (
     throw new Error(error)
   }
 }
+
 export const updateRoadmapById = async (
   req: Request<any, unknown, IRoadmap>,
   res: Response
