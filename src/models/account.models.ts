@@ -4,6 +4,7 @@ import { IAccount } from '~/interfaces/account.interface'
 
 const account = new Schema<IAccount>({
   fullName: { type: String },
+  avatar: { type: String },
   birthday: { type: Date },
   address: { type: String },
   gmail: { type: String },

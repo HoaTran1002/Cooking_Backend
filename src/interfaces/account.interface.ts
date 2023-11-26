@@ -7,6 +7,7 @@ export interface IProfile {
   gmail?: string
   phoneNumber?: string
   gender?: string
+  avatar?: string
 }
 
 export interface IAccount extends IProfile {
