@@ -6,8 +6,7 @@ const imageSchema = new Schema<IImage>({
 })
 
 const videoSchema = new Schema<IVideo>({
-  url: { type: String },
-  duration: { type: Number }
+  url: { type: String }
 })
 const roadmapSchema = new Schema<IRoadmap>({
   name: { type: String, default: 'null' },
@@ -17,6 +16,8 @@ const roadmapSchema = new Schema<IRoadmap>({
   knowledge: { type: String, default: 'null' }
 })
 export const course = new Schema<ICourse>({
+  category: { type: String },
+  leve: { type: String },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
   image: { type: String, default: 'null' },
@@ -31,8 +32,4 @@ export const course = new Schema<ICourse>({
   timeUpdate: { type: Date }
 })
 
-// const courses = new Schema<ICourses>({
-//   totalCourseCurrent: { type: Number },
-//   Items: [course]
-// })
 export default mongoose.model('Courses', course)

@@ -1,12 +1,14 @@
+type TCategory = 'SHORT_TERM' | 'LONG_TERM'
+type TLeve = 'BASIC' | 'MEDIUM' | 'MASTER'
 export interface IParams {
   courseId: string
 }
+
 export interface IImage {
   url: string
 }
 export interface IVideo {
   url: string
-  duration?: number
 }
 export interface IRoadmap {
   name: string
@@ -16,6 +18,8 @@ export interface IRoadmap {
   skill: string
 }
 export interface ICourse {
+  category?: TCategory
+  leve?: TLeve
   title?: string
   description?: string
   image?: string

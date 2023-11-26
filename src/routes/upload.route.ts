@@ -9,7 +9,7 @@ import { asyncHandelError } from '~/middlewares/error.middlewear'
 
 const router = Router()
 router.post(
-  '/uploadImageFromLocalS3',
+  '/uploadImageFromLocalS3/:idCourse',
   uploadMemory.single('file'),
   asyncHandelError(uploadImageFromLocalToS3)
 )
