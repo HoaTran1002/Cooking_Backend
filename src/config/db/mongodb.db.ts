@@ -1,7 +1,8 @@
 import mongoose, { Error } from 'mongoose'
+import { env } from '../env.config'
 
 export const connnectDB = () => {
-  const mongoDbUri = 'mongodb://127.0.0.1:27017/Cooking'
+  const mongoDbUri = `mongodb://${env.MONGODB_ADDRESS}/Cooking`
   mongoose
     .connect(mongoDbUri)
     .then((): void => {
@@ -9,5 +10,6 @@ export const connnectDB = () => {
     })
     .catch((err: Error): void => {
       console.log('connect failed:', err)
+      throw new Error('connect failed')
     })
 }
