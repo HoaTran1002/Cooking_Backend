@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Router } from 'express'
 import { uploadMemory } from '~/config/multer.config'
 import {
