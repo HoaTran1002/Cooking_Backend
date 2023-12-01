@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var auth_controllers_1 = require("../controllers/auth.controllers");
+var auth_middlewears_1 = require("../middlewares/auth.middlewears");
+var error_middlewear_1 = require("../middlewares/error.middlewear");
+var router = (0, express_1.Router)();
+router.post('/login', (0, error_middlewear_1.asyncHandelError)(auth_controllers_1.login));
+router.post('/logout', (0, auth_middlewears_1.authorize)(), (0, error_middlewear_1.asyncHandelError)(auth_controllers_1.logOut));
+router.post('/register', (0, error_middlewear_1.asyncHandelError)(auth_controllers_1.register));
+router.post('/refresh-token', (0, error_middlewear_1.asyncHandelError)(auth_controllers_1.requestRefereshToken));
+exports.default = router;

@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var multer_config_1 = require("../config/multer.config");
+var upload_controllers_1 = require("../controllers/upload.controllers");
+var error_middlewear_1 = require("../middlewares/error.middlewear");
+var router = (0, express_1.Router)();
+router.post('/uploadImageFromLocalS3/:idCourse', multer_config_1.uploadMemory.single('file'), (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.uploadImageFromLocalToS3ByCourseId));
+router.get('/getAllImageFromS3/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.getAllImageFromS3ByCourseId));
+router.get('/:keyImage/getAllImageFromS3', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.getImageFromS3BykeyImage));
+router.delete('/deleteAllImageFromS3/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.deleteAllImageFromS3ByCourseId));
+router.delete('/:keyImage/deleteImageFromS3ByCourseId/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.deleteImageFromS3ByCourseId));
+router.post('/uploadImageFromLocalS3/:idCourse', multer_config_1.uploadMemory.single('file'), (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.uploadVideoFromLocalToS3ByCourseId));
+router.get('/getAllVideoFromS3/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.getAllVideoFromS3ByCourseId));
+router.get('/:keyVideo/getAllVideoFromS3', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.getVideoFromS3BykeyVideo));
+router.delete('/deleteAllVideoFromS3/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.deleteAllVideoFromS3ByCourseId));
+router.delete('/:keyVideo/deleteVideoFromS3ByCourseId/:idCourse', (0, error_middlewear_1.asyncHandelError)(upload_controllers_1.deleteVideoFromS3ByCourseId));
+exports.default = router;

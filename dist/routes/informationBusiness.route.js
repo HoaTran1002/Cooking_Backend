@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var informationBusiness_controllers_1 = require("../controllers/informationBusiness.controllers");
+var auth_middlewears_1 = require("../middlewares/auth.middlewears");
+var error_middlewear_1 = require("../middlewares/error.middlewear");
+var router = (0, express_1.Router)();
+router.get('/getAll', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.getAll));
+router.get('/getById/:id', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.getById));
+router.post('/create', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.createInformationBusiness));
+router.delete('/remove/:id', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.removeById));
+router.put('/update/:id', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.updateFormationBusinessById));
+exports.default = router;
