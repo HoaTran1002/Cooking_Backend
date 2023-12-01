@@ -22,6 +22,7 @@ export const register = async (
   res: Response
 ): Promise<void | Response<IResonseObject>> => {
   const body = req.body
+
   const response: IResonseObject = {
     message: 'create success',
     status: 200
@@ -30,32 +31,35 @@ export const register = async (
     ;(response.message = 'invalid format'), (response.status = 401)
     return res.status(401).json(response)
   }
+
   const alreadyAccount = await Account.findOne({ userName: body.userName })
+
   if (alreadyAccount) {
     ;(response.message = 'already account!'), (response.status = 409)
     return res.status(409).json(response)
-  }
-  const account = await createAccount(body)
-  const user = {
-    _id: account._id.toString(),
-    userName: account.userName ? account.userName : 'no name'
-  }
-  console.log('user:', user)
-  const accessToken = generateAccessToken(user)
-  const refreshToken: string = generateRefreshToken(user)
+  } else {
+    const account = await createAccount(body)
+    const user = {
+      _id: account._id.toString(),
+      userName: account.userName ? account.userName : 'no name'
+    }
+    console.log('user:', user)
+    const accessToken = generateAccessToken(user)
+    const refreshToken: string = generateRefreshToken(user)
 
-  const RefreshTokenDocument: IRefreshToken = {
-    token: refreshToken,
-    idUser: account._id.toString()
+    const RefreshTokenDocument: IRefreshToken = {
+      token: refreshToken,
+      idUser: account._id.toString()
+    }
+    await refreshtokenModels.create(RefreshTokenDocument)
+    res.setHeader('Authorization', `Bearer ${accessToken}`)
+    res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
+    return res.status(200).json({
+      message: 'register success',
+      accessToken,
+      refreshToken
+    })
   }
-  await refreshtokenModels.create(RefreshTokenDocument)
-  res.setHeader('Authorization', `Bearer ${accessToken}`)
-  res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
-  return res.status(200).json({
-    message: 'register success',
-    accessToken,
-    refreshToken
-  })
 }
 
 export const login = async (

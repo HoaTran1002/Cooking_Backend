@@ -28,6 +28,7 @@ const accountValid = (body) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.accountValid = accountValid;
 const createAccount = (body) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('account');
     const account = yield account_models_1.default.create(body);
     return account;
 });

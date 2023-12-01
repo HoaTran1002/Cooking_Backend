@@ -27,7 +27,7 @@ exports.connnectDB = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const env_config_1 = require("../env.config");
 const connnectDB = () => {
-    const mongoDbUri = `mongodb://${env_config_1.env.MONGODB_ADDRESS}/Cooking`;
+    const mongoDbUri = `mongodb://${env_config_1.env.DB_USERNAME}:${env_config_1.env.DB_PASSWORD}@${env_config_1.env.MONGODB_ADDRESS}`;
     mongoose_1.default
         .connect(mongoDbUri)
         .then(() => {

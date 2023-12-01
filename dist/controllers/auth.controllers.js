@@ -40,26 +40,28 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         (response.message = 'already account!'), (response.status = 409);
         return res.status(409).json(response);
     }
-    const account = yield (0, auth_service_1.createAccount)(body);
-    const user = {
-        _id: account._id.toString(),
-        userName: account.userName ? account.userName : 'no name'
-    };
-    console.log('user:', user);
-    const accessToken = (0, jwt_service_1.generateAccessToken)(user);
-    const refreshToken = (0, jwt_service_1.generateRefreshToken)(user);
-    const RefreshTokenDocument = {
-        token: refreshToken,
-        idUser: account._id.toString()
-    };
-    yield refreshtoken_models_1.default.create(RefreshTokenDocument);
-    res.setHeader('Authorization', `Bearer ${accessToken}`);
-    res.cookie(env_config_1.env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions);
-    return res.status(200).json({
-        message: 'register success',
-        accessToken,
-        refreshToken
-    });
+    else {
+        const account = yield (0, auth_service_1.createAccount)(body);
+        const user = {
+            _id: account._id.toString(),
+            userName: account.userName ? account.userName : 'no name'
+        };
+        console.log('user:', user);
+        const accessToken = (0, jwt_service_1.generateAccessToken)(user);
+        const refreshToken = (0, jwt_service_1.generateRefreshToken)(user);
+        const RefreshTokenDocument = {
+            token: refreshToken,
+            idUser: account._id.toString()
+        };
+        yield refreshtoken_models_1.default.create(RefreshTokenDocument);
+        res.setHeader('Authorization', `Bearer ${accessToken}`);
+        res.cookie(env_config_1.env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions);
+        return res.status(200).json({
+            message: 'register success',
+            accessToken,
+            refreshToken
+        });
+    }
 });
 exports.register = register;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
