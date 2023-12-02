@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import { IInformationBusiness } from '~/interfaces/businessInfrormation.interface'
+import { imageSchema } from './course.models'
 
 const informationBusiness = new Schema<IInformationBusiness>({
   name: { type: String },
@@ -8,7 +9,7 @@ const informationBusiness = new Schema<IInformationBusiness>({
   email: { type: String },
   domain: { type: String },
   slogan: { type: String },
-  logo: { type: String },
+  logo: imageSchema,
   story: { type: String },
   achievement: [
     {
@@ -18,7 +19,7 @@ const informationBusiness = new Schema<IInformationBusiness>({
   ],
   relatedInformation: [
     {
-      image: { type: String },
+      image: imageSchema,
       content: { type: String }
     }
   ]

@@ -1,3 +1,5 @@
+import { IImage } from './course.interface'
+
 export interface IAchivementItem {
   item?: string
 }
@@ -16,7 +18,7 @@ export interface IInformationBusiness {
   email?: string
   domain?: string
   slogan?: string
-  logo?: string
+  logo?: IImage
   story?: string
   achievement?: [IAchievement]
   relatedInformation?: [IRelatedInformation]
