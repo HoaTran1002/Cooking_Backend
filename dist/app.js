@@ -15,6 +15,6 @@ app.use((0, cors_1.default)({ origin: 'http://localhost:5173', credentials: true
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
 app.use((0, cookie_parser_1.default)());
-(0, mongodb_db_1.connnectDB)();
+(0, mongodb_db_1.connectDB)();
 (0, index_route_1.default)(app);
 app.listen(env_config_1.env.PORT);

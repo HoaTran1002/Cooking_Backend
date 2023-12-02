@@ -23,19 +23,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connnectDB = void 0;
+exports.connectDB = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const env_config_1 = require("../env.config");
-const connnectDB = () => {
-    const mongoDbUri = `mongodb://${env_config_1.env.DB_USERNAME}:${env_config_1.env.DB_PASSWORD}@${env_config_1.env.MONGODB_ADDRESS}`;
+const connectDB = () => {
+    const mongoDbUri = `mongodb://${env_config_1.env.DB_USERNAME}:${env_config_1.env.DB_PASSWORD}@${env_config_1.env.MONGODB_ADDRESS}/Cooking`;
     mongoose_1.default
-        .connect(mongoDbUri)
+        .connect(mongoDbUri, {
+        authSource: 'admin'
+    })
         .then(() => {
-        console.log('connect success!');
+        console.log('Connected to MongoDB');
     })
         .catch((err) => {
-        console.log('connect failed:', err);
+        console.error('Error connecting to MongoDB:', err);
         throw new mongoose_1.Error('connect failed');
     });
 };
-exports.connnectDB = connnectDB;
+exports.connectDB = connectDB;
