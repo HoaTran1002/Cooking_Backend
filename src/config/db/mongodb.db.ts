@@ -1,15 +1,18 @@
 import mongoose, { Error } from 'mongoose'
 import { env } from '../env.config'
 
-export const connnectDB = () => {
-  const mongoDbUri = `mongodb://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.MONGODB_ADDRESS}`
+export const connectDB = () => {
+  const mongoDbUri = `mongodb://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.MONGODB_ADDRESS}/Cooking`
+
   mongoose
-    .connect(mongoDbUri)
-    .then((): void => {
-      console.log('connect success!')
+    .connect(mongoDbUri, {
+      authSource: 'admin'
     })
-    .catch((err: Error): void => {
-      console.log('connect failed:', err)
+    .then(() => {
+      console.log('Connected to MongoDB')
+    })
+    .catch((err: Error) => {
+      console.error('Error connecting to MongoDB:', err)
       throw new Error('connect failed')
     })
 }
