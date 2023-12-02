@@ -5,12 +5,10 @@ import { remove } from '~/services/course.service'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
 import { IFile, IFileResponseObject, uploadFileToDrive } from '~/services/drive.service'
+import { findById } from '~/repositories/course.repository'
 
 //create
-export const courseCreate = async (
-  req: Request<unknown, unknown, ICourse>,
-  res: Response
-): Promise<Response<IResonseObject> | void | IResonseObject> => {
+export const courseCreate = async (req: Request<unknown, unknown, ICourse>, res: Response): Promise<Response<IResonseObject> | void | IResonseObject> => {
   try {
     const course = await Courses.create(req.body)
     const response: IResonseObject = {
@@ -29,10 +27,7 @@ export const courseCreate = async (
   }
 }
 
-export const courseCreateRoadmap = async (
-  req: Request<any, unknown, IRoadmap>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const courseCreateRoadmap = async (req: Request<any, unknown, IRoadmap>, res: Response): Promise<Response<IResonseObject> | void> => {
   const response: IResonseObject = {
     message: ''
   }
@@ -53,11 +48,26 @@ export const courseCreateRoadmap = async (
   return res.status(201).json({ course: course })
 }
 
+export const getCourseById = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
+  const idCourse = req.params.idCourse
+  const response: IResonseObject = {
+    message: 'get course success!'
+  }
+  if (idCourse) {
+    const course = await findById(idCourse)
+
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' })
+    }
+
+    response.data = course
+    return res.status(200).json(response)
+  } else {
+    return res.status(404).json({ message: 'Not Found' })
+  }
+}
 //update
-export const courseUpdateById = async (
-  req: Request<any, unknown, ICourse>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const courseUpdateById = async (req: Request<any, unknown, ICourse>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const params = req.params
     const fillter = { _id: params?.courseId }
@@ -86,10 +96,7 @@ export const courseUpdateById = async (
   }
 }
 
-export const updateRoadmapById = async (
-  req: Request<any, unknown, IRoadmap>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const updateRoadmapById = async (req: Request<any, unknown, IRoadmap>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const params = req.params
     const fillter = { _id: params.courseId, 'roadmaps._id': params.roadmapId }
@@ -123,10 +130,7 @@ export const updateRoadmapById = async (
 }
 
 //remove
-export const removeRoadmapById = async (
-  req: Request<any, unknown, unknown>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const removeRoadmapById = async (req: Request<any, unknown, unknown>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const response: IResonseObject = {
       message: ''
@@ -153,10 +157,7 @@ export const removeRoadmapById = async (
     throw new Error(error)
   }
 }
-export const removeRoadmaps = async (
-  req: Request<any, unknown, unknown>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const removeRoadmaps = async (req: Request<any, unknown, unknown>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const response: IResonseObject = {
       message: ''
@@ -183,10 +184,7 @@ export const removeRoadmaps = async (
     throw new Error(error)
   }
 }
-export const removeCourseById = async (
-  req: Request<any, unknown, unknown>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const removeCourseById = async (req: Request<any, unknown, unknown>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const response: IResonseObject = {
       message: ''
@@ -209,10 +207,7 @@ export const removeCourseById = async (
 }
 
 //queries
-export const getAll = async (
-  req: Request<unknown, unknown, ICourse>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const getAll = async (req: Request<unknown, unknown, ICourse>, res: Response): Promise<Response<IResonseObject> | void> => {
   try {
     const course = await Courses.find({})
     const response: IResonseObject = {
