@@ -1,5 +1,5 @@
 Arguments: 
-  /opt/homebrew/Cellar/node/21.1.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @type/joi
+  /opt/homebrew/Cellar/node/21.1.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @type/sanitize-html
 
 PATH: 
   /Users/hoatran/anaconda3/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/hoatran/anaconda3/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type%2fjoi: Not found
+  Error: https://registry.yarnpkg.com/@type%2fsanitize-html: Not found
       at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
       at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
       at Request.emit (node:events:515:28)
@@ -53,6 +53,7 @@ npm manifest:
       "@types/jsonwebtoken": "^9.0.5",
       "@types/multer": "^1.4.11",
       "@types/node": "^20.6.3",
+      "@types/sanitize-html": "^2.9.5",
       "@typescript-eslint/eslint-plugin": "^6.7.2",
       "@typescript-eslint/parser": "^6.7.2",
       "eslint": "^8.49.0",
@@ -1492,6 +1493,13 @@ Lockfile:
     resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
     integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
   
+  "@types/sanitize-html@^2.9.5":
+    version "2.9.5"
+    resolved "https://registry.yarnpkg.com/@types/sanitize-html/-/sanitize-html-2.9.5.tgz#e8b2214c8afc7bb88d62f9c3bbbc5b4ecc80a25d"
+    integrity sha512-2Sr1vd8Dw+ypsg/oDDfZ57OMSG2Befs+l2CMyCC5bVSK3CpE7lTB2aNlbbWzazgVA+Qqfuholwom6x/mWd1qmw==
+    dependencies:
+      htmlparser2 "^8.0.0"
+  
   "@types/semver@^7.5.0":
     version "7.5.2"
     resolved "https://registry.npmjs.org/@types/semver/-/semver-7.5.2.tgz"
@@ -2140,6 +2148,36 @@ Lockfile:
     dependencies:
       esutils "^2.0.2"
   
+  dom-serializer@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+    integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
+    dependencies:
+      domelementtype "^2.3.0"
+      domhandler "^5.0.2"
+      entities "^4.2.0"
+  
+  domelementtype@^2.3.0:
+    version "2.3.0"
+    resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
+    integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
+  
+  domhandler@^5.0.2, domhandler@^5.0.3:
+    version "5.0.3"
+    resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+    integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
+    dependencies:
+      domelementtype "^2.3.0"
+  
+  domutils@^3.0.1:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
+    integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
+    dependencies:
+      dom-serializer "^2.0.0"
+      domelementtype "^2.3.0"
+      domhandler "^5.0.3"
+  
   dotenv@*, dotenv@^16.3.1:
     version "16.3.1"
     resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.3.1.tgz"
@@ -2176,6 +2214,11 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz"
     integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
+  
+  entities@^4.2.0, entities@^4.4.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
+    integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
   
   escape-html@~1.0.3:
     version "1.0.3"
@@ -2748,6 +2791,16 @@ Lockfile:
     integrity sha512-vUptKVTpIJhcczKBbgnS+RtcuYMB8+oNzPK2/Hp3hanz8JmpATdmmgLgSaadVREkDm+e2giHwY3ZRkyjSIDDFA==
     dependencies:
       function-bind "^1.1.2"
+  
+  htmlparser2@^8.0.0:
+    version "8.0.2"
+    resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-8.0.2.tgz#f002151705b383e62433b5cf466f5b716edaec21"
+    integrity sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==
+    dependencies:
+      domelementtype "^2.3.0"
+      domhandler "^5.0.3"
+      domutils "^3.0.1"
+      entities "^4.4.0"
   
   http-errors@2.0.0:
     version "2.0.0"
