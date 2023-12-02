@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 
-const imageSchema = new Schema<IImage>({
+export const imageSchema = new Schema<IImage>({
   url: { type: String },
   key: { type: String }
 })
@@ -19,7 +19,7 @@ const roadmapSchema = new Schema<IRoadmap>({
 })
 export const course = new Schema<ICourse>({
   category: { type: String },
-  leve: { type: String },
+  level: { type: String },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
   image: imageSchema,

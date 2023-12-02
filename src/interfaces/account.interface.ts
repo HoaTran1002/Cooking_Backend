@@ -1,3 +1,5 @@
+import { IImage } from './course.interface'
+
 export type TypeRoles = 'ADMIN' | 'STUDENT'
 export type TypePermission = 'ALL' | 'EDIT' | 'READ' | 'DELETE' | 'CREATE'
 export interface IProfile {
@@ -7,7 +9,7 @@ export interface IProfile {
   gmail?: string
   phoneNumber?: string
   gender?: string
-  avatar?: string
+  avatar?: IImage
 }
 
 export interface IAccount extends IProfile {

@@ -21,7 +21,7 @@ export interface IRoadmap {
 }
 export interface ICourse {
   category?: TCategory
-  leve?: TLeve
+  level?: TLeve
   title?: string
   description?: string
   image?: string

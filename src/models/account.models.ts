@@ -1,10 +1,11 @@
 import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { IAccount } from '~/interfaces/account.interface'
+import { imageSchema } from './course.models'
 
 const account = new Schema<IAccount>({
   fullName: { type: String },
-  avatar: { type: String },
+  avatar: imageSchema,
   birthday: { type: Date },
   address: { type: String },
   gmail: { type: String },
