@@ -37,6 +37,7 @@ export const decodeAccessToken = <T = unknown>(token: string): T => {
     const decoded = jwt.verify(token, env.SECRET_KEY_ACCESS_TOKEN)
     return decoded as T
   } catch (error: any) {
+    error.status = 401
     throw new Error(error)
   }
 }
@@ -45,6 +46,7 @@ export const decodeRefreshToken = <T = unknown>(token: string): T => {
     const decoded = jwt.verify(token, env.SECRET_KEY_REFRESH_TOKEN)
     return decoded as T
   } catch (error: any) {
+    error.status = 401
     throw new Error(error)
   }
 }
@@ -58,6 +60,7 @@ export const checkedAccessToken = (token: string): boolean => {
     }
     return false
   } catch (error: any) {
+    error.status = 401
     throw new Error(error)
   }
 }
@@ -71,23 +74,26 @@ export const checkedRefreshToken = (token: string): boolean => {
     }
     return false
   } catch (error: any) {
+    error.status = 401
     throw new Error(error)
   }
 }
 export const getRefreshToken = async (token: string) => {
-  if (!token) {
-    throw 'Token is missing'
+  try {
+    if (!token) {
+      throw new Error('Token is missing')
+    }
+    console.log('token:', token)
+    const fillter = { token: token }
+    const refreshToken = await RefreshToken.findOne(fillter)
+    if (!refreshToken) throw 'Invalid token'
+    return refreshToken.token
+  } catch (error: any) {
+    error.status = 401
+    throw new Error(error)
   }
-  console.log('token:', token)
-  const fillter = { token: token }
-  const refreshToken = await RefreshToken.findOne(fillter)
-  if (!refreshToken) throw 'Invalid token'
-  return refreshToken.token
 }
-export const replaceRefreshToken = async (
-  refreshToken: string,
-  newRefreshToken: string
-): Promise<IRefreshToken | any> => {
+export const replaceRefreshToken = async (refreshToken: string, newRefreshToken: string): Promise<IRefreshToken | any> => {
   try {
     const filter = { token: refreshToken }
     const update = { token: newRefreshToken }
@@ -100,7 +106,8 @@ export const replaceRefreshToken = async (
     }
     console.log('replace success:', record)
     return record
-  } catch (error) {
+  } catch (error: any) {
+    error.status = 401
     console.error('Lỗi trong quá trình cập nhật refreshToken:', error)
     throw error
   }

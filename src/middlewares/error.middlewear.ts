@@ -3,11 +3,7 @@ import { IResonseObject } from '~/interfaces/response.interface'
 
 export const asyncHandelError = (
   // eslint-disable-next-line prettier/prettier
-  callback: (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => Promise<IResonseObject | Response | void | unknown>
+  callback: (req: Request, res: Response, next: NextFunction) => Promise<IResonseObject | Response | void | unknown>
 ) => {
   const handleErr = (request: Request, response: Response, next: NextFunction) => {
     callback(request, response, next).catch(next)
@@ -17,7 +13,7 @@ export const asyncHandelError = (
 const handleErrorTrusted = (err: any): IResonseObject => {
   const responseErr: IResonseObject = {
     message: err.message || 'Internal Server Error',
-    status: 500
+    status: err.status || 500
   }
   if (err && typeof err === 'object' && 'message' in err && 'status' in err) {
     responseErr.message = err.message
