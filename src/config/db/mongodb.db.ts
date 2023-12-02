@@ -11,8 +11,19 @@ export const connectDB = () => {
     .then(() => {
       console.log('Connected to MongoDB')
     })
-    .catch((err: Error) => {
-      console.error('Error connecting to MongoDB:', err)
-      throw new Error('connect failed')
+    .catch((error: any) => {
+      console.error('Error connecting to MongoDB:', error)
+      if (error instanceof mongoose.Error) {
+        if (error.name === 'MongoTimeoutError') {
+          console.error('Timeout error occurred. Please check your network connection or MongoDB server.')
+        } else if (error.name === 'MongoNetworkError') {
+          console.error('Network error occurred. Please ensure MongoDB server is running.')
+        } else {
+          console.error('Other Mongoose error occurred:', error.message)
+        }
+      } else {
+        console.error('Other error occurred:', error.message)
+      }
+      throw new Error('Connect failed')
     })
 }

@@ -1,13 +1,6 @@
 import { Request, Response } from 'express'
 import { IResonseObject } from '~/interfaces/response.interface'
-import {
-  deleteImageS3,
-  deleteVideoS3,
-  getImageS3,
-  getVideoS3,
-  uploadImageS3,
-  uploadVideoS3
-} from '~/services/upload.service'
+import { deleteImageS3, deleteVideoS3, getImageS3, getVideoS3, uploadImageS3, uploadVideoS3 } from '~/services/upload.service'
 import Course from '~/models/course.models'
 import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
 import {
@@ -20,13 +13,10 @@ import {
   updateDeleteImage,
   updateDeleteVideo,
   updateImageFromPopImages
-} from '~/services/course.service'
+} from '~/repositories/course.repository'
 
 //Image
-export const uploadImageFromLocalToS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const uploadImageFromLocalToS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   const course = Course.findById({ _id: idCourse }) as ICourse
 
@@ -63,10 +53,7 @@ export const uploadImageFromLocalToS3ByCourseId = async (
     return res.status(400).json({ message: 'File not provided or invalid' })
   }
 }
-export const getAllImageFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const getAllImageFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   if (idCourse) {
     const result = await getAllImages(idCourse)
@@ -78,10 +65,7 @@ export const getAllImageFromS3ByCourseId = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const getImageFromS3BykeyImage = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const getImageFromS3BykeyImage = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const keyImage = req.params.keyImage
   if (keyImage) {
     const result = await getImageS3(keyImage)
@@ -93,10 +77,7 @@ export const getImageFromS3BykeyImage = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const deleteAllImageFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const deleteAllImageFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   if (idCourse) {
     const course = (await Course.findById({ _id: idCourse })) as ICourse
@@ -114,10 +95,7 @@ export const deleteAllImageFromS3ByCourseId = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const deleteImageFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const deleteImageFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   const keyImage = req.params.keyImage
   if (idCourse && keyImage) {
@@ -131,10 +109,7 @@ export const deleteImageFromS3ByCourseId = async (
   }
 }
 //Video
-export const uploadVideoFromLocalToS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const uploadVideoFromLocalToS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   const course = Course.findById({ _id: idCourse }) as ICourse
 
@@ -171,10 +146,7 @@ export const uploadVideoFromLocalToS3ByCourseId = async (
     return res.status(400).json({ message: 'File not provided or invalid' })
   }
 }
-export const getAllVideoFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const getAllVideoFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   if (idCourse) {
     const result = await getAllVideos(idCourse)
@@ -186,10 +158,7 @@ export const getAllVideoFromS3ByCourseId = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const getVideoFromS3BykeyVideo = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const getVideoFromS3BykeyVideo = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const keyVideo = req.params.keyVideo
   if (keyVideo) {
     const result = await getVideoS3(keyVideo)
@@ -201,10 +170,7 @@ export const getVideoFromS3BykeyVideo = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const deleteAllVideoFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const deleteAllVideoFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   if (idCourse) {
     const course = (await Course.findById({ _id: idCourse })) as ICourse
@@ -222,10 +188,7 @@ export const deleteAllVideoFromS3ByCourseId = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
-export const deleteVideoFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const deleteVideoFromS3ByCourseId = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const idCourse = req.params.idCourse
   const keyVideo = req.params.keyVideo
   if (idCourse && keyVideo) {

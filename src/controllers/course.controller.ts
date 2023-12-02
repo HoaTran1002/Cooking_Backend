@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/interfaces/course.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
-import { remove } from '~/services/course.service'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
-import { IFile, IFileResponseObject, uploadFileToDrive } from '~/services/drive.service'
-import { findById } from '~/repositories/course.repository'
+import { findById } from '~/services/course.service'
 
 //create
 export const courseCreate = async (req: Request<unknown, unknown, ICourse>, res: Response): Promise<Response<IResonseObject> | void | IResonseObject> => {
