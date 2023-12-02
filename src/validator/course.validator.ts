@@ -27,3 +27,20 @@ export const courseValidate = (data: ICourse) => {
   })
   return course.validate(sanitizedData)
 }
+
+export const roadmapValidate = (data: IRoadmap) => {
+  const sanitizedData = {
+    ...data,
+    name: sanitizeHtml(data?.name || ''),
+    knowledge: sanitizeHtml(data?.knowledge || ''),
+    skill: sanitizeHtml(data?.skill || '')
+  }
+  const roadmap = Joi.object<IRoadmap>({
+    name: Joi.string().trim().required(),
+    knowledge: Joi.string().trim().required(),
+    skill: Joi.string().trim().required(),
+    startTime: Joi.date(),
+    endTime: Joi.date()
+  })
+  return roadmap.validate(sanitizedData)
+}
