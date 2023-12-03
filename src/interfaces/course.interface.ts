@@ -1,5 +1,5 @@
-type TCategory = 'SHORT_TERM' | 'LONG_TERM'
-type TLeve = 'BASIC' | 'MEDIUM' | 'MASTER'
+export type TCategory = 'SHORT_TERM' | 'LONG_TERM'
+export type TLeve = 'BASIC' | 'MEDIUM' | 'MASTER'
 export interface IParams {
   courseId: string
 }

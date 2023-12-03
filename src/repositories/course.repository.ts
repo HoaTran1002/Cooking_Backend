@@ -19,7 +19,7 @@ export const updateImageFromPopImages = async (courseId: string, imageArray: IIm
 }
 export const updateVideoFromPopVideos = async (courseId: string, videoArray: IVideo[]) => {
   const fillter = { _id: courseId }
-  const update = { image: videoArray[0] }
+  const update = { video: videoArray[0] }
   const options = { new: true }
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
   return course
@@ -35,6 +35,7 @@ export const addVideoToCourse = async (courseId: string, video: IVideo) => {
   const fillter = { _id: courseId }
   const update = { $push: { videos: video } }
   const options = { new: true }
+  console.log('pedding')
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
   return course?.videos
 }

@@ -24,7 +24,7 @@ export const course = new Schema<ICourse>({
   description: { type: String, default: 'null' },
   image: imageSchema,
   images: [imageSchema],
-  video: { type: String, default: 'null' },
+  video: videoSchema,
   videos: [videoSchema],
   roadmaps: [roadmapSchema],
   price: { type: Number, default: 0 },
