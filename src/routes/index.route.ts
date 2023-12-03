@@ -4,10 +4,9 @@ import authRoutes from '~/routes/auth.route'
 import accountRoutes from '~/routes/account.route'
 import upload from '~/routes/upload.route'
 import informationBusiness from '~/routes/informationBusiness.route'
-
 import { Express } from 'express'
 import { errorHandeler, notFound } from '~/middlewares/error.middlewear'
-const useRoutes = async (app: Express): Promise<void> => {
+const useRoutes = (app: Express) => {
   app.use('/api/v1/auth', authRoutes)
   app.use('/api/v1/course', courseRoutes)
   app.use('/api/v1/account', accountRoutes)

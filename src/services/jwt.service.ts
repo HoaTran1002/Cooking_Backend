@@ -93,7 +93,10 @@ export const getRefreshToken = async (token: string) => {
     throw new Error(error)
   }
 }
-export const replaceRefreshToken = async (refreshToken: string, newRefreshToken: string): Promise<IRefreshToken | any> => {
+export const replaceRefreshToken = async (
+  refreshToken: string,
+  newRefreshToken: string
+): Promise<IRefreshToken | any> => {
   try {
     const filter = { token: refreshToken }
     const update = { token: newRefreshToken }

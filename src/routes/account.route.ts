@@ -1,5 +1,11 @@
 import { Router } from 'express'
-import { createAccount, deleteAccountById, findAccountById, findAllAccount, updateAccountById } from '~/controllers/account.controllers'
+import {
+  createAccount,
+  deleteAccountById,
+  findAccountById,
+  findAllAccount,
+  updateAccountById
+} from '~/controllers/account.controllers'
 import { IAccount } from '~/interfaces/account.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'

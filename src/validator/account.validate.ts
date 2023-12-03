@@ -16,6 +16,7 @@ export const accountValidate = (data: IAccount) => {
     role: sanitizeHtml(data?.role || ''),
     Permission: sanitizeHtml(data?.Permission || '')
   }
+
   const account = Joi.object({
     fullName: Joi.string(),
     birthday: Joi.string(),

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IResonseObject, IResponseErrorObject } from '~/interfaces/response.interface'
 
 export const asyncHandelError = (
   // eslint-disable-next-line prettier/prettier
@@ -10,12 +10,12 @@ export const asyncHandelError = (
   }
   return handleErr
 }
-const handleErrorTrusted = (err: any): IResonseObject => {
+const handleErrorTrusted = (err: any): IResonseObject | IResponseErrorObject => {
   const responseErr: IResonseObject = {
     message: err.message || 'Internal Server Error',
     status: err.status || 500
   }
-  if (err && typeof err === 'object' && 'message' in err && 'status' in err) {
+  if (err && typeof IResponseErrorObject) {
     responseErr.message = err.message
     responseErr.status = err.status
   }

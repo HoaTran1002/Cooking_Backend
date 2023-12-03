@@ -1,18 +1,16 @@
 import type { NextFunction, Request, Response } from 'express'
+
 import type Joi from 'joi'
+import { IResponseErrorObject } from '~/interfaces/response.interface'
 
 export const validateBody = <T>(validate: (object: T) => Joi.ValidationResult<T>) => {
   const middleware = (req: Request, _: Response, next: NextFunction) => {
-    try {
-      const valid = validate(req.body)
+    const valid = validate(req.body)
 
-      if (valid.error) throw new Error('is valid body')
-
-      next()
-    } catch (error: any) {
-      error.status = 400
-      throw new Error('is valid body')
+    if (valid.error) {
+      throw new IResponseErrorObject(valid.error.message, 400)
     }
+    next()
   }
 
   return middleware

@@ -3,7 +3,10 @@ import { IAccount } from '~/interfaces/account.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import Account from '~/models/account.models'
 import { deleteAccount, updateAccount } from '~/services/account.service'
-export const createAccount = async (req: Request<any, unknown, IAccount>, res: Response): Promise<void | Response<IResonseObject>> => {
+export const createAccount = async (
+  req: Request<any, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {
   const body = req.body
   const fillterExist = { userName: body.userName }
   const exist = await Account.find(fillterExist)
@@ -17,7 +20,10 @@ export const createAccount = async (req: Request<any, unknown, IAccount>, res: R
   }
   return res.status(200).json(response)
 }
-export const deleteAccountById = async (req: Request<any, unknown, IAccount>, res: Response): Promise<void | Response<IResonseObject>> => {
+export const deleteAccountById = async (
+  req: Request<any, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {
   const _id = req.params.id
   const data = await deleteAccount(_id)
   const response: IResonseObject = {
@@ -26,7 +32,10 @@ export const deleteAccountById = async (req: Request<any, unknown, IAccount>, re
   }
   return res.status(200).json(response)
 }
-export const updateAccountById = async (req: Request<any, unknown, IAccount>, res: Response): Promise<void | Response<IResonseObject>> => {
+export const updateAccountById = async (
+  req: Request<any, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {
   const _id = req.params.id
   const body = req.body
   const data = await updateAccount(_id, body)
@@ -36,7 +45,10 @@ export const updateAccountById = async (req: Request<any, unknown, IAccount>, re
   }
   return res.status(200).json(response)
 }
-export const findAccountById = async (req: Request<any, unknown, IAccount>, res: Response): Promise<void | Response<IResonseObject>> => {
+export const findAccountById = async (
+  req: Request<any, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {
   const id = req.params.id
   const data = await Account.findOne({ _id: id })
   const response: IResonseObject = {
@@ -45,7 +57,10 @@ export const findAccountById = async (req: Request<any, unknown, IAccount>, res:
   }
   return res.status(200).json(response)
 }
-export const findAllAccount = async (req: Request<any, unknown, IAccount>, res: Response): Promise<void | Response<IResonseObject>> => {
+export const findAllAccount = async (
+  req: Request<any, unknown, IAccount>,
+  res: Response
+): Promise<void | Response<IResonseObject>> => {
   const data = await Account.find({})
 
   const response: IResonseObject = {
