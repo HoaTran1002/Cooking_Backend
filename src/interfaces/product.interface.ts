@@ -4,7 +4,7 @@ export interface IProduct {
   name: string
   level: TLeve
   category: TCategory
-  image: IImage[]
-  video: IVideo[]
+  images: IImage[]
+  videos: IVideo[]
   note: string
 }

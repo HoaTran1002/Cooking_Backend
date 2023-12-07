@@ -29,7 +29,6 @@ export const getImageS3 = async (objectKey: string): Promise<any> => {
 export const deleteImageS3 = async (objectKey: string): Promise<any> => {
   const command = new DeleteObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: objectKey })
   const result = await s3.send(command)
-  console.log(result)
   return result
 }
 

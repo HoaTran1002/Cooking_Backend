@@ -6,7 +6,7 @@ export const imageSchema = new Schema<IImage>({
   key: { type: String }
 })
 
-const videoSchema = new Schema<IVideo>({
+export const videoSchema = new Schema<IVideo>({
   url: { type: String },
   key: { type: String }
 })

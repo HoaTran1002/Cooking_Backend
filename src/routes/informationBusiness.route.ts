@@ -21,7 +21,7 @@ router.post(
   asyncHandelError(createInformationBusiness)
 )
 router.delete('/remove/:id', authorize(['ADMIN']), asyncHandelError(removeById))
-router.put(
+router.patch(
   '/update/:id',
   authorize(['ADMIN']),
   validateBody<IInformationBusiness>(infoBusinessValidate),

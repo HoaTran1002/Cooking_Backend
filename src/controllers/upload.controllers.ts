@@ -94,6 +94,22 @@ export const getImageFromS3BykeyImage = async (
     return res.status(400).json({ message: 'invalid params' })
   }
 }
+export const deleteImageFromS3ByCourseId = async (
+  req: Request,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  const idCourse = req.params.idCourse
+  const keyImage = req.params.keyImage
+  if (idCourse && keyImage) {
+    const course = await Course.findById(idCourse)
+    const newImages = course?.images?.filter((item) => item.key != keyImage)
+    await deleteImageS3(keyImage)
+    if (newImages) {
+      const result = await updateDeleteImage(idCourse, newImages)
+      return res.status(200).json({ message: 'delete image success' })
+    }
+  }
+}
 export const deleteAllImageFromS3ByCourseId = async (
   req: Request,
   res: Response
@@ -113,22 +129,6 @@ export const deleteAllImageFromS3ByCourseId = async (
     }
   } else if (!idCourse) {
     return res.status(400).json({ message: 'invalid params' })
-  }
-}
-export const deleteImageFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
-  const keyImage = req.params.keyImage
-  if (idCourse && keyImage) {
-    const course = await Course.findById(idCourse)
-    const newImages = course?.images?.filter((item) => item.key != keyImage)
-    await deleteImageS3(keyImage)
-    if (newImages) {
-      const result = await updateDeleteImage(idCourse, newImages)
-      return res.status(200).json({ message: 'delete image success' })
-    }
   }
 }
 //Video
