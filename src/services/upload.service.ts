@@ -46,9 +46,11 @@ export const uploadVideoS3 = async (file: Express.Multer.File): Promise<IImage> 
     Body: file.buffer,
     ContentType: 'video/mp4'
   })
+  console.log('pedding')
   await s3.send(command)
   const commandGetUrl = new GetObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: VideoName })
   const url = await getSignedUrl(s3, commandGetUrl, { expiresIn: 360 })
+  console.log('success')
   const objectVideo: IVideo = { url: url, key: VideoName }
   return objectVideo
 }

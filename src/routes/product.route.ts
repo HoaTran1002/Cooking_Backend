@@ -27,9 +27,9 @@ route.put('/:idProduct/edit', validateBody(productValidator), asyncHandelError(e
 route.post('/:idProduct/uploadImage', uploadMemory.single('file'), asyncHandelError(uploadProductImageByIdFromLocalS3))
 route.delete('/:idProduct/deleteImage/:key', asyncHandelError(deleteProductImageS3))
 route.delete('/:idProduct/deleteAllImage', asyncHandelError(deleteAllProductImageS3))
+
 route.post('/:idProduct/uploadVideo', uploadMemory.single('file'), asyncHandelError(uploadProductVideoByIdFromLocalS3))
 route.delete('/:idProduct/deleteVideo/:key', asyncHandelError(deleteVideoImageS3))
-
 route.delete('/:idProduct/deleteAllVideo/:key', asyncHandelError(deleteAllProductVideoS3))
 route.delete('/:idProduct/delete', asyncHandelError(deleteProductById))
 route.delete('/:idProduct/deleteAll', asyncHandelError(deleteAllProduct))

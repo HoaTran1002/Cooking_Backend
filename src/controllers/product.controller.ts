@@ -136,6 +136,7 @@ export const deleteAllProductImageS3 = async (
     return res.status(200).send({ message: 'deleted all image of product' })
   }
 }
+//video
 export const uploadProductVideoByIdFromLocalS3 = async (
   req: Request<any, unknown, IProduct>,
   res: Response
@@ -144,6 +145,10 @@ export const uploadProductVideoByIdFromLocalS3 = async (
   const idProduct = req.params.idProduct
   if (!idProduct) {
     return res.status(400).json({ message: 'not found idProduct prams' })
+  }
+  const productEReady = await findProductById(idProduct)
+  if (!productEReady) {
+    return res.status(404).json({ message: 'not found product by id' })
   }
   if (!file) {
     return res.status(400).json({ message: 'file not found' })
