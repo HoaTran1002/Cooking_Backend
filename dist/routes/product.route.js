@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const multer_config_1 = require("../config/multer.config");
+const product_controller_1 = require("../controllers/product.controller");
+const error_middlewear_1 = require("../middlewares/error.middlewear");
+const validate_middlewear_1 = require("../middlewares/validate.middlewear");
+const product_validate_1 = require("../validator/product.validate");
+const route = (0, express_1.Router)();
+// , authorize(['ADMIN'])
+route.post('/create', (0, validate_middlewear_1.validateBody)(product_validate_1.productValidator), (0, error_middlewear_1.asyncHandelError)(product_controller_1.createProduct));
+route.get('/getAll', (0, error_middlewear_1.asyncHandelError)(product_controller_1.getAllProduct));
+route.get('/:idProduct/getProductById', (0, error_middlewear_1.asyncHandelError)(product_controller_1.getProductById));
+route.put('/:idProduct/edit', (0, validate_middlewear_1.validateBody)(product_validate_1.productValidator), (0, error_middlewear_1.asyncHandelError)(product_controller_1.editProductById));
+route.post('/:idProduct/uploadImage', multer_config_1.uploadMemory.single('file'), (0, error_middlewear_1.asyncHandelError)(product_controller_1.uploadProductImageByIdFromLocalS3));
+route.delete('/:idProduct/deleteImage/:key', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteProductImageS3));
+route.delete('/:idProduct/deleteAllImage', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteAllProductImageS3));
+route.post('/:idProduct/uploadVideo', multer_config_1.uploadMemory.single('file'), (0, error_middlewear_1.asyncHandelError)(product_controller_1.uploadProductVideoByIdFromLocalS3));
+route.delete('/:idProduct/deleteVideo/:key', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteVideoImageS3));
+route.delete('/:idProduct/deleteAllVideo', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteAllProductVideoS3));
+route.delete('/:idProduct/delete', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteProductById));
+route.delete('/deleteAll', (0, error_middlewear_1.asyncHandelError)(product_controller_1.deleteAllProduct));
+exports.default = route;
