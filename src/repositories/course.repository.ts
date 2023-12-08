@@ -1,6 +1,7 @@
 import Courses from '~/models/course.models'
 
 import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
+import mongoose from 'mongoose'
 export const remove = async (req: Request, res: Response): Promise<void> => {
   console.log('use service remove succesed!!')
 }
@@ -35,7 +36,6 @@ export const addVideoToCourse = async (courseId: string, video: IVideo) => {
   const fillter = { _id: courseId }
   const update = { $push: { videos: video } }
   const options = { new: true }
-  console.log('pedding')
   const course = await Courses.findOneAndUpdate<ICourse>(fillter, update, options)
   return course?.videos
 }
@@ -76,4 +76,35 @@ export const updateDeleteVideo = async (idCourse: string, videos: IVideo[]) => {
   const options = { new: true }
   const result = await Courses.findOneAndUpdate(fillter, update, options)
   return result
+}
+export const findCourseImage = async (idCourse: string, key: string) => {
+  const courseImages = await Courses.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(idCourse)
+      }
+    },
+    {
+      $unwind: '$images'
+    },
+    {
+      $match: {
+        'images.key': key
+      }
+    }
+  ])
+
+  if (courseImages && courseImages.length > 0) {
+    const foundImage = courseImages[0].images
+    console.log('image:', foundImage)
+    return foundImage
+  }
+  return null
+}
+export const updateDeleteCourseImage = async (idCourse: string, image: IImage) => {
+  const fillter = { _id: idCourse }
+  const update = { $pull: { images: { key: image.key } } }
+  const options = { new: true }
+  const course = await Courses.findOneAndUpdate(fillter, update, options)
+  return course
 }

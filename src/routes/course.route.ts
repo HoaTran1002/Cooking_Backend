@@ -16,8 +16,8 @@ import { validateBody } from '~/middlewares/validate.middlewear'
 import { courseValidate, roadmapValidate } from '~/validator/course.validator'
 const router = Router()
 
-router.get('/getAll', authorize(), asyncHandelError(getAll))
-router.post('/create', authorize(), validateBody<ICourse>(courseValidate), asyncHandelError(courseCreate))
+router.get('/getAll', asyncHandelError(getAll))
+router.post('/create', validateBody<ICourse>(courseValidate), asyncHandelError(courseCreate))
 router.get('/:courseId/roadmap/getAll', authorize(), asyncHandelError(courseCreateRoadmap))
 router.post(
   '/:courseId/roadmap/create',

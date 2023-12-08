@@ -10,3 +10,12 @@ export const findProductById = async (id: string) => {
     throw new IResponseErrorObject('not found product', 400)
   }
 }
+export const findAllProduct = async () => {
+  const products: IProduct[] | any = await productModels.find()
+  if (products.length == 0) {
+    return []
+  }
+  if (products) {
+    return products
+  }
+}

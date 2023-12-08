@@ -30,7 +30,8 @@ route.delete('/:idProduct/deleteAllImage', asyncHandelError(deleteAllProductImag
 
 route.post('/:idProduct/uploadVideo', uploadMemory.single('file'), asyncHandelError(uploadProductVideoByIdFromLocalS3))
 route.delete('/:idProduct/deleteVideo/:key', asyncHandelError(deleteVideoImageS3))
-route.delete('/:idProduct/deleteAllVideo/:key', asyncHandelError(deleteAllProductVideoS3))
+route.delete('/:idProduct/deleteAllVideo', asyncHandelError(deleteAllProductVideoS3))
+
 route.delete('/:idProduct/delete', asyncHandelError(deleteProductById))
-route.delete('/:idProduct/deleteAll', asyncHandelError(deleteAllProduct))
+route.delete('/deleteAll', asyncHandelError(deleteAllProduct))
 export default route
