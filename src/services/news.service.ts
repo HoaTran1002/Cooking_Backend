@@ -1,3 +1,3 @@
-export class newsServiceManager {
-  convertDatatoText() {}
-}
+import { INews } from '~/interfaces/news.interface'
+
+export class newsServiceManager {}

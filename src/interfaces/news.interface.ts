@@ -4,6 +4,3 @@ export interface INews {
   dateCreated: Date
   content: string
 }
-export interface IDataManager {
-  getDataByID(id: string): any
-}

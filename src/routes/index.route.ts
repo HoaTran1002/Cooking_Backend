@@ -5,6 +5,7 @@ import authRoutes from '~/routes/auth.route'
 import accountRoutes from '~/routes/account.route'
 import upload from '~/routes/upload.route'
 import informationBusiness from '~/routes/informationBusiness.route'
+import newsRoutes from '~/routes/news.route'
 import { Express } from 'express'
 import { errorHandeler, notFound } from '~/middlewares/error.middlewear'
 const useRoutes = (app: Express) => {
@@ -15,6 +16,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/upload', upload)
   app.use('/api/v1/product', productRoutes)
   app.use('/api/v1/informationBusiness', informationBusiness)
+  app.use('/api/v1/news', newsRoutes)
   app.use(errorHandeler)
   app.use(notFound)
 }
