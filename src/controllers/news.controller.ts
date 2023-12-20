@@ -46,8 +46,12 @@ export const getNewsById = async (
   return res.status(200).json(response)
 }
 export const getAllNews = async (req: Request<any, unknown, INews>, res: Response): Promise<Response<INews> | void> => {
-  const page = req.params.page
-  const size = req.params.size
+  const page = parseInt(req.params.page, 10)
+  const size = parseInt(req.params.size, 10)
+
+  if (isNaN(page) || isNaN(size) || page <= 0 || size <= 0) {
+    return res.status(400).json({ message: 'page and size should be positive integers greater than 0' })
+  }
   const getAllNews = await findAll(Number(page), Number(size))
   const response: IResonseObject = {
     message: 'failed',
