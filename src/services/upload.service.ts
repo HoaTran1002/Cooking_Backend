@@ -20,6 +20,18 @@ export const uploadImageS3 = async (file: Express.Multer.File): Promise<IImage> 
   const objectImage: IImage = { url: url, key: imageName }
   return objectImage
 }
+export const PutImageS3 = async (file: Express.Multer.File, image: IImage): Promise<IImage> => {
+  console.log('image key:', image.key)
+  const command = new PutObjectCommand({
+    Bucket: env.AWS_BUCKET_NAME,
+    Key: image.key,
+    Body: file.buffer,
+    ContentType: 'image/jpg'
+  })
+  await s3.send(command)
+  const objectImage: IImage = { url: image.url, key: image.key }
+  return objectImage
+}
 export const getImageS3 = async (objectKey: string): Promise<any> => {
   const command = new GetObjectCommand({ Bucket: env.AWS_BUCKET_NAME, Key: objectKey })
   const result = await getSignedUrl(s3, command)

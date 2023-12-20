@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { IResonseObject } from '~/interfaces/response.interface'
 import {
+  PutImageS3,
   deleteImageS3,
   deleteVideoS3,
   getImageS3,
@@ -55,6 +56,36 @@ export const uploadImageFromLocalToS3ByCourseId = async (
   }
 
   return res.status(200).json({ message: 'upload image success', result: Images })
+}
+//Image
+export const updateContentImageS3 = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
+  const keyImage = req.params.keyImage
+
+  if (!keyImage) {
+    return res.status(404).send('not found id ')
+  }
+  const url = await getImageS3(keyImage)
+  const image: IImage = { url: '', key: '' }
+  if (url) {
+    ;(image.key = keyImage), (image.url = url)
+  }
+
+  if (!image) {
+    return res.status(404).json({ mesage: 'not found image' })
+  }
+  const file = req.file
+  if (!file) {
+    return res.status(400).send('Không có file được tải lên.')
+  }
+  const imageObject: IImage = await PutImageS3(file, image)
+  if (!imageObject) {
+    return res.status(500).json({ message: 'upload image failed', imageObject: imageObject })
+  }
+  if (!imageObject) {
+    return res.status(500).json({ message: 'update image failed' })
+  }
+
+  return res.status(200).json({ message: 'update image success', result: imageObject })
 }
 export const deleteImageFromS3ByCourseId = async (
   req: Request,
