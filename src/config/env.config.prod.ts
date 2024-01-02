@@ -1,5 +1,5 @@
 export const env = {
-  NODE_ENV: 'development',
+  NODE_ENV: 'production',
   PORT: 3000,
   CLIENT_ID: '425289193958-t8ih64tnim4ih4epeurkagts168rles3.apps.googleusercontent.com',
   CLIENT_SECRET: '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',

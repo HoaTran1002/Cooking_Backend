@@ -67,5 +67,5 @@ export const findAllAccount = async (
     message: 'got all data success',
     data: data
   }
-  return res.status(200).json(response)
+  return res.status(200).json(data)
 }

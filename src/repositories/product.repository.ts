@@ -4,7 +4,7 @@ import { IVideo, IImage } from '~/interfaces/course.interface'
 import { IProduct } from '~/interfaces/product.interface'
 import { IResponseErrorObject } from '~/interfaces/response.interface'
 import productModels from '~/models/product.models'
-import { deleteImageS3, deleteVideoS3 } from '~/services/upload.service'
+import { deleteImageS3, deleteVideoS3 } from '~/services/uploadToS3.service'
 export const editProduct = async (id: string, body: IProduct) => {
   const fillter = { _id: id }
   const update: IProduct = body
@@ -108,26 +108,26 @@ export const getAllVideoProduct = async (idProduct: string) => {
   }
   return []
 }
-export const deleteAllImage = async (idProduct: string, images: IImage[]) => {
-  for (let index = 0; index < images.length; index++) {
-    try {
-      await deleteImageS3(images[index].key)
-      await updateDeleteProductImage(idProduct, images[index])
-    } catch (error: any) {
-      throw new IResponseErrorObject(error.message.toString, 500)
-    }
-  }
-}
-export const deleteAllVideo = async (idProduct: string, videos: IImage[]) => {
-  for (let index = 0; index < videos.length; index++) {
-    try {
-      await deleteVideoS3(videos[index].key)
-      await updateDeleteProductVideo(idProduct, videos[index])
-    } catch (error: any) {
-      throw new IResponseErrorObject(error.message.toString, 500)
-    }
-  }
-}
+// export const deleteAllImage = async (idProduct: string, images: IImage[]) => {
+//   for (let index = 0; index < images.length; index++) {
+//     try {
+//       await deleteImageS3(images[index].key)
+//       await updateDeleteProductImage(idProduct, images[index])
+//     } catch (error: any) {
+//       throw new IResponseErrorObject(error.message.toString, 500)
+//     }
+//   }
+// }
+// export const deleteAllVideo = async (idProduct: string, videos: IImage[]) => {
+//   for (let index = 0; index < videos.length; index++) {
+//     try {
+//       await deleteVideoS3(videos[index].key)
+//       await updateDeleteProductVideo(idProduct, videos[index])
+//     } catch (error: any) {
+//       throw new IResponseErrorObject(error.message.toString, 500)
+//     }
+//   }
+// }
 export const deleteProduct = async (idProduct: string) => {
   const fillter = { _id: idProduct }
   return await productModels.findByIdAndDelete(fillter)

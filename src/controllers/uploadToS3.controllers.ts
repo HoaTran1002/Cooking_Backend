@@ -8,7 +8,7 @@ import {
   getVideoS3,
   uploadImageS3,
   uploadVideoS3
-} from '~/services/upload.service'
+} from '~/services/uploadToS3.service'
 import Course from '~/models/course.models'
 import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
 import {
@@ -26,6 +26,7 @@ import {
   updateVideoFromPopVideos
 } from '~/repositories/course.repository'
 import { findById } from '~/services/course.service'
+import { deleteFile } from '~/services/file.service'
 
 //Image
 export const uploadImageFromLocalToS3ByCourseId = async (
@@ -87,35 +88,36 @@ export const updateContentImageS3 = async (req: Request, res: Response): Promise
 
   return res.status(200).json({ message: 'update image success', result: imageObject })
 }
-export const deleteImageFromS3ByCourseId = async (
-  req: Request,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
-  const keyImage = req.params.keyImage
-  if (!idCourse) {
-    return res.status(400).json({ message: 'not found idCourse prams' })
-  }
+// export const deleteImageFromS3ByCourseId = async (
+//   req: Request,
+//   res: Response
+// ): Promise<Response<IResonseObject> | void> => {
+//   const idCourse = req.params.idCourse
+//   const keyImage = req.params.keyImage
+//   if (!idCourse) {
+//     return res.status(400).json({ message: 'not found idCourse prams' })
+//   }
 
-  if (!keyImage) {
-    return res.status(400).json({ message: 'not found keyImage prams' })
-  }
-  const courseExist = await findById(idCourse)
-  if (!courseExist) {
-    return res.status(400).json({ message: 'idProduct invalid' })
-  }
-  const image = await findCourseImage(idCourse, keyImage)
-  if (!image) {
-    return res.status(400).json({ message: 'keyImage invalid' })
-  }
-  const course = await Course.findById(idCourse)
-  const newImages = course?.images?.filter((item) => item.key != keyImage)
-  await deleteImageS3(keyImage)
-  if (newImages) {
-    const result = await updateDeleteImage(idCourse, newImages)
-    return res.status(200).json({ message: 'delete image success' })
-  }
-}
+//   if (!keyImage) {
+//     return res.status(400).json({ message: 'not found keyImage prams' })
+//   }
+//   const courseExist = await findById(idCourse)
+//   if (!courseExist) {
+//     return res.status(400).json({ message: 'idProduct invalid' })
+//   }
+//   const image = await findCourseImage(idCourse, keyImage)
+//   if (!image) {
+//     return res.status(400).json({ message: 'keyImage invalid' })
+//   }
+//   const course = await Course.findById(idCourse)
+//   const newImages = course?.images?.filter((item) => item.key != keyImage)
+//   await deleteImageS3(keyImage)
+//   if (newImages) {
+//     const result = await updateDeleteImage(idCourse, newImages)
+//     return res.status(200).json({ message: 'delete image success' })
+//   }
+// }
+
 export const deleteAllImageFromS3ByCourseId = async (
   req: Request,
   res: Response
@@ -126,7 +128,7 @@ export const deleteAllImageFromS3ByCourseId = async (
 
     if (course?.images?.length) {
       course.images.map(async (item: IImage) => {
-        await deleteImageS3(item.key.toString())
+        await deleteImageS3(item.key!.toString())
         await updateDeleteCourseImage(idCourse, item)
       })
       return res.status(200).json({ message: 'delete image all success' })
@@ -249,7 +251,7 @@ export const deleteAllVideoFromS3ByCourseId = async (
 
     if (course?.videos?.length) {
       course.videos.map(async (item: IVideo) => {
-        await deleteVideoS3(item.key.toString())
+        await deleteVideoS3(item.key!.toString())
       })
       const courseUpdate = await updateDeleteAllVideos(idCourse)
       return res.status(200).json({ message: 'delete video all success', courseUpdate })

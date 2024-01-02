@@ -81,5 +81,5 @@ export const getById = async (
     message: 'get all category sucess',
     data: category
   }
-  return res.status(200).json(response)
+  return res.status(200).json(category)
 }

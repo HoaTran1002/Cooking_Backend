@@ -49,7 +49,7 @@ export const deleteVideoS3 = async (objectKey: string): Promise<any> => {
   const result = await s3.send(command)
   return result
 }
-export const uploadVideoS3 = async (file: Express.Multer.File): Promise<IImage> => {
+export const uploadVideoS3 = async (file: Express.Multer.File): Promise<IVideo> => {
   const randomVideoName = () => crypto.randomBytes(16).toString('hex')
   const VideoName: string = randomVideoName()
   const command = new PutObjectCommand({

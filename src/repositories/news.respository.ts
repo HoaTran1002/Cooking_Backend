@@ -21,18 +21,11 @@ export const findByID = async (id: string): Promise<INews | void> => {
 export const findAll = async (page: number, size: number): Promise<PaginationResult> => {
   const limit = size
   const skip = (page - 1) * size
-
-  // Truy vấn dữ liệu cho trang hiện tại
   const data = await newsModels.find().limit(limit).skip(skip)
-
-  // Đếm số lượng tài liệu thỏa mãn điều kiện cụ thể
   const total_documents = await newsModels.countDocuments()
-  // Tính toán tổng số trang
   const total_pages = Math.ceil(total_documents / size)
-  // Tính toán trang trước và trang tiếp theo
   const previous_pages = page > 1 ? page - 1 : null
   const next_pages = skip + size < total_documents ? page + 1 : null
-
   return {
     page,
     size,

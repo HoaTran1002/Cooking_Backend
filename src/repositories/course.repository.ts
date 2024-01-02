@@ -2,6 +2,7 @@ import Courses from '~/models/course.models'
 
 import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
 import mongoose from 'mongoose'
+import { log } from 'console'
 export const remove = async (req: Request, res: Response): Promise<void> => {
   console.log('use service remove succesed!!')
 }
@@ -89,7 +90,7 @@ export const findCourseImage = async (idCourse: string, key: string) => {
     },
     {
       $match: {
-        'images.key': key
+        'images._id': new mongoose.Types.ObjectId(key)
       }
     }
   ])
@@ -98,6 +99,30 @@ export const findCourseImage = async (idCourse: string, key: string) => {
     const foundImage = courseImages[0].images
     console.log('image:', foundImage)
     return foundImage
+  }
+  return null
+}
+export const findCourseVideo = async (idCourse: string, key: string) => {
+  const courseVideos = await Courses.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(idCourse)
+      }
+    },
+    {
+      $unwind: '$videos'
+    },
+    {
+      $match: {
+        'videos._id': new mongoose.Types.ObjectId(key)
+      }
+    }
+  ])
+
+  if (courseVideos && courseVideos.length > 0) {
+    const foundVideo = courseVideos[0].videos
+
+    return foundVideo
   }
   return null
 }

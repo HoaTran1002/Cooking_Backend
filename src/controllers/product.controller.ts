@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import { IImage } from '~/interfaces/course.interface'
+import { IImage, IVideo } from '~/interfaces/course.interface'
 import { IProduct } from '~/interfaces/product.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import Products from '~/models/product.models'
 import { getAllImages } from '~/repositories/course.repository'
 import {
-  deleteAllImage,
-  deleteAllVideo,
+  // deleteAllImage,
+  // deleteAllVideo,
   deleteProduct,
   editProduct,
   findOneProductById,
@@ -20,7 +20,7 @@ import {
   updateProductWhenUploadVideo
 } from '~/repositories/product.repository'
 import { findAllProduct, findProductById } from '~/services/product.service'
-import { deleteImageS3, deleteVideoS3, uploadImageS3, uploadVideoS3 } from '~/services/upload.service'
+import { deleteImageS3, deleteVideoS3, uploadImageS3, uploadVideoS3 } from '~/services/uploadToS3.service'
 export const createProduct = async (
   req: Request<unknown, unknown, IProduct>,
   res: Response
@@ -136,7 +136,7 @@ export const deleteAllProductImageS3 = async (
     return res.status(200).json({ data: images })
   }
   if (images) {
-    await deleteAllImage(idProduct, images)
+    // await deleteAllImage(idProduct, images)
     return res.status(200).send({ message: 'deleted all image of product' })
   }
 }
@@ -157,7 +157,7 @@ export const uploadProductVideoByIdFromLocalS3 = async (
   if (!file) {
     return res.status(400).json({ message: 'file not found' })
   }
-  const image: IImage = await uploadVideoS3(file)
+  const image: IVideo = await uploadVideoS3(file)
   if (!image) {
     return res.status(400).json({ message: 'can not upload file ' })
   }
@@ -202,7 +202,7 @@ export const deleteAllProductVideoS3 = async (
     return res.status(200).json({ data: videos })
   }
   if (videos) {
-    await deleteAllVideo(idProduct, videos)
+    // await deleteAllVideo(idProduct, videos)
     return res.status(200).send({ message: 'deleted all videos of product' })
   }
 }
@@ -217,11 +217,11 @@ export const deleteProductById = async (
   }
   if (product.images.length > 0) {
     const images = await getAllImageProduct(idProduct)
-    await deleteAllImage(idProduct, images)
+    // await deleteAllImage(idProduct, images)
   }
   if (product.videos.length > 0) {
     const videos = await getAllVideoProduct(idProduct)
-    await deleteAllVideo(idProduct, videos)
+    // await deleteAllVideo(idProduct, videos)
   }
   await deleteProduct(idProduct)
   return res.json(200).send('delete success')
@@ -238,11 +238,11 @@ export const deleteAllProduct = async (
     products.map(async (product: any) => {
       if (product.images.length > 0) {
         const images = await getAllImageProduct(product._id)
-        await deleteAllImage(product._id, images)
+        // await deleteAllImage(product._id, images)
       }
       if (product.videos.length > 0) {
         const videos = await getAllVideoProduct(product._id)
-        await deleteAllVideo(product._id, videos)
+        // await deleteAllVideo(product._id, videos)
       }
       await deleteProduct(product._id)
     })

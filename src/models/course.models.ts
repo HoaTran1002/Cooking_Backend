@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
+import { deleteFile } from '~/services/file.service'
 
 export const imageSchema = new Schema<IImage>({
   url: { type: String },
