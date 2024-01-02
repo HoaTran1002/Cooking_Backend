@@ -3,7 +3,7 @@ import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/interfaces/course.
 import { IResonseObject } from '~/interfaces/response.interface'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
-import { deleteFIleCourse, findById } from '~/services/course.service'
+import { deleteFIleCourse, deleteFIleImageCourse, deleteFIleVideoCourse, findById } from '~/services/course.service'
 import {
   addImageToCourse,
   addVideoToCourse,
@@ -345,6 +345,40 @@ export const updateContentImageVPS = async (req: Request, res: Response): Promis
     return res.status(200).json({ message: 'File has been updated successfully' })
   }
 }
+export const removeAllImageByCourseById = async (
+  req: Request<any, unknown, unknown>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params = req.params
+    const filter = { _id: params.idCourse }
+    const update = { $set: { images: [] } }
+    const options = { new: true }
+    if (!params.idCourse) {
+      return res.status(400).json({ message: 'not found idCourse prams' })
+    }
+    const courseExist = await findById(params.idCourse)
+    if (!courseExist) {
+      return res.status(400).json({ message: 'id invalid' })
+    }
+    if (courseExist.images && courseExist.images.length == 0) {
+      return res.status(200).send('list image clean')
+    }
+    await deleteFIleImageCourse(params.idCourse)
+    const deleted = await Courses.findByIdAndUpdate(filter, update, options)
+    if (!deleted) {
+      return res.status(404).send('Course  not found')
+    } else {
+      response.message = 'deleted all image  success'
+      return res.status(200).send(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
 //video
 export const uploadVideoFromLocalToVPSByCourseId = async (
   req: Request,
@@ -432,6 +466,40 @@ export const updateContentVideoVPS = async (req: Request, res: Response): Promis
   const videoObject: string | void = await updateFileContent(file, video.url)
   if (videoObject != null) {
     return res.status(200).json({ message: 'File has been updated successfully' })
+  }
+}
+export const removeAllVideoByCourseById = async (
+  req: Request<any, unknown, unknown>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  try {
+    const response: IResonseObject = {
+      message: ''
+    }
+    const params = req.params
+    const filter = { _id: params.idCourse }
+    const update = { $set: { videos: [] } }
+    const options = { new: true }
+    if (!params.idCourse) {
+      return res.status(400).json({ message: 'not found idCourse prams' })
+    }
+    const courseExist = await findById(params.idCourse)
+    if (!courseExist) {
+      return res.status(400).json({ message: 'id invalid' })
+    }
+    if (courseExist.videos && courseExist.videos.length == 0) {
+      return res.status(200).send('list video clean')
+    }
+    await deleteFIleVideoCourse(params.idCourse)
+    const deleted = await Courses.findByIdAndUpdate(filter, update, options)
+    if (!deleted) {
+      return res.status(404).send('Course  not found')
+    } else {
+      response.message = 'deleted all video  success'
+      return res.status(200).send(response)
+    }
+  } catch (error: any) {
+    throw new Error(error)
   }
 }
 // export const deleteFileOnVPS = async (req: Request, res: Response): Promise<void | Response> => {

@@ -14,7 +14,9 @@ import {
   deleteImageFromVPSByCourseId,
   updateContentImageVPS,
   deleteVideoVPSByCourseId,
-  updateContentVideoVPS
+  updateContentVideoVPS,
+  removeAllVideoByCourseById,
+  removeAllImageByCourseById
 } from '~/controllers/course.controller'
 import {
   uploadImageFromLocalToS3ByCourseId,
@@ -68,6 +70,8 @@ router.put(
   uploadMemory.single('file'),
   asyncHandelError(updateContentImageVPS)
 )
+router.delete('/:idCourse/removeAllImageByCourseById', asyncHandelError(removeAllImageByCourseById))
+
 // router.delete('/deleteAllImageFrom/:idCourse', asyncHandelError(deleteAllImageFromS3ByCourseId))
 // router.get('/getAllImageFrom/:idCourse', asyncHandelError(getAllImageFromS3ByCourseId))
 // router.get('/:keyImage/getImageFrom', asyncHandelError(getImageFromS3BykeyImage))
@@ -84,6 +88,7 @@ router.put(
   uploadMemory.single('file'),
   asyncHandelError(updateContentVideoVPS)
 )
+router.delete('/:idCourse/removeAllVideoByCourseById', asyncHandelError(removeAllVideoByCourseById))
 // router.delete('/deleteAllVideoFromS3/:idCourse', asyncHandelError(deleteAllVideoFromS3ByCourseId))
 // router.get('/getAllVideoFromS3/:idCourse', asyncHandelError(getAllVideoFromS3ByCourseId))
 // router.get('/:keyVideo/getVideoFromS3', asyncHandelError(getVideoFromS3BykeyVideo))
