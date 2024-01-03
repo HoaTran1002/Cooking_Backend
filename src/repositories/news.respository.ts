@@ -1,3 +1,4 @@
+import { promises } from 'dns'
 import { IImage } from '~/interfaces/course.interface'
 import { INews } from '~/interfaces/news.interface'
 import newsModels from '~/models/news.models'

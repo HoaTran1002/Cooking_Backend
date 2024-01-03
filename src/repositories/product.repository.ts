@@ -12,6 +12,20 @@ export const editProduct = async (id: string, body: IProduct) => {
   const product = await productModels.findOneAndUpdate(fillter, update, options)
   return product
 }
+export const addImageToProduct = async (id: string, image: IImage) => {
+  const fillter = { _id: id }
+  const update = { $push: { images: image } }
+  const options = { new: true }
+  const course = await productModels.findOneAndUpdate<IProduct>(fillter, update, options)
+  return course?.images
+}
+export const addVideoToProduct = async (id: string, video: IVideo) => {
+  const fillter = { _id: id }
+  const update = { $push: { videos: video } }
+  const options = { new: true }
+  const course = await productModels.findOneAndUpdate<IProduct>(fillter, update, options)
+  return course?.videos
+}
 export const updateProductWhenUploadImage = async (idProduct: string, image: IImage) => {
   const fillter = { _id: idProduct }
   const update = { $push: { images: image } }
@@ -32,6 +46,20 @@ export const updateDeleteProductImage = async (idProduct: string, image: IImage)
   const options = { new: true }
   const product = await productModels.findOneAndUpdate(fillter, update, options)
   return product
+}
+export const updateDeleteImage = async (idProduct: string, images: IImage[]) => {
+  const fillter = { _id: idProduct }
+  const update = { $set: { images: images, image: images[0] } }
+  const options = { new: true }
+  const result = await productModels.findOneAndUpdate(fillter, update, options)
+  return result
+}
+export const updateDeleteVideo = async (idProduct: string, videos: IVideo[]) => {
+  const fillter = { _id: idProduct }
+  const update = { $set: { videos: videos, video: videos[0] } }
+  const options = { new: true }
+  const result = await productModels.findOneAndUpdate(fillter, update, options)
+  return result
 }
 export const updateDeleteProductVideo = async (idProduct: string, video: IVideo) => {
   console.log('video:', video)
@@ -58,7 +86,7 @@ export const findProductImage = async (idProduct: string, key: string) => {
     },
     {
       $match: {
-        'images.key': key
+        'images._id': new mongoose.Types.ObjectId(key)
       }
     }
   ])
@@ -87,8 +115,8 @@ export const findProductVideo = async (idProduct: string, key: string) => {
   ])
 
   if (productVideo && productVideo.length > 0) {
-    const foundImage = productVideo[0].videos
-    return foundImage
+    const foundVideo = productVideo[0].videos
+    return foundVideo
   }
   return null
 }

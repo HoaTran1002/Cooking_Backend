@@ -1,20 +1,28 @@
 import { Router } from 'express'
-import { uploadMemory } from '~/config/multer.config'
+import { uploadDisk, uploadMemory } from '~/config/multer.config'
 import {
   createProduct,
   deleteAllProduct,
-  deleteAllProductImageS3,
-  deleteAllProductVideoS3,
+  // deleteAllProductImageS3,
+  // deleteAllProductVideoS3,
+  deleteImageFromVPSByProductId,
   deleteProductById,
-  deleteProductImageS3,
-  deleteVideoImageS3,
+  // deleteProductImageS3,
+  deleteVideoFromVPSByProductId,
+  // deleteVideoImageS3,
   editProductById,
   getAllProduct,
   getProductById,
-  uploadProductImageByIdFromLocalS3,
-  uploadProductVideoByIdFromLocalS3
+  removeAllImageByProductById,
+  removeAllVIdeoByProductById,
+  updateContentImageVPS,
+  updateContentVideoVPS,
+  uploadImageFromLocalToVPSByProductId,
+  // uploadProductImageByIdFromLocalS3,
+  // uploadProductVideoByIdFromLocalS3,
+  uploadVideoFromLocalToVPSByProductId
 } from '~/controllers/product.controller'
-import { authorize } from '~/middlewares/auth.middlewears'
+// import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'
 import { productValidator } from '~/validator/product.validate'
@@ -24,14 +32,34 @@ route.post('/create', validateBody(productValidator), asyncHandelError(createPro
 route.get('/getAll', asyncHandelError(getAllProduct))
 route.get('/:idProduct/getProductById', asyncHandelError(getProductById))
 route.put('/:idProduct/edit', validateBody(productValidator), asyncHandelError(editProductById))
-route.post('/:idProduct/uploadImage', uploadMemory.single('file'), asyncHandelError(uploadProductImageByIdFromLocalS3))
-route.delete('/:idProduct/deleteImage/:key', asyncHandelError(deleteProductImageS3))
-route.delete('/:idProduct/deleteAllImage', asyncHandelError(deleteAllProductImageS3))
-
-route.post('/:idProduct/uploadVideo', uploadMemory.single('file'), asyncHandelError(uploadProductVideoByIdFromLocalS3))
-route.delete('/:idProduct/deleteVideo/:key', asyncHandelError(deleteVideoImageS3))
-route.delete('/:idProduct/deleteAllVideo', asyncHandelError(deleteAllProductVideoS3))
 
 route.delete('/:idProduct/delete', asyncHandelError(deleteProductById))
 route.delete('/deleteAll', asyncHandelError(deleteAllProduct))
+//image
+route.post(
+  '/uploadImageFromLocal/:idProduct',
+  uploadDisk.single('file'),
+  asyncHandelError(uploadImageFromLocalToVPSByProductId)
+)
+route.delete('/:keyImage/deleteImageFromVPSByProductId/:idProduct', asyncHandelError(deleteImageFromVPSByProductId))
+route.put(
+  '/:idProduct/updateContentImage/:keyImage',
+  uploadMemory.single('file'),
+  asyncHandelError(updateContentImageVPS)
+)
+route.delete('/:idProduct/removeAllImageByProductById', asyncHandelError(removeAllImageByProductById))
+//video
+route.post(
+  '/uploadVideoFromLocalToVPS/:idProduct',
+  uploadDisk.single('file'),
+  asyncHandelError(uploadVideoFromLocalToVPSByProductId)
+)
+route.delete('/:idProduct/deleteVideoByProductId/:keyVideo', asyncHandelError(deleteVideoFromVPSByProductId))
+route.put(
+  '/:idProduct/updateContentVideo/:keyVideo',
+  uploadMemory.single('file'),
+  asyncHandelError(updateContentVideoVPS)
+)
+route.delete('/:idProduct/removeAllVideoByProductById', asyncHandelError(removeAllVIdeoByProductById))
+
 export default route

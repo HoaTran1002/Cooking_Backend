@@ -1,25 +1,19 @@
 import { Request, Response } from 'express'
-import { IImage } from '~/interfaces/course.interface'
 import { INews } from '~/interfaces/news.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import { add, deleteByID, findAll, findByID, updateByID } from '~/repositories/news.respository'
-import { uploadImageS3 } from '~/services/uploadToS3.service'
+import { deleteFile, updateFileContent } from '~/services/file.service'
 
 export const createNews = async (
   req: Request<unknown, unknown, INews>,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
   const newsData = req.body
-
   const file = req.file
   if (!file) {
     return res.status(400).json({ message: 'file not found' })
   }
-  const image: IImage = await uploadImageS3(file)
-  if (!image) {
-    return res.status(400).json({ message: 'can not upload file ' })
-  }
-  newsData.image = image
+  newsData.image.url = file.filename
   const createdNews = await add(newsData)
   const response: IResonseObject = {
     message: 'created news success',
@@ -71,10 +65,15 @@ export const updateNewsById = async (
   if (!id) {
     return res.status(400).json({ message: 'cannot found id' })
   }
-  const newsExist = await findByID(id)
+  const newsExist = (await findByID(id)) as INews
+
   if (!newsExist) {
     return res.status(400).json({ message: 'cannot found any news' })
   }
+  if (!newsExist.image.url) {
+    return res.status(400).json({ message: 'cannot found news image' })
+  }
+  body.image.url = newsExist.image.url
   const newsUpdate = await updateByID(id, body)
   const response: IResonseObject = {
     message: 'updated data success',
@@ -96,8 +95,35 @@ export const deleteNewsById = async (
   if (!newsExist) {
     return res.status(400).json({ message: 'cannot found any news' })
   }
+
+  await deleteFile(newsExist.image.url)
   const result = await deleteByID(id)
   if (result) {
     return res.status(200).json({ message: 'deleted news success' })
+  }
+}
+export const updateContentImageVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
+  const id = req.params.id
+  const file = req.file
+  if (!id) {
+    return res.status(400).json({ message: 'not found id prams' })
+  }
+
+  const newsExist = await findByID(id)
+  if (!newsExist) {
+    return res.status(400).json({ message: 'cannot found any news' })
+  }
+
+  if (!newsExist.image) {
+    return res.status(404).json({ mesage: 'not found image' })
+  }
+
+  if (!file) {
+    return res.status(400).send('Không có file được tải lên.')
+  }
+
+  const imageObject: string | void = await updateFileContent(file, newsExist.image.url)
+  if (imageObject != null) {
+    return res.status(200).json({ message: 'File has been updated successfully' })
   }
 }

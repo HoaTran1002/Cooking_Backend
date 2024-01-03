@@ -18,18 +18,18 @@ import {
   removeAllVideoByCourseById,
   removeAllImageByCourseById
 } from '~/controllers/course.controller'
-import {
-  uploadImageFromLocalToS3ByCourseId,
-  updateContentImageS3,
-  deleteAllImageFromS3ByCourseId,
-  getAllImageFromS3ByCourseId,
-  getImageFromS3BykeyImage,
-  uploadVideoFromLocalToS3ByCourseId,
-  deleteVideoFromS3ByCourseId,
-  deleteAllVideoFromS3ByCourseId,
-  getAllVideoFromS3ByCourseId,
-  getVideoFromS3BykeyVideo
-} from '~/controllers/uploadToS3.controllers'
+// import {
+//   uploadImageFromLocalToS3ByCourseId,
+//   updateContentImageS3,
+//   deleteAllImageFromS3ByCourseId,
+//   getAllImageFromS3ByCourseId,
+//   getImageFromS3BykeyImage,
+//   uploadVideoFromLocalToS3ByCourseId,
+//   deleteVideoFromS3ByCourseId,
+//   deleteAllVideoFromS3ByCourseId,
+//   getAllVideoFromS3ByCourseId,
+//   getVideoFromS3BykeyVideo
+// } from '~/controllers/uploadToS3.controllers'
 import { ICourse, IRoadmap } from '~/interfaces/course.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
