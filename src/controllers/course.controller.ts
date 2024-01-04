@@ -264,29 +264,35 @@ export const uploadImageFromLocalToVPSByCourseId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
+  try {
+    const idCourse = req.params.idCourse
 
-  if (!idCourse) {
-    return res.status(404).send('not found id course')
-  }
-  const course = await findById(idCourse)
+    if (!idCourse) {
+      return res.status(404).send('not found id course')
+    }
+    const course = await findById(idCourse)
 
-  if (!course) {
-    return res.status(404).json({ mesage: 'not found coures' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
-  const imageObject: IImage = {
-    url: file.path
-  }
-  const Images = await addImageToCourse(idCourse, imageObject)
-  if (!Images) {
-    return res.status(500).json({ message: 'upload image failed' })
-  }
+    if (!course) {
+      return res.status(404).json({ mesage: 'not found coures' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
+    const imageObject: IImage = {
+      url: file.path
+    }
+    const Images = await addImageToCourse(idCourse, imageObject)
+    if (!Images) {
+      return res.status(500).json({ message: 'upload image failed' })
+    }
 
-  return res.status(200).json({ message: 'upload image success', result: Images })
+    return res.status(200).json({ message: 'upload image success', result: Images })
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
+  }
 }
 export const deleteImageFromVPSByCourseId = async (
   req: Request,
@@ -318,31 +324,37 @@ export const deleteImageFromVPSByCourseId = async (
   }
 }
 export const updateContentImageVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
-  const keyImage = req.params.keyImage
-  if (!idCourse) {
-    return res.status(400).json({ message: 'not found idCourse prams' })
-  }
+  try {
+    const idCourse = req.params.idCourse
+    const keyImage = req.params.keyImage
+    if (!idCourse) {
+      return res.status(400).json({ message: 'not found idCourse prams' })
+    }
 
-  if (!keyImage) {
-    return res.status(400).json({ message: 'not found keyImage prams' })
-  }
-  const image: IImage = await findCourseImage(idCourse, keyImage)
-  if (!image) {
-    return res.status(400).json({ message: 'key Image invalid' })
-  }
+    if (!keyImage) {
+      return res.status(400).json({ message: 'not found keyImage prams' })
+    }
+    const image: IImage = await findCourseImage(idCourse, keyImage)
+    if (!image) {
+      return res.status(400).json({ message: 'key Image invalid' })
+    }
 
-  if (!image) {
-    return res.status(404).json({ mesage: 'not found image' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
+    if (!image) {
+      return res.status(404).json({ mesage: 'not found image' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
 
-  const imageObject: string | void = await updateFileContent(file, image.url)
-  if (imageObject != null) {
-    return res.status(200).json({ message: 'File has been updated successfully' })
+    const imageObject: string | void = await updateFileContent(file, image.url)
+    if (imageObject != null) {
+      return res.status(200).json({ message: 'File has been updated successfully' })
+    }
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
   }
 }
 export const removeAllImageByCourseById = async (
@@ -384,31 +396,37 @@ export const uploadVideoFromLocalToVPSByCourseId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
+  try {
+    const idCourse = req.params.idCourse
 
-  if (!idCourse) {
-    return res.status(404).send('not found id course')
-  }
-  const course = await findById(idCourse)
+    if (!idCourse) {
+      return res.status(404).send('not found id course')
+    }
+    const course = await findById(idCourse)
 
-  if (!course) {
-    return res.status(404).json({ mesage: 'not found coures' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
+    if (!course) {
+      return res.status(404).json({ mesage: 'not found coures' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
 
-  const videoObject: IVideo = {
-    url: file.path
-  }
+    const videoObject: IVideo = {
+      url: file.path
+    }
 
-  const Video = await addVideoToCourse(idCourse, videoObject)
-  if (!Video) {
-    return res.status(500).json({ message: 'upload video failed' })
-  }
+    const Video = await addVideoToCourse(idCourse, videoObject)
+    if (!Video) {
+      return res.status(500).json({ message: 'upload video failed' })
+    }
 
-  return res.status(200).json({ message: 'upload video success', result: Video })
+    return res.status(200).json({ message: 'upload video success', result: Video })
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
+  }
 }
 export const deleteVideoVPSByCourseId = async (
   req: Request,
@@ -441,31 +459,37 @@ export const deleteVideoVPSByCourseId = async (
   }
 }
 export const updateContentVideoVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
-  const keyVideo = req.params.keyVideo
-  if (!idCourse) {
-    return res.status(400).json({ message: 'not found idCourse prams' })
-  }
+  try {
+    const idCourse = req.params.idCourse
+    const keyVideo = req.params.keyVideo
+    if (!idCourse) {
+      return res.status(400).json({ message: 'not found idCourse prams' })
+    }
 
-  if (!keyVideo) {
-    return res.status(400).json({ message: 'not found key video prams' })
-  }
-  const video: IVideo = await findCourseVideo(idCourse, keyVideo)
-  if (!video) {
-    return res.status(400).json({ message: 'key video invalid' })
-  }
+    if (!keyVideo) {
+      return res.status(400).json({ message: 'not found key video prams' })
+    }
+    const video: IVideo = await findCourseVideo(idCourse, keyVideo)
+    if (!video) {
+      return res.status(400).json({ message: 'key video invalid' })
+    }
 
-  if (!video) {
-    return res.status(404).json({ mesage: 'not found image' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
+    if (!video) {
+      return res.status(404).json({ mesage: 'not found image' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
 
-  const videoObject: string | void = await updateFileContent(file, video.url)
-  if (videoObject != null) {
-    return res.status(200).json({ message: 'File has been updated successfully' })
+    const videoObject: string | void = await updateFileContent(file, video.url)
+    if (videoObject != null) {
+      return res.status(200).json({ message: 'File has been updated successfully' })
+    }
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
   }
 }
 export const removeAllVideoByCourseById = async (

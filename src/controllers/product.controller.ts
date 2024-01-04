@@ -269,29 +269,35 @@ export const uploadImageFromLocalToVPSByProductId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const idProduct = req.params.idProduct
+  try {
+    const idProduct = req.params.idProduct
 
-  if (!idProduct) {
-    return res.status(404).send('not found id product')
-  }
-  const product = await productModels.findById({ _id: idProduct })
+    if (!idProduct) {
+      return res.status(404).send('not found id product')
+    }
+    const product = await productModels.findById({ _id: idProduct })
 
-  if (!product) {
-    return res.status(404).json({ mesage: 'not found product' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
-  const imageObject: IImage = {
-    url: file.path
-  }
-  const Images = await addImageToProduct(idProduct, imageObject)
-  if (!Images) {
-    return res.status(500).json({ message: 'upload image failed' })
-  }
+    if (!product) {
+      return res.status(404).json({ mesage: 'not found product' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
+    const imageObject: IImage = {
+      url: file.path
+    }
+    const Images = await addImageToProduct(idProduct, imageObject)
+    if (!Images) {
+      return res.status(500).json({ message: 'upload image failed' })
+    }
 
-  return res.status(200).json({ message: 'upload image success', result: Images })
+    return res.status(200).json({ message: 'upload image success', result: Images })
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
+  }
 }
 export const deleteImageFromVPSByProductId = async (
   req: Request,
@@ -323,32 +329,38 @@ export const deleteImageFromVPSByProductId = async (
   }
 }
 export const updateContentImageVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const idProduct = req.params.idProduct
-  const keyImage = req.params.keyImage
-  if (!idProduct) {
-    return res.status(404).send('not found id product')
-  }
-  const product = await productModels.findById({ _id: idProduct })
+  try {
+    const idProduct = req.params.idProduct
+    const keyImage = req.params.keyImage
+    if (!idProduct) {
+      return res.status(404).send('not found id product')
+    }
+    const product = await productModels.findById({ _id: idProduct })
 
-  if (!product) {
-    return res.status(404).json({ mesage: 'not found product' })
-  }
-  if (!keyImage) {
-    return res.status(400).json({ message: 'not found keyImage prams' })
-  }
-  const image: IImage = await findProductImage(idProduct, keyImage)
-  if (!image) {
-    return res.status(400).json({ message: 'key Image invalid' })
-  }
+    if (!product) {
+      return res.status(404).json({ mesage: 'not found product' })
+    }
+    if (!keyImage) {
+      return res.status(400).json({ message: 'not found keyImage prams' })
+    }
+    const image: IImage = await findProductImage(idProduct, keyImage)
+    if (!image) {
+      return res.status(400).json({ message: 'key Image invalid' })
+    }
 
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
 
-  const imageObject: string | void = await updateFileContent(file, image.url)
-  if (imageObject != null) {
-    return res.status(200).json({ message: 'File has been updated successfully' })
+    const imageObject: string | void = await updateFileContent(file, image.url)
+    if (imageObject != null) {
+      return res.status(200).json({ message: 'File has been updated successfully' })
+    }
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
   }
 }
 export const removeAllImageByProductById = async (
@@ -390,29 +402,35 @@ export const uploadVideoFromLocalToVPSByProductId = async (
   req: Request,
   res: Response
 ): Promise<Response<IResonseObject> | void> => {
-  const idProduct = req.params.idProduct
+  try {
+    const idProduct = req.params.idProduct
 
-  if (!idProduct) {
-    return res.status(404).send('not found id product')
-  }
-  const product = await productModels.findById({ _id: idProduct })
+    if (!idProduct) {
+      return res.status(404).send('not found id product')
+    }
+    const product = await productModels.findById({ _id: idProduct })
 
-  if (!product) {
-    return res.status(404).json({ mesage: 'not found product' })
-  }
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
-  const videoObject: IVideo = {
-    url: file.path
-  }
-  const videos = await addVideoToProduct(idProduct, videoObject)
-  if (!videos) {
-    return res.status(500).json({ message: 'upload video failed' })
-  }
+    if (!product) {
+      return res.status(404).json({ mesage: 'not found product' })
+    }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
+    const videoObject: IVideo = {
+      url: file.path
+    }
+    const videos = await addVideoToProduct(idProduct, videoObject)
+    if (!videos) {
+      return res.status(500).json({ message: 'upload video failed' })
+    }
 
-  return res.status(200).json({ message: 'upload video success', result: videos })
+    return res.status(200).json({ message: 'upload video success', result: videos })
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
+  }
 }
 export const deleteVideoFromVPSByProductId = async (
   req: Request,
@@ -444,32 +462,38 @@ export const deleteVideoFromVPSByProductId = async (
   }
 }
 export const updateContentVideoVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const idProduct = req.params.idProduct
-  const keyVideo = req.params.keyVideo
-  if (!idProduct) {
-    return res.status(404).send('not found id product')
-  }
-  const product = await productModels.findById({ _id: idProduct })
+  try {
+    const idProduct = req.params.idProduct
+    const keyVideo = req.params.keyVideo
+    if (!idProduct) {
+      return res.status(404).send('not found id product')
+    }
+    const product = await productModels.findById({ _id: idProduct })
 
-  if (!product) {
-    return res.status(404).json({ mesage: 'not found product' })
-  }
-  if (!keyVideo) {
-    return res.status(400).json({ message: 'not found keyVideo prams' })
-  }
-  const video: IVideo = await findProductVideo(idProduct, keyVideo)
-  if (!video) {
-    return res.status(400).json({ message: 'key video invalid' })
-  }
+    if (!product) {
+      return res.status(404).json({ mesage: 'not found product' })
+    }
+    if (!keyVideo) {
+      return res.status(400).json({ message: 'not found keyVideo prams' })
+    }
+    const video: IVideo = await findProductVideo(idProduct, keyVideo)
+    if (!video) {
+      return res.status(400).json({ message: 'key video invalid' })
+    }
 
-  const file = req.file
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
+    const file = req.file
+    if (!file) {
+      return res.status(400).send('Không có file được tải lên.')
+    }
 
-  const imageObject: string | void = await updateFileContent(file, video.url)
-  if (imageObject != null) {
-    return res.status(200).json({ message: 'File has been updated successfully' })
+    const imageObject: string | void = await updateFileContent(file, video.url)
+    if (imageObject != null) {
+      return res.status(200).json({ message: 'File has been updated successfully' })
+    }
+  } catch (error: any) {
+    const file = req.file
+    await deleteFile(file!.path)
+    throw new Error(error)
   }
 }
 export const removeAllVIdeoByProductById = async (
