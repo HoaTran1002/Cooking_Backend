@@ -10,16 +10,22 @@ export const createNews = async (
 ): Promise<Response<IResonseObject> | void> => {
   const newsData = req.body
   const file = req.file
-  if (!file) {
-    return res.status(400).json({ message: 'file not found' })
+  try {
+    if (!file) {
+      return res.status(400).json({ message: 'file not found' })
+    }
+
+    newsData.image = { url: file.path }
+    const createdNews = await add(newsData)
+    const response: IResonseObject = {
+      message: 'created news success',
+      data: createdNews
+    }
+    return res.status(200).json(response)
+  } catch (error: any) {
+    await deleteFile(file!.path)
+    throw new Error(error)
   }
-  newsData.image.url = file.filename
-  const createdNews = await add(newsData)
-  const response: IResonseObject = {
-    message: 'created news success',
-    data: createdNews
-  }
-  return res.status(200).json(response)
 }
 export const getNewsById = async (
   req: Request<any, unknown, INews>,
@@ -73,7 +79,7 @@ export const updateNewsById = async (
   if (!newsExist.image.url) {
     return res.status(400).json({ message: 'cannot found news image' })
   }
-  body.image.url = newsExist.image.url
+  body.image = { url: newsExist.image.url }
   const newsUpdate = await updateByID(id, body)
   const response: IResonseObject = {
     message: 'updated data success',
@@ -102,28 +108,36 @@ export const deleteNewsById = async (
     return res.status(200).json({ message: 'deleted news success' })
   }
 }
-export const updateContentImageVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const id = req.params.id
-  const file = req.file
-  if (!id) {
-    return res.status(400).json({ message: 'not found id prams' })
-  }
+export const updateContentImageVPS = async (
+  req: Request<any, unknown, INews>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  const fileUpload = req.file
+  try {
+    const id = req.params.id
+    const file = req.file
+    if (!id) {
+      return res.status(400).json({ message: 'not found id prams' })
+    }
 
-  const newsExist = await findByID(id)
-  if (!newsExist) {
-    return res.status(400).json({ message: 'cannot found any news' })
-  }
+    const newsExist = await findByID(id)
+    if (newsExist == null) {
+      return res.status(400).json({ message: 'cannot found any news' })
+    } else {
+      if (!newsExist.image) {
+        return res.status(404).json({ mesage: 'not found image' })
+      }
+      if (!file) {
+        return res.status(400).send('Không có file được tải lên.')
+      }
 
-  if (!newsExist.image) {
-    return res.status(404).json({ mesage: 'not found image' })
-  }
-
-  if (!file) {
-    return res.status(400).send('Không có file được tải lên.')
-  }
-
-  const imageObject: string | void = await updateFileContent(file, newsExist.image.url)
-  if (imageObject != null) {
-    return res.status(200).json({ message: 'File has been updated successfully' })
+      const imageObject: string | void = await updateFileContent(file, newsExist.image.url)
+      if (imageObject != null) {
+        return res.status(200).json({ message: 'File has been updated successfully' })
+      }
+    }
+  } catch (error: any) {
+    await deleteFile(fileUpload!.path)
+    throw new Error(error)
   }
 }

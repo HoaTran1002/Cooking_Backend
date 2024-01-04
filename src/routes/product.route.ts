@@ -41,7 +41,7 @@ route.post(
   uploadDisk.single('file'),
   asyncHandelError(uploadImageFromLocalToVPSByProductId)
 )
-route.delete('/:keyImage/deleteImageFromVPSByProductId/:idProduct', asyncHandelError(deleteImageFromVPSByProductId))
+route.delete('/:idProduct/deleteImageFromVPSByProductId/:keyImage', asyncHandelError(deleteImageFromVPSByProductId))
 route.put(
   '/:idProduct/updateContentImage/:keyImage',
   uploadMemory.single('file'),
@@ -50,7 +50,7 @@ route.put(
 route.delete('/:idProduct/removeAllImageByProductById', asyncHandelError(removeAllImageByProductById))
 //video
 route.post(
-  '/uploadVideoFromLocalToVPS/:idProduct',
+  '/:idProduct/uploadVideoFromLocalToVPS',
   uploadDisk.single('file'),
   asyncHandelError(uploadVideoFromLocalToVPSByProductId)
 )

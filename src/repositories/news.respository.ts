@@ -14,9 +14,9 @@ export const add = async (data: INews): Promise<INews | void> => {
   const news = (await newsModels.create(data)) as INews
   return news
 }
-export const findByID = async (id: string): Promise<INews | void> => {
+export const findByID = async (id: string): Promise<INews | null> => {
   const fillter = { _id: id }
-  const data = (await newsModels.findOne(fillter)) as INews
+  const data: INews | null = await newsModels.findOne(fillter)
   return data
 }
 export const findAll = async (page: number, size: number): Promise<PaginationResult> => {

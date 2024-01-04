@@ -228,15 +228,15 @@ export const deleteProductById = async (
     return res.status(404).json({ message: 'not found product by id' })
   }
   if (product.images.length > 0) {
-    const images = await getAllImageProduct(idProduct)
-    // await deleteAllImage(idProduct, images)
+    // const images = await getAllImageProduct(idProduct)
+    await deleteFIleImageProduct(idProduct)
   }
   if (product.videos.length > 0) {
-    const videos = await getAllVideoProduct(idProduct)
-    // await deleteAllVideo(idProduct, videos)
+    // const videos = await getAllVideoProduct(idProduct)
+    await deleteFIleVideoProduct(idProduct)
   }
   await deleteProduct(idProduct)
-  return res.json(200).send('delete success')
+  return res.status(200).send('delete success')
 }
 export const deleteAllProduct = async (
   req: Request<any, unknown, IProduct>,
@@ -499,7 +499,7 @@ export const removeAllVIdeoByProductById = async (
     if (!deleted) {
       return res.status(404).send('product  not found')
     } else {
-      response.message = 'deleted all image  success'
+      response.message = 'deleted all video  success'
       return res.status(200).send(response)
     }
   } catch (error: any) {

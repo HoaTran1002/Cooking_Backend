@@ -109,7 +109,7 @@ export const findProductVideo = async (idProduct: string, key: string) => {
     },
     {
       $match: {
-        'videos.key': key
+        'videos._id': new mongoose.Types.ObjectId(key)
       }
     }
   ])
