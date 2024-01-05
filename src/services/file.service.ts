@@ -1,5 +1,3 @@
-import { any } from 'joi'
-import multer from 'multer'
 import * as fs from 'node:fs'
 export const deleteFile = async (path: string): Promise<void> => {
   fs.unlink(path, (err: any) => {

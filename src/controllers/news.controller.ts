@@ -14,7 +14,7 @@ export const createNews = async (
     if (!file) {
       return res.status(400).json({ message: 'file not found' })
     }
-
+    console.log(file.buffer)
     newsData.image = { url: file.path }
     const createdNews = await add(newsData)
     const response: IResonseObject = {
@@ -108,10 +108,7 @@ export const deleteNewsById = async (
     return res.status(200).json({ message: 'deleted news success' })
   }
 }
-export const updateContentImageVPS = async (
-  req: Request<any, unknown, INews>,
-  res: Response
-): Promise<Response<IResonseObject> | void> => {
+export const updateContentImageVPS = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
   const fileUpload = req.file
   try {
     const id = req.params.id
@@ -119,7 +116,6 @@ export const updateContentImageVPS = async (
     if (!id) {
       return res.status(400).json({ message: 'not found id prams' })
     }
-
     const newsExist = await findByID(id)
     if (newsExist == null) {
       return res.status(400).json({ message: 'cannot found any news' })
@@ -130,7 +126,6 @@ export const updateContentImageVPS = async (
       if (!file) {
         return res.status(400).send('Không có file được tải lên.')
       }
-
       const imageObject: string | void = await updateFileContent(file, newsExist.image.url)
       if (imageObject != null) {
         return res.status(200).json({ message: 'File has been updated successfully' })
