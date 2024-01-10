@@ -1,7 +1,10 @@
 import { Request } from 'express'
 import multer, { Multer } from 'multer'
+
 import { env } from './env.config'
+
 import crypto from 'crypto'
+
 export const uploadMemory = multer({
   storage: multer.memoryStorage()
 })
