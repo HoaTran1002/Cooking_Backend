@@ -7,4 +7,5 @@ export interface IProduct {
   images: IImage[]
   videos: IVideo[]
   note: string
+  idProduct: string
 }

@@ -9,7 +9,8 @@ export const productValidator = (data: IProduct) => {
     category: Joi.string().valid('SHORT_TERM', 'LONG_TERM').required().trim(),
     note: Joi.string().required(),
     image: Joi.array<IImage>(),
-    video: Joi.array<IVideo>()
+    video: Joi.array<IVideo>(),
+    idProduct: Joi.string().required()
   })
   return product.validate(data)
 }
