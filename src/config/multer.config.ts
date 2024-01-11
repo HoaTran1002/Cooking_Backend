@@ -10,7 +10,7 @@ export const uploadMemory = multer({
 
 const storage = multer.diskStorage({
   destination: (req: Request, file: Express.Multer.File, cb) => {
-    const uploadPath = './src/content/upload'
+    const uploadPath = env.PATH_DATA_FILE
     // Kiểm tra xem thư mục uploadPath có tồn tại không
     if (!fs.existsSync(uploadPath)) {
       // Nếu không tồn tại, hãy tạo thư mục

@@ -18,7 +18,7 @@ exports.env = {
     AWS_BUCKET_ACCESS_KEY: 'AKIAXNUMROQNWUXAGR4P',
     AWS_BUCKET_SECRET_KEY: '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',
     MONGODB_ADDRESS: 'localhost:27017',
-    PATH_DATA_FILE: './src/content/upload',
+    PATH_DATA_FILE: '/var/www/conten',
     DB_USERNAME: 'admin',
     DB_PASSWORD: 'Pass2910'
 };
