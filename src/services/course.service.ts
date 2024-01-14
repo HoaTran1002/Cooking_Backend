@@ -7,6 +7,11 @@ export const findById = async (id: string) => {
   const result = await Courses.findOne(fillter)
   return result
 }
+export const courseFindById = async (id: string) => {
+  const fillter = { _id: id }
+  const result = await Courses.findOne(fillter)
+  return result
+}
 export const deleteFIleCourse = async (_id: string): Promise<void> => {
   const course = (await courseModels.findOne({ _id: _id })) as ICourse
   if (course.images && course.images.length > 0) {

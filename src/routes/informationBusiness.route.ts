@@ -12,8 +12,8 @@ import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'
 import { infoBusinessValidate } from '~/validator/informationBusiness.validate'
 const router = Router()
-router.get('/getAll', authorize(), asyncHandelError(getAll))
-router.get('/getById/:id', authorize(), asyncHandelError(getById))
+router.get('/getAll', asyncHandelError(getAll))
+router.get('/getById/:id', asyncHandelError(getById))
 router.post(
   '/create',
   authorize(['ADMIN']),

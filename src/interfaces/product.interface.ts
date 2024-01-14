@@ -1,3 +1,4 @@
+import { string } from 'joi'
 import { IImage, IVideo, TCategory, TLeve } from './course.interface'
 
 export interface IProduct {
@@ -7,5 +8,7 @@ export interface IProduct {
   images: IImage[]
   videos: IVideo[]
   note: string
-  idProduct: string
+  timeLearning?: string[]
+  idCourse?: string
+  idCategory?: string[]
 }

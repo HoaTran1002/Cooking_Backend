@@ -1,22 +1,20 @@
-// import { Router } from 'express'
-// import {
-//   createCategory,
-//   removeCategory,
-//   updateCategory,
-//   addCourseById,
-//   removeCourseById,
-//   getAll,
-//   getById
-// } from '~/controllers/category.controllers'
-// import { authorize } from '~/middlewares/auth.middlewears'
-// import { asyncHandelError } from '~/middlewares/error.middlewear'
-// const router = Router()
-// router.get('/', authorize(), asyncHandelError(getAll))
-// router.get('/:id', authorize(), asyncHandelError(getById))
-// router.post('/create', authorize(), asyncHandelError(createCategory))
-// router.post('/:id/addCourseById/:idCourse', authorize(), asyncHandelError(addCourseById))
-// router.put('/update/:id', authorize(), asyncHandelError(updateCategory))
-// router.delete('/remove/:id', authorize(), asyncHandelError(removeCategory))
-// router.delete('/:id/removeCourseById/:idCourse', authorize(), asyncHandelError(removeCourseById))
+import { Router } from 'express'
+import {
+  createCategory,
+  getAll,
+  getAllByCourseId,
+  getById,
+  removeCategory,
+  updateCategory
+} from '~/controllers/category.controllers'
+import { authorize } from '~/middlewares/auth.middlewears'
+import { asyncHandelError } from '~/middlewares/error.middlewear'
+const router = Router()
+router.post('/create/:idCourse', authorize(), asyncHandelError(createCategory))
+router.put('/:id/update', asyncHandelError(updateCategory))
+router.delete('/:id/remove', authorize(), asyncHandelError(removeCategory))
+router.get('/getAll', asyncHandelError(getAll))
+router.get('/getAllByCourseId/:idCourse', asyncHandelError(getAllByCourseId))
+router.get('/:id/getAllById', authorize(), asyncHandelError(getById))
 
-// export default router
+export default router

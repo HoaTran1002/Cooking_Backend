@@ -27,7 +27,6 @@ export const removeCourse = async (_id: string, _idCourse: string): Promise<void
 }
 export const updateById = async (_id: string, body: ICategory): Promise<void | ICategory | unknown> => {
   const fillter = { _id: _id }
-  const name = body
   const update = {
     body
   }
