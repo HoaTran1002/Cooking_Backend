@@ -22,19 +22,25 @@ export const findAllProduct = async () => {
   }
 }
 export const deleteFIleImageProduct = async (_id: string): Promise<void> => {
-  const course = (await productModels.findOne({ _id: _id })) as IProduct
-  if (course.images && course.images.length > 0) {
-    course.images.map(async (image: IImage) => {
+  const product = (await productModels.findOne({ _id: _id })) as IProduct
+  if (product.images && product.images.length > 0) {
+    product.images.map(async (image: IImage) => {
       await deleteFile(image.url)
     })
   }
 }
 
 export const deleteFIleVideoProduct = async (_id: string): Promise<void> => {
-  const course = (await productModels.findOne({ _id: _id })) as IProduct
-  if (course.videos && course.videos.length > 0) {
-    course.videos.map(async (video: IImage) => {
+  const product = (await productModels.findOne({ _id: _id })) as IProduct
+  if (product.videos && product.videos.length > 0) {
+    product.videos.map(async (video: IImage) => {
       await deleteFile(video.url)
     })
   }
+}
+export const updateIdCategory = async (idProduct: string, idCategory: string): Promise<void> => {
+  const fillter = { id: idProduct }
+  const update = { idCategory }
+  const options = { new: true }
+  await productModels.findOneAndUpdate(fillter, update, options)
 }

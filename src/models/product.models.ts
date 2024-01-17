@@ -12,7 +12,7 @@ const product = new Schema<IProduct>({
   videos: [videoSchema],
   timeLearning: [String],
   idCourse: { type: String },
-  idCategory: [String]
+  idCategory: { type: String }
 })
 
 export default mongoose.model('ProductsModels', product)

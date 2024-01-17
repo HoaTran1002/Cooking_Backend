@@ -28,7 +28,7 @@ import { validateBody } from '~/middlewares/validate.middlewear'
 import { productValidator } from '~/validator/product.validate'
 const route = Router()
 // , authorize(['ADMIN'])
-route.post('/create', validateBody(productValidator), asyncHandelError(createProduct))
+route.post('/create/:idCourse/:idCategory?', validateBody(productValidator), asyncHandelError(createProduct))
 route.get('/getAll', asyncHandelError(getAllProduct))
 route.get('/:idProduct/getProductById', asyncHandelError(getProductById))
 route.put('/:idProduct/edit', validateBody(productValidator), asyncHandelError(editProductById))

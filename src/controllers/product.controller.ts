@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { IImage, IVideo } from '~/interfaces/course.interface'
+import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
 import { IProduct } from '~/interfaces/product.interface'
 import { IResonseObject } from '~/interfaces/response.interface'
 import productModels from '~/models/product.models'
@@ -8,8 +8,6 @@ import { getAllImages } from '~/repositories/course.repository'
 import {
   addImageToProduct,
   addVideoToProduct,
-  // deleteAllImage,
-  // deleteAllVideo,
   deleteProduct,
   editProduct,
   findOneProductById,
@@ -24,6 +22,8 @@ import {
   updateProductWhenUploadImage,
   updateProductWhenUploadVideo
 } from '~/repositories/product.repository'
+import { findCategoryById } from '~/services/category.service'
+import { courseFindById } from '~/services/course.service'
 import { deleteFile, updateFileContent } from '~/services/file.service'
 import {
   deleteFIleImageProduct,
@@ -33,10 +33,27 @@ import {
 } from '~/services/product.service'
 import { deleteImageS3, deleteVideoS3, uploadImageS3, uploadVideoS3 } from '~/services/uploadToS3.service'
 export const createProduct = async (
-  req: Request<unknown, unknown, IProduct>,
+  req: Request<any, unknown, IProduct>,
   res: Response
 ): Promise<Response<IResonseObject | void>> => {
   const body = req.body
+  const idCourse = req.params.idCourse
+  const idCategory = req.params.idCategory
+  if (!idCourse) {
+    return res.status(404).json({ message: 'not exist idCourse' })
+  }
+  const course = (await courseFindById(idCourse)) as ICourse
+  if (!course) {
+    return res.status(404).json({ message: 'not found Course by this id' })
+  }
+  if (idCategory) {
+    const category = findCategoryById(idCategory)
+    if (!category) {
+      return res.status(404).json({ message: 'not found category by this id' })
+    }
+    body.idCategory = idCategory
+  }
+  body.idCourse = idCourse
   const product = await Products.create(body)
   if (product) {
     return res.status(200).json({ message: 'created product success', data: product })

@@ -10,5 +10,5 @@ export interface IProduct {
   note: string
   timeLearning?: string[]
   idCourse?: string
-  idCategory?: string[]
+  idCategory?: string
 }

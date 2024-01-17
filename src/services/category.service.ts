@@ -40,3 +40,7 @@ export const findById = async (_id: string): Promise<void | ICategory | unknown>
   const category = Category.findById(_id)
   return category
 }
+export const findCategoryById = async (_id: string): Promise<void | ICategory | unknown> => {
+  const category = Category.findById(_id)
+  return category
+}
