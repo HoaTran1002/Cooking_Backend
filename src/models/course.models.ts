@@ -1,6 +1,11 @@
 import mongoose, { Schema } from 'mongoose'
 import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 import { deleteFile } from '~/services/file.service'
+import productModels from './product.models'
+import { deleteByIdProduct } from '~/services/product.service'
+import categoryModels from './category.models'
+import { removeCategory } from '~/services/category.service'
+import { IProduct } from '~/interfaces/product.interface'
 
 export const imageSchema = new Schema<IImage>({
   url: { type: String },
@@ -23,8 +28,8 @@ export const course = new Schema<ICourse>({
   level: { type: String },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
-  images: [imageSchema],
-  videos: [videoSchema],
+  images: { type: [imageSchema] },
+  videos: { type: [videoSchema] },
   roadmaps: [roadmapSchema],
   price: { type: Number, default: 0 },
   discountPrice: { type: Number, default: 0 },
@@ -32,5 +37,24 @@ export const course = new Schema<ICourse>({
   timeCreate: { type: Date, default: Date.now },
   timeUpdate: { type: Date }
 })
-
+course.pre('findOneAndDelete', async function (next) {
+  try {
+    const doc = await this.model.findOne(this.getQuery())
+    const products = await productModels.find({ idCategory: doc._id })
+    if (products.length > 0) {
+      products.map(async (product) => {
+        await deleteByIdProduct(new mongoose.Types.ObjectId(product.id).toString())
+      })
+    }
+    const categories = await categoryModels.find({ idCourse: doc._id })
+    if (categories.length > 0) {
+      categories.map(async (category) => {
+        await removeCategory(new mongoose.Types.ObjectId(category.id).toString())
+      })
+    }
+    next()
+  } catch (error: any) {
+    next(error)
+  }
+})
 export default mongoose.model('Courses', course)

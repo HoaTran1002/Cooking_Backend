@@ -8,8 +8,8 @@ const product = new Schema<IProduct>({
   level: { type: String },
   note: { type: String },
   category: { type: String },
-  images: [imageSchema],
-  videos: [videoSchema],
+  images: { type: [imageSchema] },
+  videos: { type: [videoSchema] },
   timeLearning: [String],
   idCourse: { type: String },
   idCategory: { type: String }

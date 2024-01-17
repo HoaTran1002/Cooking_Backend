@@ -44,3 +44,8 @@ export const findCategoryById = async (_id: string): Promise<void | ICategory | 
   const category = Category.findById(_id)
   return category
 }
+export const removeCategory = async (_id: string): Promise<void> => {
+  const fillter = { _id: _id }
+  const options = { new: true }
+  await Category.findOneAndDelete(fillter, options)
+}

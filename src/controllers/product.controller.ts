@@ -95,8 +95,26 @@ export const editProductById = async (
   if (!idProduct) {
     return res.status(404).json({ message: 'not found id product' })
   }
-  console.log('body:', req.body)
-  const productEdit = await editProduct(idProduct, req.body)
+  const body = req.body
+  const idCourse = req.params.idCourse
+  const idCategory = req.params.idCategory
+  if (idCourse) {
+    const course = (await courseFindById(idCourse)) as ICourse
+    if (!course) {
+      return res.status(404).json({ message: 'not found Course by this id' })
+    }
+    body.idCourse = idCourse
+  }
+
+  if (idCategory) {
+    const category = findCategoryById(idCategory)
+    if (!category) {
+      return res.status(404).json({ message: 'not found category by this id' })
+    }
+    body.idCategory = idCategory
+  }
+
+  const productEdit = await editProduct(idProduct, body)
   if (!productEdit) {
     return res.status(404).json({ message: 'not found product by id' })
   }

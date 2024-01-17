@@ -31,7 +31,7 @@ const route = Router()
 route.post('/create/:idCourse/:idCategory?', validateBody(productValidator), asyncHandelError(createProduct))
 route.get('/getAll', asyncHandelError(getAllProduct))
 route.get('/:idProduct/getProductById', asyncHandelError(getProductById))
-route.put('/:idProduct/edit', validateBody(productValidator), asyncHandelError(editProductById))
+route.put('/:idProduct/edit/:idCourse?/:idCategory?', validateBody(productValidator), asyncHandelError(editProductById))
 
 route.delete('/:idProduct/delete', asyncHandelError(deleteProductById))
 route.delete('/deleteAll', asyncHandelError(deleteAllProduct))
