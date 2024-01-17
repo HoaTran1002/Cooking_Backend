@@ -36,15 +36,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateContentImageVPS = exports.deleteNewsById = exports.updateNewsById = exports.getAllNews = exports.getNewsById = exports.createNews = void 0;
-var news_respository_1 = require("../repositories/news.respository");
+exports.deleteChefById = exports.getAllChef = exports.getByIdChef = exports.updateContentImageVPS = exports.updateTextDataChefById = exports.createChef = void 0;
+var chef_repository_1 = require("../repositories/chef.repository");
+var chef_service_1 = require("../services/chef.service");
 var file_service_1 = require("../services/file.service");
-var createNews = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newsData, file, createdNews, response, error_1;
+var createChef = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var chefData, file, createdNews, response, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                newsData = req.body;
+                chefData = req.body;
                 file = req.file;
                 _a.label = 1;
             case 1:
@@ -52,12 +53,12 @@ var createNews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 if (!file) {
                     return [2 /*return*/, res.status(400).json({ message: 'file not found' })];
                 }
-                newsData.image = { url: file.path };
-                return [4 /*yield*/, (0, news_respository_1.add)(newsData)];
+                chefData.image = { url: file.path };
+                return [4 /*yield*/, (0, chef_repository_1.addChef)(chefData)];
             case 2:
                 createdNews = _a.sent();
                 response = {
-                    message: 'created news success',
+                    message: 'created chef success',
                     data: createdNews
                 };
                 return [2 /*return*/, res.status(200).json(response)];
@@ -71,58 +72,9 @@ var createNews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-exports.createNews = createNews;
-var getNewsById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, newsExist, response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                if (!id) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found id' })];
-                }
-                return [4 /*yield*/, (0, news_respository_1.findByID)(id)];
-            case 1:
-                newsExist = _a.sent();
-                if (!newsExist) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any news' })];
-                }
-                response = {
-                    message: 'get data success',
-                    data: newsExist
-                };
-                return [2 /*return*/, res.status(200).json(response)];
-        }
-    });
-}); };
-exports.getNewsById = getNewsById;
-var getAllNews = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var page, size, getAllNews, response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                page = parseInt(req.params.page, 10);
-                size = parseInt(req.params.size, 10);
-                if (isNaN(page) || isNaN(size) || page <= 0 || size <= 0) {
-                    return [2 /*return*/, res.status(400).json({ message: 'page and size should be positive integers greater than 0' })];
-                }
-                return [4 /*yield*/, (0, news_respository_1.findAll)(Number(page), Number(size))];
-            case 1:
-                getAllNews = _a.sent();
-                response = {
-                    message: 'get all success',
-                    data: getAllNews
-                };
-                if (!getAllNews) {
-                    return [2 /*return*/, res.status(200).json(response)];
-                }
-                return [2 /*return*/, res.status(200).json(getAllNews)];
-        }
-    });
-}); };
-exports.getAllNews = getAllNews;
-var updateNewsById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, body, newsExist, newsUpdate, response;
+exports.createChef = createChef;
+var updateTextDataChefById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, body, chefExist, chefUpdate, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -131,62 +83,33 @@ var updateNewsById = function (req, res) { return __awaiter(void 0, void 0, void
                 if (!id) {
                     return [2 /*return*/, res.status(400).json({ message: 'cannot found id' })];
                 }
-                return [4 /*yield*/, (0, news_respository_1.findByID)(id)];
+                return [4 /*yield*/, (0, chef_repository_1.getChefByID)(id)];
             case 1:
-                newsExist = (_a.sent());
-                if (!newsExist) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any news' })];
+                chefExist = (_a.sent());
+                if (!chefExist) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any chef' })];
                 }
-                if (!newsExist.image.url) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found news image' })];
+                if (!chefExist.image.url) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found chef image' })];
                 }
-                body.image = { url: newsExist.image.url };
-                return [4 /*yield*/, (0, news_respository_1.updateByID)(id, body)];
+                body.image = { url: chefExist.image.url };
+                return [4 /*yield*/, (0, chef_repository_1.updateChefByID)(id, body)];
             case 2:
-                newsUpdate = _a.sent();
+                chefUpdate = _a.sent();
                 response = {
-                    message: 'updated data success',
-                    data: newsUpdate
+                    message: 'updated data chef success',
+                    data: chefUpdate
                 };
-                if (newsUpdate) {
+                if (chefUpdate) {
                     return [2 /*return*/, res.status(200).json(response)];
                 }
                 return [2 /*return*/];
         }
     });
 }); };
-exports.updateNewsById = updateNewsById;
-var deleteNewsById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, newsExist, result;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                if (!id) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found id' })];
-                }
-                return [4 /*yield*/, (0, news_respository_1.findByID)(id)];
-            case 1:
-                newsExist = _a.sent();
-                if (!newsExist) {
-                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any news' })];
-                }
-                return [4 /*yield*/, (0, file_service_1.deleteFile)(newsExist.image.url)];
-            case 2:
-                _a.sent();
-                return [4 /*yield*/, (0, news_respository_1.deleteByID)(id)];
-            case 3:
-                result = _a.sent();
-                if (result) {
-                    return [2 /*return*/, res.status(200).json({ message: 'deleted news success' })];
-                }
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.deleteNewsById = deleteNewsById;
+exports.updateTextDataChefById = updateTextDataChefById;
 var updateContentImageVPS = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var fileUpload, id, file, newsExist, imageObject, error_2;
+    var fileUpload, id, file, chefExist, imageObject, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -199,19 +122,19 @@ var updateContentImageVPS = function (req, res) { return __awaiter(void 0, void 
                 if (!id) {
                     return [2 /*return*/, res.status(400).json({ message: 'not found id prams' })];
                 }
-                return [4 /*yield*/, (0, news_respository_1.findByID)(id)];
+                return [4 /*yield*/, (0, chef_repository_1.getChefByID)(id)];
             case 2:
-                newsExist = _a.sent();
-                if (!(newsExist == null)) return [3 /*break*/, 3];
+                chefExist = _a.sent();
+                if (!(chefExist == null)) return [3 /*break*/, 3];
                 return [2 /*return*/, res.status(400).json({ message: 'cannot found any news' })];
             case 3:
-                if (!newsExist.image) {
+                if (!chefExist.image) {
                     return [2 /*return*/, res.status(404).json({ mesage: 'not found image' })];
                 }
                 if (!file) {
                     return [2 /*return*/, res.status(400).send('Không có file được tải lên.')];
                 }
-                return [4 /*yield*/, (0, file_service_1.updateFileContent)(file, newsExist.image.url)];
+                return [4 /*yield*/, (0, file_service_1.updateFileContent)(file, chefExist.image.url)];
             case 4:
                 imageObject = _a.sent();
                 if (imageObject != null) {
@@ -230,3 +153,78 @@ var updateContentImageVPS = function (req, res) { return __awaiter(void 0, void 
     });
 }); };
 exports.updateContentImageVPS = updateContentImageVPS;
+var getByIdChef = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, chefExist, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                if (!id) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found id' })];
+                }
+                return [4 /*yield*/, (0, chef_repository_1.getChefByID)(id)];
+            case 1:
+                chefExist = _a.sent();
+                if (!chefExist) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any chef' })];
+                }
+                response = {
+                    message: 'get data success',
+                    data: chefExist
+                };
+                return [2 /*return*/, res.status(200).json(response)];
+        }
+    });
+}); };
+exports.getByIdChef = getByIdChef;
+var getAllChef = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var page, size, getAllChef, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                page = parseInt(req.params.page, 10);
+                size = parseInt(req.params.size, 10);
+                if (isNaN(page) || isNaN(size) || page <= 0 || size <= 0) {
+                    return [2 /*return*/, res.status(400).json({ message: 'page and size should be positive integers greater than 0' })];
+                }
+                return [4 /*yield*/, (0, chef_service_1.findAll)(Number(page), Number(size))];
+            case 1:
+                getAllChef = _a.sent();
+                response = {
+                    message: 'get all success',
+                    data: getAllChef
+                };
+                if (!getAllChef) {
+                    return [2 /*return*/, res.status(200).json(response)];
+                }
+                return [2 /*return*/, res.status(200).json(getAllChef)];
+        }
+    });
+}); };
+exports.getAllChef = getAllChef;
+var deleteChefById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, chefExist;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                if (!id) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found id' })];
+                }
+                return [4 /*yield*/, (0, chef_repository_1.getChefByID)(id)];
+            case 1:
+                chefExist = _a.sent();
+                if (!chefExist) {
+                    return [2 /*return*/, res.status(400).json({ message: 'cannot found any chef' })];
+                }
+                return [4 /*yield*/, (0, file_service_1.deleteFile)(chefExist.image.url)];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, (0, chef_repository_1.deleteByIDChef)(id)];
+            case 3:
+                _a.sent();
+                return [2 /*return*/, res.status(200).json({ message: 'deleted chef success' })];
+        }
+    });
+}); };
+exports.deleteChefById = deleteChefById;

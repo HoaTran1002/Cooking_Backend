@@ -24,14 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
+var course_models_1 = require("./course.models");
 var chef = new mongoose_1.Schema({
     name: { type: String },
-    birthday: { type: String },
-    image: { type: String },
-    address: { type: String },
-    phoneNumber: { type: String },
-    email: { type: String },
-    skill: { type: String },
-    achievements: { type: String }
+    description: { type: String },
+    slogan: { type: String },
+    role: { type: String },
+    image: { type: course_models_1.imageSchema }
 });
 exports.default = mongoose_1.default.model('Chef', chef);

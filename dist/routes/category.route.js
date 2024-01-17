@@ -1,23 +1,14 @@
 "use strict";
-// import { Router } from 'express'
-// import {
-//   createCategory,
-//   removeCategory,
-//   updateCategory,
-//   addCourseById,
-//   removeCourseById,
-//   getAll,
-//   getById
-// } from '../controllers/category.controllers'
-// import { authorize } from '../middlewares/auth.middlewears'
-// import { asyncHandelError } from '../middlewares/error.middlewear'
-// const router = Router()
-// router.get('/', authorize(), asyncHandelError(getAll))
-// router.get('/:id', authorize(), asyncHandelError(getById))
-// router.post('/create', authorize(), asyncHandelError(createCategory))
-// router.post('/:id/addCourseById/:idCourse', authorize(), asyncHandelError(addCourseById))
-// router.put('/update/:id', authorize(), asyncHandelError(updateCategory))
-// router.delete('/remove/:id', authorize(), asyncHandelError(removeCategory))
-// router.delete('/:id/removeCourseById/:idCourse', authorize(), asyncHandelError(removeCourseById))
 Object.defineProperty(exports, "__esModule", { value: true });
-// export default router
+var express_1 = require("express");
+var category_controllers_1 = require("../controllers/category.controllers");
+var auth_middlewears_1 = require("../middlewares/auth.middlewears");
+var error_middlewear_1 = require("../middlewares/error.middlewear");
+var router = (0, express_1.Router)();
+router.post('/create/:idCourse', (0, auth_middlewears_1.authorize)(), (0, error_middlewear_1.asyncHandelError)(category_controllers_1.createCategory));
+router.put('/:id/update', (0, error_middlewear_1.asyncHandelError)(category_controllers_1.updateCategory));
+router.delete('/:id/remove', (0, auth_middlewears_1.authorize)(), (0, error_middlewear_1.asyncHandelError)(category_controllers_1.removeCategory));
+router.get('/getAll', (0, error_middlewear_1.asyncHandelError)(category_controllers_1.getAll));
+router.get('/getAllByCourseId/:idCourse', (0, error_middlewear_1.asyncHandelError)(category_controllers_1.getAllByCourseId));
+router.get('/:id/getAllById', (0, auth_middlewears_1.authorize)(), (0, error_middlewear_1.asyncHandelError)(category_controllers_1.getById));
+exports.default = router;

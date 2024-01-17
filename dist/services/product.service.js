@@ -39,10 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteFIleVideoProduct = exports.deleteFIleImageProduct = exports.findAllProduct = exports.findProductById = void 0;
+exports.deleteByIdProduct = exports.updateIdCategory = exports.deleteFIleVideoProduct = exports.deleteFIleImageProduct = exports.findAllProduct = exports.findProductById = void 0;
 var response_interface_1 = require("../interfaces/response.interface");
 var product_models_1 = __importDefault(require("../models/product.models"));
 var file_service_1 = require("./file.service");
+var product_repository_1 = require("../repositories/product.repository");
 var findProductById = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var fillter, products, error_1;
     return __generator(this, function (_a) {
@@ -83,14 +84,14 @@ var findAllProduct = function () { return __awaiter(void 0, void 0, void 0, func
 }); };
 exports.findAllProduct = findAllProduct;
 var deleteFIleImageProduct = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
-    var course;
+    var product;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, product_models_1.default.findOne({ _id: _id })];
             case 1:
-                course = (_a.sent());
-                if (course.images && course.images.length > 0) {
-                    course.images.map(function (image) { return __awaiter(void 0, void 0, void 0, function () {
+                product = (_a.sent());
+                if (product.images && product.images.length > 0) {
+                    product.images.map(function (image) { return __awaiter(void 0, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, (0, file_service_1.deleteFile)(image.url)];
@@ -107,14 +108,14 @@ var deleteFIleImageProduct = function (_id) { return __awaiter(void 0, void 0, v
 }); };
 exports.deleteFIleImageProduct = deleteFIleImageProduct;
 var deleteFIleVideoProduct = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
-    var course;
+    var product;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, product_models_1.default.findOne({ _id: _id })];
             case 1:
-                course = (_a.sent());
-                if (course.videos && course.videos.length > 0) {
-                    course.videos.map(function (video) { return __awaiter(void 0, void 0, void 0, function () {
+                product = (_a.sent());
+                if (product.videos && product.videos.length > 0) {
+                    product.videos.map(function (video) { return __awaiter(void 0, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, (0, file_service_1.deleteFile)(video.url)];
@@ -130,3 +131,49 @@ var deleteFIleVideoProduct = function (_id) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.deleteFIleVideoProduct = deleteFIleVideoProduct;
+var updateIdCategory = function (idProduct, idCategory) { return __awaiter(void 0, void 0, void 0, function () {
+    var fillter, update, options;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                fillter = { id: idProduct };
+                update = { idCategory: idCategory };
+                options = { new: true };
+                return [4 /*yield*/, product_models_1.default.findOneAndUpdate(fillter, update, options)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateIdCategory = updateIdCategory;
+var deleteByIdProduct = function (idProduct) { return __awaiter(void 0, void 0, void 0, function () {
+    var product;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, exports.findProductById)(idProduct)];
+            case 1:
+                product = (_a.sent());
+                if (!(product.images.length > 0)) return [3 /*break*/, 3];
+                // const images = await getAllImageProduct(idProduct)
+                return [4 /*yield*/, (0, exports.deleteFIleImageProduct)(idProduct)];
+            case 2:
+                // const images = await getAllImageProduct(idProduct)
+                _a.sent();
+                _a.label = 3;
+            case 3:
+                if (!(product.videos.length > 0)) return [3 /*break*/, 5];
+                // const videos = await getAllVideoProduct(idProduct)
+                return [4 /*yield*/, (0, exports.deleteFIleVideoProduct)(idProduct)];
+            case 4:
+                // const videos = await getAllVideoProduct(idProduct)
+                _a.sent();
+                _a.label = 5;
+            case 5: return [4 /*yield*/, (0, product_repository_1.deleteProduct)(idProduct)];
+            case 6:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteByIdProduct = deleteByIdProduct;

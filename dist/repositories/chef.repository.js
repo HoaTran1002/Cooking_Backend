@@ -39,107 +39,65 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeCategory = exports.findCategoryById = exports.findById = exports.updateById = exports.removeCourse = exports.addCourse = exports.remove = void 0;
-var category_models_1 = __importDefault(require("../models/category.models"));
-var remove = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
-    var fillter, options, category;
+exports.deleteByIDChef = exports.updateChefByID = exports.getChefByID = exports.addChef = void 0;
+var chef_models_1 = __importDefault(require("../models/chef.models"));
+var addChef = function (data) { return __awaiter(void 0, void 0, void 0, function () {
+    var news;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, chef_models_1.default.create(data)];
+            case 1:
+                news = (_a.sent());
+                return [2 /*return*/, news];
+        }
+    });
+}); };
+exports.addChef = addChef;
+var getChefByID = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var fillter, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                fillter = { _id: _id };
+                fillter = { _id: id };
+                return [4 /*yield*/, chef_models_1.default.findOne(fillter)];
+            case 1:
+                data = _a.sent();
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.getChefByID = getChefByID;
+var updateChefByID = function (id, body) { return __awaiter(void 0, void 0, void 0, function () {
+    var fillter, update, options, news;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                fillter = { _id: id };
+                update = { $set: body };
                 options = { new: true };
-                return [4 /*yield*/, category_models_1.default.findOneAndDelete(fillter, options)];
+                return [4 /*yield*/, chef_models_1.default.findOneAndUpdate(fillter, update, options)];
             case 1:
-                category = _a.sent();
-                return [2 /*return*/, category];
+                news = _a.sent();
+                if (news) {
+                    return [2 /*return*/, news];
+                }
+                return [2 /*return*/];
         }
     });
 }); };
-exports.remove = remove;
-var addCourse = function (_id, _idCourse) { return __awaiter(void 0, void 0, void 0, function () {
-    var fillter, update, options, category;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                fillter = { _id: _id };
-                update = { $push: { _idCourses: { idCourse: _idCourse } } };
-                options = { new: true };
-                return [4 /*yield*/, category_models_1.default.updateOne(fillter, update)];
-            case 1:
-                category = _a.sent();
-                return [2 /*return*/, category];
-        }
-    });
-}); };
-exports.addCourse = addCourse;
-var removeCourse = function (_id, _idCourse) { return __awaiter(void 0, void 0, void 0, function () {
-    var fillter, update, options, category;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                fillter = { _id: _id };
-                update = {
-                    $pull: {
-                        _idCourses: { idCourse: _idCourse }
-                    }
-                };
-                options = { new: true };
-                return [4 /*yield*/, category_models_1.default.updateOne(fillter, update, options)];
-            case 1:
-                category = _a.sent();
-                return [2 /*return*/, category];
-        }
-    });
-}); };
-exports.removeCourse = removeCourse;
-var updateById = function (_id, body) { return __awaiter(void 0, void 0, void 0, function () {
-    var fillter, update, options, category;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                fillter = { _id: _id };
-                update = {
-                    body: body
-                };
-                options = {
-                    new: true
-                };
-                return [4 /*yield*/, category_models_1.default.findOneAndUpdate(fillter, update, options)];
-            case 1:
-                category = _a.sent();
-                return [2 /*return*/, category];
-        }
-    });
-}); };
-exports.updateById = updateById;
-var findById = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
-    var category;
-    return __generator(this, function (_a) {
-        category = category_models_1.default.findById(_id);
-        return [2 /*return*/, category];
-    });
-}); };
-exports.findById = findById;
-var findCategoryById = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
-    var category;
-    return __generator(this, function (_a) {
-        category = category_models_1.default.findById(_id);
-        return [2 /*return*/, category];
-    });
-}); };
-exports.findCategoryById = findCategoryById;
-var removeCategory = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
+exports.updateChefByID = updateChefByID;
+var deleteByIDChef = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var fillter, options;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                fillter = { _id: _id };
+                fillter = { _id: id };
                 options = { new: true };
-                return [4 /*yield*/, category_models_1.default.findOneAndDelete(fillter, options)];
+                return [4 /*yield*/, chef_models_1.default.findOneAndDelete(fillter, options)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
         }
     });
 }); };
-exports.removeCategory = removeCategory;
+exports.deleteByIDChef = deleteByIDChef;

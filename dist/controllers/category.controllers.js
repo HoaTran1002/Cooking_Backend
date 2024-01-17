@@ -39,15 +39,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.getAll = exports.removeCourseById = exports.addCourseById = exports.updateCategory = exports.removeCategory = exports.createCategory = void 0;
+exports.getById = exports.getAllByCourseId = exports.getAll = exports.removeCategory = exports.updateCategory = exports.createCategory = void 0;
 var category_models_1 = __importDefault(require("../models/category.models"));
 var category_service_1 = require("../services/category.service");
+var course_service_1 = require("../services/course.service");
 var createCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var category, response;
+    var idCourse, course, categoryInfor, category, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, category_models_1.default.create(req.body.name)];
+            case 0:
+                idCourse = req.body.idCourse;
+                if (!idCourse) {
+                    return [2 /*return*/, res.status(400).json({ message: 'could not found idCourse' })];
+                }
+                return [4 /*yield*/, (0, course_service_1.courseFindById)(idCourse)];
             case 1:
+                course = _a.sent();
+                if (!course) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found Course' })];
+                }
+                categoryInfor = {
+                    name: req.body.name,
+                    idCourse: req.body.idCourse
+                };
+                return [4 /*yield*/, category_models_1.default.create(categoryInfor)];
+            case 2:
                 category = _a.sent();
                 response = {
                     message: 'create category success',
@@ -58,81 +74,60 @@ var createCategory = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.createCategory = createCategory;
-var removeCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _id, category, response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _id = req.params.id;
-                return [4 /*yield*/, (0, category_service_1.remove)(_id)];
-            case 1:
-                category = _a.sent();
-                response = {
-                    message: 'remove category success',
-                    data: category
-                };
-                return [2 /*return*/, res.status(200).json(response)];
-        }
-    });
-}); };
-exports.removeCategory = removeCategory;
 var updateCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _id, body, category, response;
+    var _id, body, category, newCategory, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _id = req.params.id;
                 body = req.body;
-                return [4 /*yield*/, (0, category_service_1.updateById)(_id, body)];
+                if (!_id) {
+                    return [2 /*return*/, res.status(400).json({ message: 'could not found idCategory' })];
+                }
+                return [4 /*yield*/, (0, category_service_1.findById)(_id)];
             case 1:
                 category = _a.sent();
+                if (!category) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found category' })];
+                }
+                return [4 /*yield*/, (0, category_service_1.updateById)(_id, body)];
+            case 2:
+                newCategory = _a.sent();
                 response = {
                     message: 'up date category success',
-                    data: category
+                    data: newCategory
                 };
                 return [2 /*return*/, res.status(201).json(response)];
         }
     });
 }); };
 exports.updateCategory = updateCategory;
-var addCourseById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _id, _idCourse, category, response;
+var removeCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _id, category, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _id = req.params.id;
-                _idCourse = req.params.idCourse;
-                return [4 /*yield*/, (0, category_service_1.addCourse)(_id, _idCourse)];
+                if (!_id) {
+                    return [2 /*return*/, res.status(400).json({ message: 'could not exist  id' })];
+                }
+                return [4 /*yield*/, (0, category_service_1.findById)(_id)];
             case 1:
                 category = _a.sent();
+                if (!category) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found category' })];
+                }
+                return [4 /*yield*/, (0, category_service_1.remove)(_id)];
+            case 2:
+                _a.sent();
                 response = {
-                    message: 'remove category success',
-                    data: category
+                    message: 'remove category success'
                 };
                 return [2 /*return*/, res.status(200).json(response)];
         }
     });
 }); };
-exports.addCourseById = addCourseById;
-var removeCourseById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _id, _idCourse, category, response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _id = req.params.id;
-                _idCourse = req.params.idCourse;
-                return [4 /*yield*/, (0, category_service_1.removeCourse)(_id, _idCourse)];
-            case 1:
-                category = _a.sent();
-                response = {
-                    message: 'remove category success',
-                    data: category
-                };
-                return [2 /*return*/, res.status(200).json(response)];
-        }
-    });
-}); };
-exports.removeCourseById = removeCourseById;
+exports.removeCategory = removeCategory;
 var getAll = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var category, response;
     return __generator(this, function (_a) {
@@ -140,6 +135,9 @@ var getAll = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 0: return [4 /*yield*/, category_models_1.default.find()];
             case 1:
                 category = _a.sent();
+                if (!category) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found category' })];
+                }
                 response = {
                     message: 'get all success',
                     data: category
@@ -149,6 +147,36 @@ var getAll = function (req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 exports.getAll = getAll;
+var getAllByCourseId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var idCourse, course, category, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                idCourse = req.body.idCourse;
+                if (!idCourse) {
+                    return [2 /*return*/, res.status(400).json({ message: 'could not found idCourse' })];
+                }
+                return [4 /*yield*/, (0, course_service_1.courseFindById)(idCourse)];
+            case 1:
+                course = _a.sent();
+                if (!course) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found Course' })];
+                }
+                return [4 /*yield*/, category_models_1.default.find({ idCourse: idCourse })];
+            case 2:
+                category = _a.sent();
+                if (!category) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found category' })];
+                }
+                response = {
+                    message: 'get all success',
+                    data: category
+                };
+                return [2 /*return*/, res.status(200).json(response)];
+        }
+    });
+}); };
+exports.getAllByCourseId = getAllByCourseId;
 var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _id, category, response;
     return __generator(this, function (_a) {
@@ -158,12 +186,41 @@ var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, category_service_1.findById)(_id)];
             case 1:
                 category = _a.sent();
+                if (!_id) {
+                    return [2 /*return*/, res.status(400).json({ message: 'could not exist  id' })];
+                }
+                if (!category) {
+                    return [2 /*return*/, res.status(404).json({ message: 'could not found category' })];
+                }
                 response = {
                     message: 'get all category sucess',
                     data: category
                 };
-                return [2 /*return*/, res.status(200).json(category)];
+                return [2 /*return*/, res.status(200).json(response)];
         }
     });
 }); };
 exports.getById = getById;
+// export const addCourseById = async (req: Request, res: Response): Promise<void | Response<IResonseObject>> => {
+//   const _id = req.params.id
+//   const _idCourse = req.params.idCourse
+//   const category = await addCourse(_id, _idCourse)
+//   const response: IResonseObject = {
+//     message: 'remove category success',
+//     data: category
+//   }
+//   return res.status(200).json(response)
+// }
+// export const removeCourseById = async (
+//   req: Request<any, unknown, ICategory>,
+//   res: Response
+// ): Promise<void | Response<IResonseObject>> => {
+//   const _id = req.params.id
+//   const _idCourse = req.params.idCourse
+//   const category = await removeCourse(_id, _idCourse)
+//   const response: IResonseObject = {
+//     message: 'remove category success',
+//     data: category
+//   }
+//   return res.status(200).json(response)
+// }

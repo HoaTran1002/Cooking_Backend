@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteFIleVideoCourse = exports.deleteFIleImageCourse = exports.deleteFIleCourse = exports.findById = void 0;
+exports.deleteFIleVideoCourse = exports.deleteFIleImageCourse = exports.deleteFIleCourse = exports.courseFindById = exports.findById = void 0;
 var course_models_1 = __importDefault(require("../models/course.models"));
 var course_models_2 = __importDefault(require("../models/course.models"));
 var file_service_1 = require("./file.service");
@@ -57,6 +57,20 @@ var findById = function (id) { return __awaiter(void 0, void 0, void 0, function
     });
 }); };
 exports.findById = findById;
+var courseFindById = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var fillter, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                fillter = { _id: id };
+                return [4 /*yield*/, course_models_2.default.findOne(fillter)];
+            case 1:
+                result = _a.sent();
+                return [2 /*return*/, result];
+        }
+    });
+}); };
+exports.courseFindById = courseFindById;
 var deleteFIleCourse = function (_id) { return __awaiter(void 0, void 0, void 0, function () {
     var course;
     return __generator(this, function (_a) {

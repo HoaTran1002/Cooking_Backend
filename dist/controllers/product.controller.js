@@ -43,17 +43,38 @@ exports.removeAllVIdeoByProductById = exports.updateContentVideoVPS = exports.de
 var product_models_1 = __importDefault(require("../models/product.models"));
 var product_models_2 = __importDefault(require("../models/product.models"));
 var product_repository_1 = require("../repositories/product.repository");
+var category_service_1 = require("../services/category.service");
+var course_service_1 = require("../services/course.service");
 var file_service_1 = require("../services/file.service");
 var product_service_1 = require("../services/product.service");
 var uploadToS3_service_1 = require("../services/uploadToS3.service");
 var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, product;
+    var body, idCourse, idCategory, course, category, product;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 body = req.body;
-                return [4 /*yield*/, product_models_2.default.create(body)];
+                idCourse = req.params.idCourse;
+                idCategory = req.params.idCategory;
+                if (!idCourse) {
+                    return [2 /*return*/, res.status(404).json({ message: 'not exist idCourse' })];
+                }
+                return [4 /*yield*/, (0, course_service_1.courseFindById)(idCourse)];
             case 1:
+                course = (_a.sent());
+                if (!course) {
+                    return [2 /*return*/, res.status(404).json({ message: 'not found Course by this id' })];
+                }
+                if (idCategory) {
+                    category = (0, category_service_1.findCategoryById)(idCategory);
+                    if (!category) {
+                        return [2 /*return*/, res.status(404).json({ message: 'not found category by this id' })];
+                    }
+                    body.idCategory = idCategory;
+                }
+                body.idCourse = idCourse;
+                return [4 /*yield*/, product_models_2.default.create(body)];
+            case 2:
                 product = _a.sent();
                 if (product) {
                     return [2 /*return*/, res.status(200).json({ message: 'created product success', data: product })];
@@ -95,7 +116,7 @@ var getProductById = function (req, res) { return __awaiter(void 0, void 0, void
 }); };
 exports.getProductById = getProductById;
 var editProductById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var idProduct, product, productEdit;
+    var idProduct, product, body, idCourse, idCategory, course, category, productEdit;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -109,9 +130,28 @@ var editProductById = function (req, res) { return __awaiter(void 0, void 0, voi
                 if (!idProduct) {
                     return [2 /*return*/, res.status(404).json({ message: 'not found id product' })];
                 }
-                console.log('body:', req.body);
-                return [4 /*yield*/, (0, product_repository_1.editProduct)(idProduct, req.body)];
+                body = req.body;
+                idCourse = req.params.idCourse;
+                idCategory = req.params.idCategory;
+                if (!idCourse) return [3 /*break*/, 3];
+                return [4 /*yield*/, (0, course_service_1.courseFindById)(idCourse)];
             case 2:
+                course = (_a.sent());
+                if (!course) {
+                    return [2 /*return*/, res.status(404).json({ message: 'not found Course by this id' })];
+                }
+                body.idCourse = idCourse;
+                _a.label = 3;
+            case 3:
+                if (idCategory) {
+                    category = (0, category_service_1.findCategoryById)(idCategory);
+                    if (!category) {
+                        return [2 /*return*/, res.status(404).json({ message: 'not found category by this id' })];
+                    }
+                    body.idCategory = idCategory;
+                }
+                return [4 /*yield*/, (0, product_repository_1.editProduct)(idProduct, body)];
+            case 4:
                 productEdit = _a.sent();
                 if (!productEdit) {
                     return [2 /*return*/, res.status(404).json({ message: 'not found product by id' })];

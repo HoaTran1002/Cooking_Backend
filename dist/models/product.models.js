@@ -30,8 +30,10 @@ var product = new mongoose_1.Schema({
     level: { type: String },
     note: { type: String },
     category: { type: String },
-    images: [course_models_1.imageSchema],
-    videos: [course_models_1.videoSchema],
-    idProduct: { type: String }
+    images: { type: [course_models_1.imageSchema] },
+    videos: { type: [course_models_1.videoSchema] },
+    timeLearning: [String],
+    idCourse: { type: String },
+    idCategory: { type: String }
 });
 exports.default = mongoose_1.default.model('ProductsModels', product);
