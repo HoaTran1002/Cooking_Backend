@@ -16,14 +16,14 @@ router.get('/getAll', asyncHandelError(getAll))
 router.get('/getById/:id', asyncHandelError(getById))
 router.post(
   '/create',
-  authorize(['ADMIN']),
+  // authorize(['ADMIN']),
   validateBody<IInformationBusiness>(infoBusinessValidate),
   asyncHandelError(createInformationBusiness)
 )
 router.delete('/remove/:id', authorize(['ADMIN']), asyncHandelError(removeById))
 router.patch(
   '/update/:id',
-  authorize(['ADMIN']),
+  // authorize(['ADMIN']),
   validateBody<IInformationBusiness>(infoBusinessValidate),
   asyncHandelError(updateFormationBusinessById)
 )
