@@ -19,7 +19,8 @@ export const env = {
   AWS_BUCKET_SECRET_KEY: 'Dcx6je57RqFlLmF4ebSneAAGk+pm+i32aIZ/FGpJ',
   MONGODB_ADDRESS: 'localhost:27017',
   //'/var/www/content',
-  PATH_DATA_FILE: '/Users/hoatran/datafile',
+  // /Users/hoatran/datafile
+  PATH_DATA_FILE: '/var/www/content',
   DB_USERNAME: 'admin',
   DB_PASSWORD: 'Pass2910'
 }
