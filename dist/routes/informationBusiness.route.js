@@ -9,7 +9,11 @@ var informationBusiness_validate_1 = require("../validator/informationBusiness.v
 var router = (0, express_1.Router)();
 router.get('/getAll', (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.getAll));
 router.get('/getById/:id', (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.getById));
-router.post('/create', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, validate_middlewear_1.validateBody)(informationBusiness_validate_1.infoBusinessValidate), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.createInformationBusiness));
+router.post('/create', 
+// authorize(['ADMIN']),
+(0, validate_middlewear_1.validateBody)(informationBusiness_validate_1.infoBusinessValidate), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.createInformationBusiness));
 router.delete('/remove/:id', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.removeById));
-router.patch('/update/:id', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, validate_middlewear_1.validateBody)(informationBusiness_validate_1.infoBusinessValidate), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.updateFormationBusinessById));
+router.patch('/update/:id', 
+// authorize(['ADMIN']),
+(0, validate_middlewear_1.validateBody)(informationBusiness_validate_1.infoBusinessValidate), (0, error_middlewear_1.asyncHandelError)(informationBusiness_controllers_1.updateFormationBusinessById));
 exports.default = router;
