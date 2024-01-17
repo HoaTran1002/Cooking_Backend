@@ -14,7 +14,7 @@ export const createNews = async (
     if (!file) {
       return res.status(400).json({ message: 'file not found' })
     }
-    console.log(file.buffer)
+
     newsData.image = { url: file.path }
     const createdNews = await add(newsData)
     const response: IResonseObject = {
@@ -54,7 +54,7 @@ export const getAllNews = async (req: Request<any, unknown, INews>, res: Respons
   }
   const getAllNews = await findAll(Number(page), Number(size))
   const response: IResonseObject = {
-    message: 'failed',
+    message: 'get all success',
     data: getAllNews
   }
   if (!getAllNews) {

@@ -2,8 +2,6 @@ import Joi from 'joi'
 import { ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 export const courseValidate = (data: ICourse) => {
   const course = Joi.object<ICourse>({
-    category: Joi.string().valid('SHORT_TERM', 'LONG_TERM').required().trim(),
-    level: Joi.string().valid('BASIC', 'MEDIUM', 'MASTER').required().trim(),
     title: Joi.string().trim(),
     description: Joi.string().trim(),
     image: Joi.object<IImage>(),

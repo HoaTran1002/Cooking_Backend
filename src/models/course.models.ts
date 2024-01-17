@@ -24,8 +24,6 @@ const roadmapSchema = new Schema<IRoadmap>({
   knowledge: { type: String, default: 'null' }
 })
 export const course = new Schema<ICourse>({
-  category: { type: String },
-  level: { type: String },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
   images: { type: [imageSchema] },

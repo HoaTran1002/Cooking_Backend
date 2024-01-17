@@ -20,8 +20,6 @@ export interface IRoadmap {
   skill: string
 }
 export interface ICourse {
-  category?: TCategory
-  level?: TLeve
   title?: string
   description?: string
   image?: string

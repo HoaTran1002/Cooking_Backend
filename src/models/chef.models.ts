@@ -1,23 +1,12 @@
 import mongoose, { Schema } from 'mongoose'
-interface IChef {
-  name?: string
-  birthday?: string
-  image?: string
-  address?: string
-  phoneNumber?: string
-  email?: string
-  skill?: string
-  achievements?: string
-}
+import { imageSchema } from './course.models'
+import { IChef } from '~/interfaces/chef.interface'
 
 const chef = new Schema<IChef>({
   name: { type: String },
-  birthday: { type: String },
-  image: { type: String },
-  address: { type: String },
-  phoneNumber: { type: String },
-  email: { type: String },
-  skill: { type: String },
-  achievements: { type: String }
+  description: { type: String },
+  slogan: { type: String },
+  role: { type: String },
+  image: { type: imageSchema }
 })
 export default mongoose.model('Chef', chef)
