@@ -48,7 +48,8 @@ var createCategory = function (req, res) { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                idCourse = req.body.idCourse;
+                idCourse = req.params.idCourse;
+                console.log(idCourse);
                 if (!idCourse) {
                     return [2 /*return*/, res.status(400).json({ message: 'could not found idCourse' })];
                 }
@@ -60,7 +61,7 @@ var createCategory = function (req, res) { return __awaiter(void 0, void 0, void
                 }
                 categoryInfor = {
                     name: req.body.name,
-                    idCourse: req.body.idCourse
+                    idCourse: req.params.idCourse
                 };
                 return [4 /*yield*/, category_models_1.default.create(categoryInfor)];
             case 2:
@@ -152,7 +153,8 @@ var getAllByCourseId = function (req, res) { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                idCourse = req.body.idCourse;
+                idCourse = req.params.idCourse;
+                console.log(idCourse);
                 if (!idCourse) {
                     return [2 /*return*/, res.status(400).json({ message: 'could not found idCourse' })];
                 }
