@@ -5,7 +5,7 @@ import Category from '~/models/category.models'
 import { remove, addCourse, removeCourse, findById, updateById } from '~/services/category.service'
 import { courseFindById } from '~/services/course.service'
 export const createCategory = async (req: Request, res: Response): Promise<void | Response<IResonseObject>> => {
-  const idCourse = req.body.idCourse
+  const idCourse = req.params.idCourse
   if (!idCourse) {
     return res.status(400).json({ message: 'could not found idCourse' })
   }
@@ -15,7 +15,7 @@ export const createCategory = async (req: Request, res: Response): Promise<void 
   }
   const categoryInfor: ICategory = {
     name: req.body.name!,
-    idCourse: req.body.idCourse
+    idCourse: req.params.idCourse
   }
   const category = await Category.create(categoryInfor)
   const response: IResonseObject = {
@@ -75,7 +75,7 @@ export const getAll = async (req: Request, res: Response): Promise<void | Respon
   return res.status(200).json(response)
 }
 export const getAllByCourseId = async (req: Request, res: Response): Promise<void | Response<IResonseObject>> => {
-  const idCourse = req.body.idCourse
+  const idCourse = req.params.idCourse
   if (!idCourse) {
     return res.status(400).json({ message: 'could not found idCourse' })
   }
