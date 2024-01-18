@@ -32,7 +32,7 @@ var product = new mongoose_1.Schema({
     category: { type: String },
     images: { type: [course_models_1.imageSchema] },
     videos: { type: [course_models_1.videoSchema] },
-    timeLearning: [String],
+    timeLearning: { type: String },
     idCourse: { type: String },
     idCategory: { type: String }
 });

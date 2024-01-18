@@ -67,7 +67,8 @@ var product_models_1 = __importDefault(require("./product.models"));
 var product_service_1 = require("../services/product.service");
 var category = new mongoose_1.Schema({
     name: { type: String },
-    idCourse: { type: String }
+    idCourse: { type: String },
+    listTimeLearning: { type: [String] }
 });
 category.pre('findOneAndDelete', function (next) {
     return __awaiter(this, void 0, void 0, function () {

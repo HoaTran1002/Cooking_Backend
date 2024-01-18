@@ -8,7 +8,7 @@ export interface IProduct {
   images: IImage[]
   videos: IVideo[]
   note: string
-  timeLearning?: string[]
+  timeLearning?: string
   idCourse?: string
   idCategory?: string
 }

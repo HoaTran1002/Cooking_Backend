@@ -5,7 +5,8 @@ import { updateIdCategory } from '~/services/product.service'
 
 const category = new Schema<ICategory>({
   name: { type: String },
-  idCourse: { type: String }
+  idCourse: { type: String },
+  listTimeLearning: { type: [String] }
 })
 category.pre('findOneAndDelete', async function (next) {
   try {

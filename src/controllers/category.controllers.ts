@@ -16,7 +16,8 @@ export const createCategory = async (req: Request, res: Response): Promise<void 
   }
   const categoryInfor: ICategory = {
     name: req.body.name!,
-    idCourse: req.params.idCourse
+    idCourse: req.params.idCourse,
+    listTimeLearning: req.body.listTimeLearning
   }
   const category = await Category.create(categoryInfor)
   const response: IResonseObject = {

@@ -10,7 +10,7 @@ const product = new Schema<IProduct>({
   category: { type: String },
   images: { type: [imageSchema] },
   videos: { type: [videoSchema] },
-  timeLearning: [String],
+  timeLearning: { type: String },
   idCourse: { type: String },
   idCategory: { type: String }
 })

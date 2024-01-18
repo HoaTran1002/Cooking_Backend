@@ -61,7 +61,8 @@ var createCategory = function (req, res) { return __awaiter(void 0, void 0, void
                 }
                 categoryInfor = {
                     name: req.body.name,
-                    idCourse: req.params.idCourse
+                    idCourse: req.params.idCourse,
+                    listTimeLearning: req.body.listTimeLearning
                 };
                 return [4 /*yield*/, category_models_1.default.create(categoryInfor)];
             case 2:
