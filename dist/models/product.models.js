@@ -27,9 +27,7 @@ var mongoose_1 = __importStar(require("mongoose"));
 var course_models_1 = require("./course.models");
 var product = new mongoose_1.Schema({
     name: { type: String },
-    level: { type: String },
     note: { type: String },
-    category: { type: String },
     images: { type: [course_models_1.imageSchema] },
     videos: { type: [course_models_1.videoSchema] },
     timeLearning: { type: String },

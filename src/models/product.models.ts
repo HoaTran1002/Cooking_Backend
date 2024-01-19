@@ -5,9 +5,7 @@ import { imageSchema, videoSchema } from './course.models'
 
 const product = new Schema<IProduct>({
   name: { type: String },
-  level: { type: String },
   note: { type: String },
-  category: { type: String },
   images: { type: [imageSchema] },
   videos: { type: [videoSchema] },
   timeLearning: { type: String },
