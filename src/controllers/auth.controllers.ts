@@ -53,6 +53,7 @@ export const register = async (
     }
     await refreshtokenModels.create(RefreshTokenDocument)
     res.setHeader('Authorization', `Bearer ${accessToken}`)
+    res.cookie(env.NAME_ACCESS_TOKEN_IN_COOKIE, accessToken, cookiesOptions)
     res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
     return res.status(200).json({
       message: 'register success',
@@ -107,6 +108,7 @@ export const login = async (
   const refreshs = await refreshtokenModels.find()
   console.log(refreshs)
   res.setHeader('Authorization', `Bearer ${accessToken}`)
+  res.cookie(env.NAME_ACCESS_TOKEN_IN_COOKIE, accessToken, cookiesOptions)
   res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, refreshToken, cookiesOptions)
 
   return res.status(200).json({
@@ -151,6 +153,7 @@ export const requestRefereshToken = async (req: Request<unknown, unknown, IAccou
       if (replaced) {
         const accessToken = generateAccessToken(user)
         res.setHeader('Authorization', `Bearer ${accessToken}`)
+        res.cookie(env.NAME_ACCESS_TOKEN_IN_COOKIE, accessToken, cookiesOptions)
         res.cookie(env.NAME_REFRESH_TOKEN_IN_COOKIE, newRefreshToken, cookiesOptions)
         response.message = 'refresh token success'
         response.data = { accessToken, refreshToken }
@@ -169,6 +172,7 @@ export const logOut = async (req: Request, res: Response) => {
     const refreshToken: string = await req.cookies[env.NAME_REFRESH_TOKEN_IN_COOKIE]
     const fillter = { token: refreshToken }
     await refreshtokenModels.findOneAndDelete(fillter)
+    res.clearCookie(env.NAME_ACCESS_TOKEN_IN_COOKIE)
     res.clearCookie(env.NAME_REFRESH_TOKEN_IN_COOKIE)
     res.removeHeader('Authorization')
     const response: IResonseObject = {

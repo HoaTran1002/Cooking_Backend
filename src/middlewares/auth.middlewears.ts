@@ -11,7 +11,6 @@ export const authorize = (roles?: string[]) =>
       message: ''
     }
     const authorizationHeader = req.get('Authorization')
-    console.log('authorizationHeader:', authorizationHeader)
     if (!authorizationHeader) {
       response.message = 'not found token'
       throw new Error('no authencation')
