@@ -5,6 +5,7 @@ import authRoutes from '~/routes/auth.route'
 import accountRoutes from '~/routes/account.route'
 // import upload from '~/routes/uploadToS3.route'
 import chefRoutes from '~/routes/chef.route'
+import faqRoutes from '~/routes/faq.route'
 import informationBusiness from '~/routes/informationBusiness.route'
 import newsRoutes from '~/routes/news.route'
 import { Express } from 'express'
@@ -19,6 +20,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/informationBusiness', informationBusiness)
   app.use('/api/v1/news', newsRoutes)
   app.use('/api/v1/chef', chefRoutes)
+  app.use('/api/v1/faq', faqRoutes)
   app.use(errorHandeler)
   app.use(notFound)
 }
