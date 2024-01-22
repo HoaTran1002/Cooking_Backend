@@ -16,7 +16,8 @@ import {
   deleteVideoVPSByCourseId,
   updateContentVideoVPS,
   removeAllVideoByCourseById,
-  removeAllImageByCourseById
+  removeAllImageByCourseById,
+  getCourseById
 } from '~/controllers/course.controller'
 // import {
 //   uploadImageFromLocalToS3ByCourseId,
@@ -38,39 +39,55 @@ import { courseValidate, roadmapValidate } from '~/validator/course.validator'
 const router = Router()
 
 router.get('/getAll', asyncHandelError(getAll))
-router.post('/create', validateBody<ICourse>(courseValidate), asyncHandelError(courseCreate))
-router.get('/:courseId/roadmap/getAll', authorize(), asyncHandelError(courseCreateRoadmap))
+router.get('/:courseId/getCourse', asyncHandelError(getCourseById))
+router.post('/create', authorize(['ADMIN']), validateBody<ICourse>(courseValidate), asyncHandelError(courseCreate))
+router.get('/:courseId/roadmap/getAll', asyncHandelError(courseCreateRoadmap))
 router.post(
   '/:courseId/roadmap/create',
-  authorize(),
+  authorize(['ADMIN']),
   validateBody<IRoadmap>(roadmapValidate),
   asyncHandelError(courseCreateRoadmap)
 )
 
-router.put('/:courseId/update', authorize(), validateBody<ICourse>(courseValidate), asyncHandelError(courseUpdateById))
+router.put(
+  '/:courseId/update',
+  authorize(['ADMIN']),
+  validateBody<ICourse>(courseValidate),
+  asyncHandelError(courseUpdateById)
+)
 router.put(
   '/:courseId/roadmap/:roadmapId/update',
-  authorize(),
+  authorize(['ADMIN']),
   validateBody<IRoadmap>(roadmapValidate),
   asyncHandelError(updateRoadmapById)
 )
-router.delete('/:courseId/roadmap/:roadmapId/remove', authorize(), asyncHandelError(removeRoadmapById))
-router.delete('/:courseId/remove', asyncHandelError(removeCourseById))
+router.delete('/:courseId/roadmap/:roadmapId/remove', authorize(['ADMIN']), asyncHandelError(removeRoadmapById))
+router.delete('/:courseId/remove', authorize(['ADMIN']), asyncHandelError(removeCourseById))
 
 //file
 //image
 router.post(
   '/uploadImageFromLocal/:idCourse',
+  authorize(['ADMIN']),
   uploadDisk.single('file'),
   asyncHandelError(uploadImageFromLocalToVPSByCourseId)
 )
-router.delete('/:keyImage/deleteImageFromVPSByCourseId/:idCourse', asyncHandelError(deleteImageFromVPSByCourseId))
+router.delete(
+  '/:keyImage/deleteImageFromVPSByCourseId/:idCourse',
+  authorize(['ADMIN']),
+  asyncHandelError(deleteImageFromVPSByCourseId)
+)
 router.put(
   '/:idCourse/updateContentImage/:keyImage',
+  authorize(['ADMIN']),
   uploadMemory.single('file'),
   asyncHandelError(updateContentImageVPS)
 )
-router.delete('/:idCourse/removeAllImageByCourseById', asyncHandelError(removeAllImageByCourseById))
+router.delete(
+  '/:idCourse/removeAllImageByCourseById',
+  authorize(['ADMIN']),
+  asyncHandelError(removeAllImageByCourseById)
+)
 
 // router.delete('/deleteAllImageFrom/:idCourse', asyncHandelError(deleteAllImageFromS3ByCourseId))
 // router.get('/getAllImageFrom/:idCourse', asyncHandelError(getAllImageFromS3ByCourseId))
@@ -79,16 +96,26 @@ router.delete('/:idCourse/removeAllImageByCourseById', asyncHandelError(removeAl
 //video
 router.post(
   '/uploadVideoFromLocalToVPS/:idCourse',
+  authorize(['ADMIN']),
   uploadDisk.single('file'),
   asyncHandelError(uploadVideoFromLocalToVPSByCourseId)
 )
-router.delete('/:idCourse/deleteVideoByCourseId/:keyVideo', asyncHandelError(deleteVideoVPSByCourseId))
+router.delete(
+  '/:idCourse/deleteVideoByCourseId/:keyVideo',
+  authorize(['ADMIN']),
+  asyncHandelError(deleteVideoVPSByCourseId)
+)
 router.put(
   '/:idCourse/updateContentVideo/:keyVideo',
+  authorize(['ADMIN']),
   uploadMemory.single('file'),
   asyncHandelError(updateContentVideoVPS)
 )
-router.delete('/:idCourse/removeAllVideoByCourseById', asyncHandelError(removeAllVideoByCourseById))
+router.delete(
+  '/:idCourse/removeAllVideoByCourseById',
+  authorize(['ADMIN']),
+  asyncHandelError(removeAllVideoByCourseById)
+)
 // router.delete('/deleteAllVideoFromS3/:idCourse', asyncHandelError(deleteAllVideoFromS3ByCourseId))
 // router.get('/getAllVideoFromS3/:idCourse', asyncHandelError(getAllVideoFromS3ByCourseId))
 // router.get('/:keyVideo/getVideoFromS3', asyncHandelError(getVideoFromS3BykeyVideo))

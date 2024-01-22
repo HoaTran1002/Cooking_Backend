@@ -12,9 +12,14 @@ import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'
 import { accountValidate } from '~/validator/account.validate'
 const router = Router()
-router.get('/getAll', authorize(), asyncHandelError(findAllAccount))
-router.get('/findAccountById/:id', authorize(), asyncHandelError(findAccountById))
-router.post('/create', authorize(), validateBody<IAccount>(accountValidate), asyncHandelError(createAccount))
-router.delete('/delete/:id', authorize(), asyncHandelError(deleteAccountById))
-router.patch('/update/:id', authorize(), validateBody<IAccount>(accountValidate), asyncHandelError(updateAccountById))
+router.get('/getAll', asyncHandelError(findAllAccount))
+router.get('/findAccountById/:id', asyncHandelError(findAccountById))
+router.post('/create', authorize(['ADMIN']), validateBody<IAccount>(accountValidate), asyncHandelError(createAccount))
+router.delete('/delete/:id', authorize(['ADMIN']), asyncHandelError(deleteAccountById))
+router.patch(
+  '/update/:id',
+  authorize(['ADMIN']),
+  validateBody<IAccount>(accountValidate),
+  asyncHandelError(updateAccountById)
+)
 export default router

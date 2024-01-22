@@ -13,7 +13,7 @@ import { errorHandeler, notFound } from '~/middlewares/error.middlewear'
 const useRoutes = (app: Express) => {
   app.use('/api/v1/auth', authRoutes)
   app.use('/api/v1/course', courseRoutes)
-  app.use('/api/v1/account', accountRoutes)
+  // app.use('/api/v1/account', accountRoutes)
   app.use('/api/v1/category', categoryRoutes)
   // app.use('/api/v1/upload', upload)
   app.use('/api/v1/product', productRoutes)

@@ -63,21 +63,24 @@ export const courseCreateRoadmap = async (
   return res.status(201).json({ course: course })
 }
 
-export const getCourseById = async (req: Request, res: Response): Promise<Response<IResonseObject> | void> => {
-  const idCourse = req.params.idCourse
+export const getCourseById = async (
+  req: Request<any, unknown, ICourse>,
+  res: Response
+): Promise<Response<IResonseObject> | void> => {
+  const idCourse = req.params.courseId
   const response: IResonseObject = {
     message: 'get course success!'
   }
-  if (idCourse) {
-    const course = await findById(idCourse)
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' })
-    }
-    response.data = course
-    return res.status(200).json(response)
-  } else {
-    return res.status(404).json({ message: 'Not Found' })
+  if (!idCourse) {
+    return res.status(404).json({ message: 'idcourse required' })
   }
+
+  const course = await findById(idCourse)
+  if (!course) {
+    return res.status(404).json({ message: 'Course not found' })
+  }
+  response.data = course
+  return res.status(200).json(response)
 }
 //update
 export const courseUpdateById = async (
