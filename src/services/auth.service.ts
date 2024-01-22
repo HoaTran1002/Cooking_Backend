@@ -16,7 +16,6 @@ export const accountValid = async (body: IAccount): Promise<boolean> => {
   return false
 }
 export const createAccount = async (body: IAccount) => {
-  console.log('account')
   const account = await Account.create(body)
   return account
 }

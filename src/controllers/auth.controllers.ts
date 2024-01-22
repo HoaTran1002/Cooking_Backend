@@ -15,7 +15,7 @@ import { env } from '~/config/env.config'
 const cookiesOptions = {
   expires: new Date(Date.now() + 86400000),
   httpOnly: false,
-  secure: false
+  secure: true
 }
 export const register = async (
   req: Request<unknown, unknown, IAccount>,
@@ -43,7 +43,7 @@ export const register = async (
       _id: account._id.toString(),
       userName: account.userName ? account.userName : 'no name'
     }
-    console.log('user:', user)
+
     const accessToken = generateAccessToken(user)
     const refreshToken: string = generateRefreshToken(user)
 
