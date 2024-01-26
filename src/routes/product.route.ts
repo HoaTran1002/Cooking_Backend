@@ -29,13 +29,23 @@ import { validateBody } from '~/middlewares/validate.middlewear'
 import { productValidator } from '~/validator/product.validate'
 const route = Router()
 // , authorize(['ADMIN'])
-route.post('/create/:idCourse/:idCategory?', validateBody(productValidator), asyncHandelError(createProduct))
+route.post(
+  '/create/:idCourse/:idCategory?',
+  authorize(['ADMIN']),
+  validateBody(productValidator),
+  asyncHandelError(createProduct)
+)
 route.get('/getAll', asyncHandelError(getAllProduct))
 route.get('/:idProduct/getProductById', asyncHandelError(getProductById))
-route.put('/:idProduct/edit/:idCourse?/:idCategory?', validateBody(productValidator), asyncHandelError(editProductById))
+route.put(
+  '/:idProduct/edit/:idCourse?/:idCategory?',
+  authorize(['ADMIN']),
+  validateBody(productValidator),
+  asyncHandelError(editProductById)
+)
 
-route.delete('/:idProduct/delete', asyncHandelError(deleteProductById))
-route.delete('/deleteAll', asyncHandelError(deleteAllProduct))
+route.delete('/:idProduct/delete', authorize(['ADMIN']), asyncHandelError(deleteProductById))
+route.delete('/deleteAll', authorize(['ADMIN']), asyncHandelError(deleteAllProduct))
 //image
 route.post(
   '/uploadImageFromLocal/:idProduct',
