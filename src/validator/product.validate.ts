@@ -7,8 +7,10 @@ export const productValidator = (data: IProduct) => {
     name: Joi.string().required(),
     note: Joi.string().required(),
     image: Joi.array<IImage>(),
+    timeLearning: Joi.string(),
     video: Joi.array<IVideo>(),
-    idCourse: Joi.string().required()
+    idCourse: Joi.string(),
+    idCategory: Joi.string()
   })
   return product.validate(data)
 }

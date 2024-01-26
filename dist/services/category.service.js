@@ -98,12 +98,9 @@ var updateById = function (_id, body) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 fillter = { _id: _id };
-                update = {
-                    body: body
-                };
-                options = {
-                    new: true
-                };
+                update = { $set: body };
+                console.log(body);
+                options = { new: true };
                 return [4 /*yield*/, category_models_1.default.findOneAndUpdate(fillter, update, options)];
             case 1:
                 category = _a.sent();

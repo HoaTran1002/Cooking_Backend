@@ -27,12 +27,9 @@ export const removeCourse = async (_id: string, _idCourse: string): Promise<void
 }
 export const updateById = async (_id: string, body: ICategory): Promise<void | ICategory | unknown> => {
   const fillter = { _id: _id }
-  const update = {
-    body
-  }
-  const options = {
-    new: true
-  }
+  const update = { $set: body }
+  console.log(body)
+  const options = { new: true }
   const category = await Category.findOneAndUpdate(fillter, update, options)
   return category
 }
