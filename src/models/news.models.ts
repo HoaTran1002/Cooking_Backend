@@ -13,8 +13,8 @@ const news = new Schema<INews>({
 news.pre('findOneAndDelete', async function (next) {
   try {
     const doc = (await this.model.findOne(this.getQuery())) as INews
-    if (doc && doc.image) {
-      // await deleteImageS3(doc.image.key)
+    if (doc.image) {
+      await deleteImageS3(doc.image.url)
     }
     next()
   } catch (error: any) {

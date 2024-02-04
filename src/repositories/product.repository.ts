@@ -4,6 +4,8 @@ import { IVideo, IImage } from '~/interfaces/course.interface'
 import { IProduct } from '~/interfaces/product.interface'
 import { IResponseErrorObject } from '~/interfaces/response.interface'
 import productModels from '~/models/product.models'
+import tourModels from '~/models/tour.models'
+import { ServicesFactory } from '~/services/factory.service'
 import { deleteImageS3, deleteVideoS3 } from '~/services/uploadToS3.service'
 export const editProduct = async (id: string, body: IProduct) => {
   const fillter = { _id: id }
@@ -158,5 +160,11 @@ export const getAllVideoProduct = async (idProduct: string) => {
 // }
 export const deleteProduct = async (idProduct: string) => {
   const fillter = { _id: idProduct }
-  return await productModels.findByIdAndDelete(fillter)
+  const tours = await tourModels.find({ idProduct: idProduct })
+  if (tours.length > 0) {
+    tours.map(async (tour) => {
+      await ServicesFactory.deleteData(new mongoose.Types.ObjectId(tour._id).toString(), 'Tour')
+    })
+    return await productModels.findByIdAndDelete(fillter)
+  }
 }
