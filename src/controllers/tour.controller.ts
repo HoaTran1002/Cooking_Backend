@@ -10,7 +10,7 @@ class TourController {
     req: Request<any, unknown, ITourOverView>,
     res: Response
   ): Promise<Response<IResponseSuccessObject>> => {
-    const idProduct = req.params.id
+    const idProduct = req.params.idProduct
     const body = req.body
     const file = req.file
     try {
@@ -18,18 +18,19 @@ class TourController {
         return res.status(400).json({ message: 'file not found' })
       }
 
-      body.activityImages = { url: file.path }
       if (!idProduct) {
         throw new IResponseErrorObject('not found idProduct.', 404)
       }
+
       const tour: ITourOverView = {
         idProduct: idProduct,
         activityName: body.activityName,
         activityContent: body.activityContent,
         startTime: body.startTime,
         endTime: body.endTime,
-        activityImages: body.activityImages
+        activityImages: { url: file.path, key: '' }
       }
+
       const response = new IResponseSuccessObject(
         'Create TourOverView success',
         await ServicesFactory.createData('Tour', tour),
@@ -38,13 +39,14 @@ class TourController {
       return res.status(200).json(response)
     } catch (error: any) {
       await deleteFile(file!.path)
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
   editTour = async (
     req: Request<any, unknown, ITourOverView>,
     res: Response
   ): Promise<Response<IResponseSuccessObject>> => {
+    console.log(req.body)
     const response = new IResponseSuccessObject(
       'Update Tour success',
       await ServicesFactory.editData(req.params.id, 'Tour', req.body),
@@ -93,7 +95,6 @@ class TourController {
     const fileUpload = req.file
     try {
       const id = req.params.id
-      const file = req.file
       if (!id) {
         return res.status(400).json({ message: 'not found id prams' })
       }
@@ -104,10 +105,11 @@ class TourController {
         if (!tour.activityImages) {
           return res.status(404).json({ mesage: 'not found image' })
         }
-        if (!file) {
+        if (!fileUpload) {
           return res.status(400).send('Không có file được tải lên.')
         }
-        await updateFileContent(file, tour.activityImages.url)
+
+        await updateFileContent(fileUpload, tour.activityImages.url)
         const response = new IResponseSuccessObject('File has been updated successfully', 200)
         return res.status(200).json(response)
       }

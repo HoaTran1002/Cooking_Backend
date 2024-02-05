@@ -7,14 +7,13 @@ import { ITourOverView } from '~/interfaces/tour.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'
-import { tourValidator, tourValidatorPramsIdProduct } from '~/validator/tour.validate'
+import { tourValidator } from '~/validator/tour.validate'
 
 const route = Router()
 route.post(
-  '/create/product/:id',
+  '/create/product/:idProduct',
   authorize(['ADMIN']),
   validateBody<ITourOverView>(tourValidator),
-  validateBody<ITourOverView>(tourValidatorPramsIdProduct),
   uploadDisk.single('file'),
   asyncHandelError(tourController.createTour)
 )

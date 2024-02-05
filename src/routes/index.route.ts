@@ -22,7 +22,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/news', newsRoutes)
   app.use('/api/v1/chef', chefRoutes)
   app.use('/api/v1/faq', faqRoutes)
-  app.use('/api/v1/faq', tourRoutes)
+  app.use('/api/v1/tour', tourRoutes)
   app.use(errorHandeler)
   app.use(notFound)
 }

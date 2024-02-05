@@ -17,7 +17,7 @@ export const productValidator = (data: IProduct) => {
     price: Joi.string(),
     position: Joi.string(),
     executionTime: Joi.string(),
-    numberOfAttendees: { type: Number },
+    numberOfAttendees: Joi.number(),
     languageOfInstruction: Joi.string(),
     serviceDetailsWhenStudying: Joi.string(),
     linkMenu: Joi.string(),
