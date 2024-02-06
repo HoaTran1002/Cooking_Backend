@@ -64,6 +64,7 @@ var fs = __importStar(require("node:fs"));
 var deleteFile = function (path) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         fs.unlink(path, function (err) {
+            // throw new Error(err.message)
             if (err) {
                 console.log('loi loi');
                 throw new Error(err.message);

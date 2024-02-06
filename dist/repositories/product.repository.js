@@ -325,20 +325,22 @@ var deleteProduct = function (idProduct) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, tour_models_1.default.find({ idProduct: idProduct })];
             case 1:
                 tours = _a.sent();
-                if (!(tours.length > 0)) return [3 /*break*/, 3];
-                tours.map(function (tour) { return __awaiter(void 0, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0: return [4 /*yield*/, factory_service_1.ServicesFactory.deleteData(new mongoose_1.default.Types.ObjectId(tour._id).toString(), 'Tour')];
-                            case 1:
-                                _a.sent();
-                                return [2 /*return*/];
-                        }
-                    });
-                }); });
+                if (tours.length > 0) {
+                    tours.map(function (tour) { return __awaiter(void 0, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, factory_service_1.ServicesFactory.deleteData(new mongoose_1.default.Types.ObjectId(tour._id).toString(), 'Tour')];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                }
                 return [4 /*yield*/, product_models_1.default.findByIdAndDelete(fillter)];
-            case 2: return [2 /*return*/, _a.sent()];
-            case 3: return [2 /*return*/];
+            case 2:
+                _a.sent();
+                return [2 /*return*/];
         }
     });
 }); };
