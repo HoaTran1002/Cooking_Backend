@@ -165,6 +165,6 @@ export const deleteProduct = async (idProduct: string) => {
     tours.map(async (tour) => {
       await ServicesFactory.deleteData(new mongoose.Types.ObjectId(tour._id).toString(), 'Tour')
     })
-    return await productModels.findByIdAndDelete(fillter)
   }
+  await productModels.findByIdAndDelete(fillter)
 }

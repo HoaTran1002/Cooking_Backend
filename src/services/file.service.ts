@@ -1,6 +1,7 @@
 import * as fs from 'node:fs'
 export const deleteFile = async (path: string): Promise<void> => {
   fs.unlink(path, (err: any) => {
+    // throw new Error(err.message)
     if (err) {
       console.log('loi loi')
       throw new Error(err.message)
