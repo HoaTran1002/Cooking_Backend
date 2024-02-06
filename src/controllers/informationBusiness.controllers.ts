@@ -9,6 +9,7 @@ export const createInformationBusiness = async (
   res: Response
 ): Promise<void | Response<IResonseObject>> => {
   const body = req.body
+  console.log(body)
   const data = await InformationBusiness.create(body)
   const response: IResonseObject = {
     message: 'created information about the business',
@@ -30,14 +31,13 @@ export const getById = async (
   res: Response<IResonseObject>
 ): Promise<void | Response<IResonseObject>> => {
   const _id = req.params.id
-  const data: IInformationBusiness | null = await InformationBusiness.findOne({ id: _id })
+  const data = await InformationBusiness.findById({ _id: _id })
   const response: IResonseObject = {
     message: 'get data success',
     data: data
   }
-  if (data) {
-    return res.status(200).json(response)
-  }
+
+  return res.status(200).json(response)
 }
 export const removeById = async (
   req: Request<any, unknown, IInformationBusiness>,
