@@ -10,7 +10,7 @@ var tourValidator = function (data) {
         idProduct: joi_1.default.string(),
         startTime: joi_1.default.string(),
         endTime: joi_1.default.string(),
-        AactivityName: joi_1.default.string(),
+        activityName: joi_1.default.string(),
         activityContent: joi_1.default.string()
     });
     return tour.validate(data);

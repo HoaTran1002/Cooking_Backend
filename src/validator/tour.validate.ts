@@ -9,7 +9,7 @@ export const tourValidator = (data: ITourOverView) => {
     idProduct: Joi.string(),
     startTime: Joi.string(),
     endTime: Joi.string(),
-    AactivityName: Joi.string(),
+    activityName: Joi.string(),
     activityContent: Joi.string()
   })
   return tour.validate(data)
