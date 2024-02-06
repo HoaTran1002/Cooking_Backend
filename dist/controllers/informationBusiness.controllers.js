@@ -48,6 +48,7 @@ var createInformationBusiness = function (req, res) { return __awaiter(void 0, v
         switch (_a.label) {
             case 0:
                 body = req.body;
+                console.log(body);
                 return [4 /*yield*/, businessInformation_models_1.default.create(body)];
             case 1:
                 data = _a.sent();
@@ -82,17 +83,14 @@ var getById = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
         switch (_a.label) {
             case 0:
                 _id = req.params.id;
-                return [4 /*yield*/, businessInformation_models_1.default.findOne({ id: _id })];
+                return [4 /*yield*/, businessInformation_models_1.default.findById({ _id: _id })];
             case 1:
                 data = _a.sent();
                 response = {
                     message: 'get data success',
                     data: data
                 };
-                if (data) {
-                    return [2 /*return*/, res.status(200).json(response)];
-                }
-                return [2 /*return*/];
+                return [2 /*return*/, res.status(200).json(response)];
         }
     });
 }); };
