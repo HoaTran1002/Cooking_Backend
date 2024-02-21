@@ -7,6 +7,7 @@ exports.productValidator = void 0;
 var joi_1 = __importDefault(require("joi"));
 var productValidator = function (data) {
     var product = joi_1.default.object({
+        position: joi_1.default.number(),
         name: joi_1.default.string().required(),
         note: joi_1.default.string().required(),
         image: joi_1.default.array(),
@@ -18,7 +19,6 @@ var productValidator = function (data) {
         title: joi_1.default.string(),
         description: joi_1.default.string(),
         price: joi_1.default.string(),
-        position: joi_1.default.number(),
         executionTime: joi_1.default.string(),
         numberOfAttendees: joi_1.default.number(),
         languageOfInstruction: joi_1.default.string(),

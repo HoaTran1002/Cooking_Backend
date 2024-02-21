@@ -4,6 +4,7 @@ import { IHightLight, IProduct } from '~/interfaces/product.interface'
 
 export const productValidator = (data: IProduct) => {
   const product = Joi.object({
+    position: Joi.number(),
     name: Joi.string().required(),
     note: Joi.string().required(),
     image: Joi.array<IImage>(),
@@ -15,7 +16,6 @@ export const productValidator = (data: IProduct) => {
     title: Joi.string(),
     description: Joi.string(),
     price: Joi.string(),
-    position: Joi.number(),
     executionTime: Joi.string(),
     numberOfAttendees: Joi.number(),
     languageOfInstruction: Joi.string(),
