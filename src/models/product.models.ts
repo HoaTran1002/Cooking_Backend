@@ -74,4 +74,5 @@ product.pre('save', async function (next) {
     next(error)
   }
 })
+
 export default mongoose.model('ProductsModels', product)
