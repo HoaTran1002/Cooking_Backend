@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import mongoose, { Schema } from 'mongoose'
 import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 import { deleteFile } from '~/services/file.service'
@@ -24,6 +25,7 @@ const roadmapSchema = new Schema<IRoadmap>({
   knowledge: { type: String, default: 'null' }
 })
 export const course = new Schema<ICourse>({
+  position: { type: Number, default: 0 },
   title: { type: String, default: 'null' },
   description: { type: String, default: 'null' },
   images: { type: [imageSchema] },
@@ -35,6 +37,37 @@ export const course = new Schema<ICourse>({
   timeCreate: { type: Date, default: Date.now },
   timeUpdate: { type: Date }
 })
+course.pre('save', async function (next) {
+  try {
+    if (this.isNew) {
+      let newPosition = 1
+      const highestCourse = await mongoose.model('Courses').findOne({}, 'position').sort({ position: -1 }).exec()
+      if (highestCourse) {
+        newPosition = highestCourse.position + 1
+      }
+
+      const existingCourse = await mongoose.model('Courses').findOne({ position: newPosition })
+      if (existingCourse) {
+        let i = 1
+        while (true) {
+          const testPosition = newPosition + i
+          const courseWithSamePosition = await mongoose.model('Courses').findOne({ position: testPosition })
+          if (!courseWithSamePosition) {
+            newPosition = testPosition
+            break
+          }
+          i++
+        }
+      }
+
+      this.position = newPosition
+    }
+    next()
+  } catch (error: any) {
+    next(error)
+  }
+})
+
 course.pre('findOneAndDelete', async function (next) {
   try {
     const doc = await this.model.findOne(this.getQuery())

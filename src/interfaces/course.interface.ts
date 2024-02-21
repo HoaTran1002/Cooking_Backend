@@ -20,6 +20,7 @@ export interface IRoadmap {
   skill: string
 }
 export interface ICourse {
+  position?: number
   title?: string
   description?: string
   image?: string

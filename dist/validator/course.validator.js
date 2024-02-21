@@ -7,6 +7,7 @@ exports.roadmapValidate = exports.courseValidate = void 0;
 var joi_1 = __importDefault(require("joi"));
 var courseValidate = function (data) {
     var course = joi_1.default.object({
+        position: joi_1.default.number(),
         title: joi_1.default.string().trim(),
         description: joi_1.default.string().trim(),
         image: joi_1.default.object(),

@@ -63,6 +63,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.course = exports.videoSchema = exports.imageSchema = void 0;
+/* eslint-disable no-constant-condition */
 var mongoose_1 = __importStar(require("mongoose"));
 var product_models_1 = __importDefault(require("./product.models"));
 var product_service_1 = require("../services/product.service");
@@ -84,6 +85,7 @@ var roadmapSchema = new mongoose_1.Schema({
     knowledge: { type: String, default: 'null' }
 });
 exports.course = new mongoose_1.Schema({
+    position: { type: Number, default: 0 },
     title: { type: String, default: 'null' },
     description: { type: String, default: 'null' },
     images: { type: [exports.imageSchema] },
@@ -95,9 +97,57 @@ exports.course = new mongoose_1.Schema({
     timeCreate: { type: Date, default: Date.now },
     timeUpdate: { type: Date }
 });
+exports.course.pre('save', function (next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var newPosition, highestCourse, existingCourse, i, testPosition, courseWithSamePosition, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 7, , 8]);
+                    if (!this.isNew) return [3 /*break*/, 6];
+                    newPosition = 1;
+                    return [4 /*yield*/, mongoose_1.default.model('Courses').findOne({}, 'position').sort({ position: -1 }).exec()];
+                case 1:
+                    highestCourse = _a.sent();
+                    if (highestCourse) {
+                        newPosition = highestCourse.position + 1;
+                    }
+                    return [4 /*yield*/, mongoose_1.default.model('Courses').findOne({ position: newPosition })];
+                case 2:
+                    existingCourse = _a.sent();
+                    if (!existingCourse) return [3 /*break*/, 5];
+                    i = 1;
+                    _a.label = 3;
+                case 3:
+                    if (!true) return [3 /*break*/, 5];
+                    testPosition = newPosition + i;
+                    return [4 /*yield*/, mongoose_1.default.model('Courses').findOne({ position: testPosition })];
+                case 4:
+                    courseWithSamePosition = _a.sent();
+                    if (!courseWithSamePosition) {
+                        newPosition = testPosition;
+                        return [3 /*break*/, 5];
+                    }
+                    i++;
+                    return [3 /*break*/, 3];
+                case 5:
+                    this.position = newPosition;
+                    _a.label = 6;
+                case 6:
+                    next();
+                    return [3 /*break*/, 8];
+                case 7:
+                    error_1 = _a.sent();
+                    next(error_1);
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
+            }
+        });
+    });
+});
 exports.course.pre('findOneAndDelete', function (next) {
     return __awaiter(this, void 0, void 0, function () {
-        var doc, products, categories, error_1;
+        var doc, products, categories, error_2;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -139,8 +189,8 @@ exports.course.pre('findOneAndDelete', function (next) {
                     next();
                     return [3 /*break*/, 5];
                 case 4:
-                    error_1 = _a.sent();
-                    next(error_1);
+                    error_2 = _a.sent();
+                    next(error_2);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }

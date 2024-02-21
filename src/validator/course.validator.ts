@@ -2,6 +2,7 @@ import Joi from 'joi'
 import { ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
 export const courseValidate = (data: ICourse) => {
   const course = Joi.object<ICourse>({
+    position: Joi.number(),
     title: Joi.string().trim(),
     description: Joi.string().trim(),
     image: Joi.object<IImage>(),
