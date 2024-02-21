@@ -18,7 +18,7 @@ var productValidator = function (data) {
         title: joi_1.default.string(),
         description: joi_1.default.string(),
         price: joi_1.default.string(),
-        position: joi_1.default.string(),
+        position: joi_1.default.number(),
         executionTime: joi_1.default.string(),
         numberOfAttendees: joi_1.default.number(),
         languageOfInstruction: joi_1.default.string(),
