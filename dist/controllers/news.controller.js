@@ -171,12 +171,12 @@ var deleteNewsById = function (req, res) { return __awaiter(void 0, void 0, void
                 if (!newsExist) {
                     return [2 /*return*/, res.status(400).json({ message: 'cannot found any news' })];
                 }
-                return [4 /*yield*/, (0, file_service_1.deleteFile)(newsExist.image.url)];
-            case 2:
-                _a.sent();
                 return [4 /*yield*/, (0, news_respository_1.deleteByID)(id)];
-            case 3:
+            case 2:
                 result = _a.sent();
+                return [4 /*yield*/, (0, file_service_1.deleteFile)(newsExist.image.url)];
+            case 3:
+                _a.sent();
                 if (result) {
                     return [2 /*return*/, res.status(200).json({ message: 'deleted news success' })];
                 }
