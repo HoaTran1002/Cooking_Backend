@@ -101,9 +101,9 @@ export const deleteNewsById = async (
   if (!newsExist) {
     return res.status(400).json({ message: 'cannot found any news' })
   }
-
   await deleteFile(newsExist.image.url)
   const result = await deleteByID(id)
+
   if (result) {
     return res.status(200).json({ message: 'deleted news success' })
   }

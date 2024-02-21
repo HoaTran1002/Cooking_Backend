@@ -10,16 +10,16 @@ const news = new Schema<INews>({
   dateCreated: { type: Date, default: Date.now() },
   image: imageSchema
 })
-news.pre('findOneAndDelete', async function (next) {
-  try {
-    const doc = (await this.model.findOne(this.getQuery())) as INews
-    if (doc.image) {
-      await deleteImageS3(doc.image.url)
-    }
-    next()
-  } catch (error: any) {
-    next(error)
-  }
-})
+// news.pre('findOneAndDelete', async function (next) {
+//   try {
+//     const doc = (await this.model.findOne(this.getQuery())) as INews
+//     if (doc.image) {
+//       await deleteImageS3(doc.image.url)
+//     }
+//     next()
+//   } catch (error: any) {
+//     next(error)
+//   }
+// })
 
 export default mongoose.model('newsModels', news)
