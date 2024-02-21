@@ -5,7 +5,8 @@ export const chefValidate = (data: IChef) => {
     name: Joi.string().required().trim(),
     description: Joi.string().required().trim(),
     slogan: Joi.string().required().trim(),
-    role: Joi.string().required().trim()
+    role: Joi.string().required().trim(),
+    position: Joi.number()
   })
   return chef.validate(data)
 }

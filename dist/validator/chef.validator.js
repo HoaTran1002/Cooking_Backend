@@ -10,7 +10,8 @@ var chefValidate = function (data) {
         name: joi_1.default.string().required().trim(),
         description: joi_1.default.string().required().trim(),
         slogan: joi_1.default.string().required().trim(),
-        role: joi_1.default.string().required().trim()
+        role: joi_1.default.string().required().trim(),
+        position: joi_1.default.number()
     });
     return chef.validate(data);
 };

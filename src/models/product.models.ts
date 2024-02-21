@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { string } from 'joi'
 import mongoose, { Schema } from 'mongoose'
 import { IImage, IVideo } from '~/interfaces/course.interface'
@@ -21,6 +22,7 @@ export const hightLightSchema = new Schema<IHightLight>({
 })
 
 const product = new Schema<IProduct>({
+  position: { type: Number, default: 0 },
   name: { type: String },
   note: { type: String },
   images: { type: [imageSchema] },
@@ -32,7 +34,6 @@ const product = new Schema<IProduct>({
   title: { type: String },
   description: { type: String },
   price: { type: String },
-  position: { type: String },
   executionTime: { type: String },
   numberOfAttendees: { type: Number },
   languageOfInstruction: { type: String },
@@ -43,5 +44,34 @@ const product = new Schema<IProduct>({
   content_review: { type: String },
   listScript: [{ type: String }]
 })
+product.pre('save', async function (next) {
+  try {
+    if (this.isNew) {
+      let newPosition = 1
+      const highestCourse = await mongoose.model('ProductsModels').findOne({}, 'position').sort({ position: -1 }).exec()
+      if (highestCourse) {
+        newPosition = highestCourse.position + 1
+      }
 
+      const existingCourse = await mongoose.model('ProductsModels').findOne({ position: newPosition })
+      if (existingCourse) {
+        let i = 1
+        while (true) {
+          const testPosition = newPosition + i
+          const courseWithSamePosition = await mongoose.model('ProductsModels').findOne({ position: testPosition })
+          if (!courseWithSamePosition) {
+            newPosition = testPosition
+            break
+          }
+          i++
+        }
+      }
+
+      this.position = newPosition
+    }
+    next()
+  } catch (error: any) {
+    next(error)
+  }
+})
 export default mongoose.model('ProductsModels', product)
