@@ -25,9 +25,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 var mongoose_1 = __importStar(require("mongoose"));
+var env_config_1 = require("../env.config");
 var connectDB = function () {
-    // const mongoDbUri = `mongodb://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.MONGODB_ADDRESS}/Cooking`
-    var mongoDbUri = "mongodb://localhost:27017/Cooking";
+    var mongoDbUri = "mongodb://".concat(env_config_1.env.DB_USERNAME, ":").concat(env_config_1.env.DB_PASSWORD, "@").concat(env_config_1.env.MONGODB_ADDRESS, "/Cooking");
+    // const mongoDbUri = `mongodb://localhost:27017/Cooking`
     mongoose_1.default
         .connect(mongoDbUri, {
         authSource: 'admin'

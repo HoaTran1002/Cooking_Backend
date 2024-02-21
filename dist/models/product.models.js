@@ -105,13 +105,13 @@ product.pre('save', function (next) {
                     _a.trys.push([0, 7, , 8]);
                     if (!this.isNew) return [3 /*break*/, 6];
                     newPosition = 1;
-                    return [4 /*yield*/, mongoose_1.default.model('ProductsModels').findOne({}, 'position').sort({ position: -1 }).exec()];
+                    return [4 /*yield*/, mongoose_1.default.model('Product').findOne({}, 'position').sort({ position: -1 }).exec()];
                 case 1:
                     highestCourse = _a.sent();
                     if (highestCourse) {
                         newPosition = highestCourse.position + 1;
                     }
-                    return [4 /*yield*/, mongoose_1.default.model('ProductsModels').findOne({ position: newPosition })];
+                    return [4 /*yield*/, mongoose_1.default.model('Product').findOne({ position: newPosition })];
                 case 2:
                     existingCourse = _a.sent();
                     if (!existingCourse) return [3 /*break*/, 5];
@@ -120,7 +120,7 @@ product.pre('save', function (next) {
                 case 3:
                     if (!true) return [3 /*break*/, 5];
                     testPosition = newPosition + i;
-                    return [4 /*yield*/, mongoose_1.default.model('ProductsModels').findOne({ position: testPosition })];
+                    return [4 /*yield*/, mongoose_1.default.model('Product').findOne({ position: testPosition })];
                 case 4:
                     courseWithSamePosition = _a.sent();
                     if (!courseWithSamePosition) {
@@ -144,4 +144,4 @@ product.pre('save', function (next) {
         });
     });
 });
-exports.default = mongoose_1.default.model('ProductsModels', product);
+exports.default = mongoose_1.default.model('Product', product);

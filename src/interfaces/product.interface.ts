@@ -7,7 +7,7 @@ export interface IHightLight {
 }
 
 export interface IProduct {
-  position?: number
+  position: number
   name: string
   images: IImage[]
   videos: IVideo[]

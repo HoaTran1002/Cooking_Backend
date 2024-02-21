@@ -48,17 +48,17 @@ product.pre('save', async function (next) {
   try {
     if (this.isNew) {
       let newPosition = 1
-      const highestCourse = await mongoose.model('ProductsModels').findOne({}, 'position').sort({ position: -1 }).exec()
+      const highestCourse = await mongoose.model('Product').findOne({}, 'position').sort({ position: -1 }).exec()
       if (highestCourse) {
         newPosition = highestCourse.position + 1
       }
 
-      const existingCourse = await mongoose.model('ProductsModels').findOne({ position: newPosition })
+      const existingCourse = await mongoose.model('Product').findOne({ position: newPosition })
       if (existingCourse) {
         let i = 1
         while (true) {
           const testPosition = newPosition + i
-          const courseWithSamePosition = await mongoose.model('ProductsModels').findOne({ position: testPosition })
+          const courseWithSamePosition = await mongoose.model('Product').findOne({ position: testPosition })
           if (!courseWithSamePosition) {
             newPosition = testPosition
             break
@@ -75,4 +75,4 @@ product.pre('save', async function (next) {
   }
 })
 
-export default mongoose.model('ProductsModels', product)
+export default mongoose.model('Product', product)
