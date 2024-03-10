@@ -47,7 +47,7 @@ var refreshtoken_models_1 = __importDefault(require("../models/refreshtoken.mode
 var env_config_1 = require("../config/env.config");
 var cookiesOptions = {
     expires: new Date(Date.now() + 86400000),
-    httpOnly: false,
+    httpOnly: true,
     secure: true
 };
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

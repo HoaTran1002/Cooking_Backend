@@ -21,7 +21,7 @@ export const env = {
   MONGODB_ADDRESS: 'localhost:27017',
   //'/var/www/content',
   // /Users/hoatran/datafile
-  PATH_DATA_FILE: '/var/www/content',
+  PATH_DATA_FILE: '/Users/hoatran/datafile',
   DB_USERNAME: 'admin',
   DB_PASSWORD: 'Pass2910'
 }

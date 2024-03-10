@@ -14,7 +14,7 @@ import refreshtokenModels, { IRefreshToken } from '~/models/refreshtoken.models'
 import { env } from '~/config/env.config'
 const cookiesOptions = {
   expires: new Date(Date.now() + 86400000),
-  httpOnly: false,
+  httpOnly: true,
   secure: true
 }
 export const register = async (
