@@ -1,6 +1,6 @@
 import Joi from 'joi'
-import { IImage, IVideo } from '~/interfaces/course.interface'
-import { IHightLight, IProduct } from '~/interfaces/product.interface'
+import { IImage, IVideo } from '~/contract/interfaces/course.interface'
+import { IHightLight, IProduct } from '~/contract/interfaces/product.interface'
 
 export const productValidator = (data: IProduct) => {
   const product = Joi.object({

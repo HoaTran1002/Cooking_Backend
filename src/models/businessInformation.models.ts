@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { IInformationBusiness } from '~/interfaces/businessInfrormation.interface'
+import { IInformationBusiness } from '~/contract/interfaces/businessInfrormation.interface'
 import { imageSchema } from './course.models'
 
 const informationBusiness = new Schema<IInformationBusiness>({

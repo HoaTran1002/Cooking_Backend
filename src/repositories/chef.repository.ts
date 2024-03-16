@@ -1,4 +1,4 @@
-import { IChef } from '~/interfaces/chef.interface'
+import { IChef } from '~/contract/interfaces/chef.interface'
 import chefModels from '~/models/chef.models'
 
 export const addChef = async (data: IChef): Promise<IChef | void> => {

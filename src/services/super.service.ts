@@ -1,4 +1,4 @@
-import PaginationResult from '~/interfaces/pagination.interface'
+import PaginationResult from '~/contract/interfaces/pagination.interface'
 
 export abstract class Services<T> {
   abstract createData(payload: T): Promise<T>

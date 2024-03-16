@@ -1,12 +1,12 @@
 /* eslint-disable no-constant-condition */
 import mongoose, { Schema } from 'mongoose'
-import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
+import { ICourses, ICourse, IImage, IRoadmap, IVideo } from '~/contract/interfaces/course.interface'
 import { deleteFile } from '~/services/file.service'
 import productModels from './product.models'
 import { deleteByIdProduct } from '~/services/product.service'
 import categoryModels from './category.models'
 import { removeCategory } from '~/services/category.service'
-import { IProduct } from '~/interfaces/product.interface'
+import { IProduct } from '~/contract/interfaces/product.interface'
 
 export const imageSchema = new Schema<IImage>({
   url: { type: String },

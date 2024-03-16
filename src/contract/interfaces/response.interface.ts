@@ -4,9 +4,9 @@ export interface IResonseObject {
   status?: number
 }
 export class IResponseErrorObject {
-  public message!: string
+  public message!: any
   public status!: number
-  constructor(message: string, status = 400) {
+  constructor(message: any, status = 400) {
     this.status = status
     this.message = message
   }

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { INews } from '~/interfaces/news.interface'
+import { INews } from '~/contract/interfaces/news.interface'
 import { imageSchema } from './course.models'
 import { deleteImageS3 } from '~/services/uploadToS3.service'
 

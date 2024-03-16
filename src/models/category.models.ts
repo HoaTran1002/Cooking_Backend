@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { ICategory } from '~/interfaces/category.interface'
+import { ICategory } from '~/contract/interfaces/category.interface'
 import productModels from './product.models'
 import { updateIdCategory } from '~/services/product.service'
 

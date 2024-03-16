@@ -6,7 +6,7 @@ import {
   removeById,
   updateFormationBusinessById
 } from '~/controllers/informationBusiness.controllers'
-import { IInformationBusiness } from '~/interfaces/businessInfrormation.interface'
+import { IInformationBusiness } from '~/contract/interfaces/businessInfrormation.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

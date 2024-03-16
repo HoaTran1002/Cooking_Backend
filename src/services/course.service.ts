@@ -1,4 +1,4 @@
-import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
+import { ICourse, IImage, IVideo } from '~/contract/interfaces/course.interface'
 import courseModels from '~/models/course.models'
 import Courses from '~/models/course.models'
 import { deleteFile } from './file.service'

@@ -1,4 +1,4 @@
-import { IInformationBusiness } from '~/interfaces/businessInfrormation.interface'
+import { IInformationBusiness } from '~/contract/interfaces/businessInfrormation.interface'
 import imformationBusiness from '~/models/businessInformation.models'
 
 export const updateById = async (

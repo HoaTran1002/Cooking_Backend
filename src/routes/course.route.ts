@@ -31,7 +31,7 @@ import {
 //   getAllVideoFromS3ByCourseId,
 //   getVideoFromS3BykeyVideo
 // } from '~/controllers/uploadToS3.controllers'
-import { ICourse, IRoadmap } from '~/interfaces/course.interface'
+import { ICourse, IRoadmap } from '~/contract/interfaces/course.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

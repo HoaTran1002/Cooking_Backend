@@ -1,9 +1,9 @@
 import faqModel from '~/models/faq.model'
 // import { Services } from './service.service'
-import { IFaq } from '~/interfaces/faq.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
 import { Services } from './super.service'
-import { IResponseErrorObject } from '~/interfaces/response.interface'
-import PaginationResult from '~/interfaces/pagination.interface'
+import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
+import PaginationResult from '~/contract/interfaces/pagination.interface'
 
 export class FAQServices extends Services<IFaq> {
   createData(payload: IFaq): Promise<IFaq> {

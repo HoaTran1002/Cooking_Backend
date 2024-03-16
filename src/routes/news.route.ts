@@ -8,7 +8,7 @@ import {
   updateContentImageVPS,
   updateNewsById
 } from '~/controllers/news.controller'
-import { INews } from '~/interfaces/news.interface'
+import { INews } from '~/contract/interfaces/news.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

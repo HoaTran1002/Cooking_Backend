@@ -1,6 +1,6 @@
 import Joi from 'joi'
-import { IAccount } from '~/interfaces/account.interface'
-import { IImage } from '~/interfaces/course.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
+import { IImage } from '~/contract/interfaces/course.interface'
 export const accountValidate = (data: IAccount) => {
   const account = Joi.object({
     fullName: Joi.string(),

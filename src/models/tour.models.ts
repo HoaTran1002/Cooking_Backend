@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { ITourOverView } from '~/interfaces/tour.interface'
+import { ITourOverView } from '~/contract/interfaces/tour.interface'
 import { imageSchema } from './product.models'
 import { deleteFile } from '~/services/file.service'
 const tourSchema = new Schema<ITourOverView>({

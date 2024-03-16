@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { asyncHandelError } from './error.middlewear'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import { IUserToken, decodeAccessToken } from '~/services/jwt.service'
 import Account from '~/models/account.models'
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 
 export const authorize = (roles?: string[]) =>
   asyncHandelError(async (req: Request, res: Response, next: NextFunction) => {

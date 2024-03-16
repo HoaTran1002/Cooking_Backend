@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { IFaq } from '~/interfaces/faq.interface'
-import { IResponseSuccessObject } from '~/interfaces/response.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
+import { IResponseSuccessObject } from '~/contract/interfaces/response.interface'
 import { ServicesFactory } from '~/services/factory.service'
 
 class FAQController {

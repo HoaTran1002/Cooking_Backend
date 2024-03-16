@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { ICourse, IImage, IRoadmap, IVideo } from '~/interfaces/course.interface'
+import { ICourse, IImage, IRoadmap, IVideo } from '~/contract/interfaces/course.interface'
 export const courseValidate = (data: ICourse) => {
   const course = Joi.object<ICourse>({
     position: Joi.number(),

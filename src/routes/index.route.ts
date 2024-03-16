@@ -4,6 +4,7 @@ import productRoutes from '~/routes/product.route'
 import authRoutes from '~/routes/auth.route'
 import accountRoutes from '~/routes/account.route'
 import tourRoutes from '~/routes/tour.route'
+import partnerRoutes from '~/routes/partner.route'
 // import upload from '~/routes/uploadToS3.route'
 import chefRoutes from '~/routes/chef.route'
 import faqRoutes from '~/routes/faq.route'
@@ -23,6 +24,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/chef', chefRoutes)
   app.use('/api/v1/faq', faqRoutes)
   app.use('/api/v1/tour', tourRoutes)
+  app.use('/api/v1/partner', partnerRoutes)
   app.use(errorHandeler)
   app.use(notFound)
 }

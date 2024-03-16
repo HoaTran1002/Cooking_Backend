@@ -1,6 +1,6 @@
 import { Request, Response, response } from 'express'
-import { ICategory } from '~/interfaces/category.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { ICategory } from '~/contract/interfaces/category.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import Category from '~/models/category.models'
 import { remove, addCourse, removeCourse, findById, updateById } from '~/services/category.service'
 import { courseFindById } from '~/services/course.service'

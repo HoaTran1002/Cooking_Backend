@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { IInformationBusiness } from '~/interfaces/businessInfrormation.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IInformationBusiness } from '~/contract/interfaces/businessInfrormation.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import InformationBusiness from '~/models/businessInformation.models'
 import { updateById } from '~/services/informationBusiness.service'
 

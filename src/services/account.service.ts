@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 import Account from '~/models/account.models'
 export const deleteAccount = async (_id: string): Promise<void | IAccount | unknown> => {
   const fillter = { id: _id }

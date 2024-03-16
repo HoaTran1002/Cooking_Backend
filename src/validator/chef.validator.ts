@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { IChef } from '~/interfaces/chef.interface'
+import { IChef } from '~/contract/interfaces/chef.interface'
 export const chefValidate = (data: IChef) => {
   const chef = Joi.object({
     name: Joi.string().required().trim(),

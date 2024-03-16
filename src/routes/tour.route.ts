@@ -3,7 +3,7 @@ import { uploadDisk, uploadMemory } from '~/config/multer.config'
 
 import tourController from '~/controllers/tour.controller'
 
-import { ITourOverView } from '~/interfaces/tour.interface'
+import { ITourOverView } from '~/contract/interfaces/tour.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

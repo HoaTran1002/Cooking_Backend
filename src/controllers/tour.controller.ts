@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { IFaq } from '~/interfaces/faq.interface'
-import { IResponseErrorObject, IResponseSuccessObject } from '~/interfaces/response.interface'
-import { ITourOverView } from '~/interfaces/tour.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
+import { IResponseErrorObject, IResponseSuccessObject } from '~/contract/interfaces/response.interface'
+import { ITourOverView } from '~/contract/interfaces/tour.interface'
 import { ServicesFactory } from '~/services/factory.service'
 import { deleteFile, updateFileContent } from '~/services/file.service'
 

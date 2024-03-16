@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 import { imageSchema } from './course.models'
 
 const account = new Schema<IAccount>({

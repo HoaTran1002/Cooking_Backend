@@ -1,3 +1,3 @@
-import { INews } from '~/interfaces/news.interface'
+import { INews } from '~/contract/interfaces/news.interface'
 
 export class newsServiceManager {}

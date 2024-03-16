@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/interfaces/course.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { ICourse, IImage, IParams, IRoadmap, IVideo } from '~/contract/interfaces/course.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import Courses from '~/models/course.models'
 import { Error } from 'mongoose'
 import { deleteFIleCourse, deleteFIleImageCourse, deleteFIleVideoCourse, findById } from '~/services/course.service'

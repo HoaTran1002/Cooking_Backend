@@ -3,7 +3,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { env } from '~/config/env.config'
 import { s3 } from '~/config/s3.config'
 import crypto from 'crypto'
-import { IImage, IVideo } from '~/interfaces/course.interface'
+import { IImage, IVideo } from '~/contract/interfaces/course.interface'
 
 export const uploadImageS3 = async (file: Express.Multer.File): Promise<IImage> => {
   const randomImageName = () => crypto.randomBytes(16).toString('hex')

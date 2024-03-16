@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { IChef } from '~/interfaces/chef.interface'
+import { IChef } from '~/contract/interfaces/chef.interface'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'
 import { chefValidate } from '~/validator/chef.validator'

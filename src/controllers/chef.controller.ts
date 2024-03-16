@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { IChef } from '~/interfaces/chef.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IChef } from '~/contract/interfaces/chef.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import { addChef, deleteByIDChef, getChefByID, updateChefByID } from '~/repositories/chef.repository'
 import { findAll } from '~/services/chef.service'
 import { deleteFile, updateFileContent } from '~/services/file.service'

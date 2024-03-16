@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { INews } from '~/interfaces/news.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { INews } from '~/contract/interfaces/news.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import { add, deleteByID, findAll, findByID, updateByID } from '~/repositories/news.respository'
 import { deleteFile, updateFileContent } from '~/services/file.service'
 

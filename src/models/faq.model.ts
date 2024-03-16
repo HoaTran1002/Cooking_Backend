@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { IFaq } from '~/interfaces/faq.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
 
 const faqs = new Schema<IFaq>({
   question: { type: String, required: true },

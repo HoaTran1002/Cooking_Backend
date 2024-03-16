@@ -1,4 +1,4 @@
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 
 import bcrypt from 'bcrypt'
 import Account from '~/models/account.models'
@@ -9,10 +9,8 @@ export const accountValid = async (body: IAccount): Promise<boolean> => {
     if (!isMatch) {
       return false
     }
-
     return true
   }
-
   return false
 }
 export const createAccount = async (body: IAccount) => {

@@ -6,7 +6,7 @@ import {
   findAllAccount,
   updateAccountById
 } from '~/controllers/account.controllers'
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

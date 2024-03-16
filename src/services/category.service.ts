@@ -1,4 +1,4 @@
-import { ICategory } from '~/interfaces/category.interface'
+import { ICategory } from '~/contract/interfaces/category.interface'
 import Category from '~/models/category.models'
 
 export const remove = async (_id: string): Promise<void | ICategory | unknown> => {

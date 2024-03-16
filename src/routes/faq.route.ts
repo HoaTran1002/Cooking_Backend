@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import faqController from '~/controllers/faq.controller'
-import { IFaq } from '~/interfaces/faq.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
 import { validateBody } from '~/middlewares/validate.middlewear'

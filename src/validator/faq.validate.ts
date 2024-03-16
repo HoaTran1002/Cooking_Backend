@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { IFaq } from '~/interfaces/faq.interface'
+import { IFaq } from '~/contract/interfaces/faq.interface'
 
 export const faqValidate = (data: IFaq) => {
   const faq = Joi.object({

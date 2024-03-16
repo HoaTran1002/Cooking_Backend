@@ -1,6 +1,10 @@
 import Joi from 'joi'
-import { IAchievement, IInformationBusiness, IRelatedInformation } from '~/interfaces/businessInfrormation.interface'
-import { IImage } from '~/interfaces/course.interface'
+import {
+  IAchievement,
+  IInformationBusiness,
+  IRelatedInformation
+} from '~/contract/interfaces/businessInfrormation.interface'
+import { IImage } from '~/contract/interfaces/course.interface'
 export const infoBusinessValidate = (data: IInformationBusiness) => {
   const infoBusiness = Joi.object({
     name: Joi.string().trim(),

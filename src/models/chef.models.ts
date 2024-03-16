@@ -1,7 +1,7 @@
 /* eslint-disable no-constant-condition */
 import mongoose, { Schema } from 'mongoose'
 import { imageSchema } from './course.models'
-import { IChef } from '~/interfaces/chef.interface'
+import { IChef } from '~/contract/interfaces/chef.interface'
 
 const chef = new Schema<IChef>({
   position: { type: Number, default: 0 },

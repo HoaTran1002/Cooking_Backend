@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { IAccount } from '~/interfaces/account.interface'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import Account from '~/models/account.models'
 import { deleteAccount, updateAccount } from '~/services/account.service'
 export const createAccount = async (

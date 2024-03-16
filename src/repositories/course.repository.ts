@@ -1,6 +1,6 @@
 import Courses from '~/models/course.models'
 
-import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
+import { ICourse, IImage, IVideo } from '~/contract/interfaces/course.interface'
 import mongoose from 'mongoose'
 import { log } from 'console'
 export const remove = async (req: Request, res: Response): Promise<void> => {

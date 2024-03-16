@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { IAccount } from '~/interfaces/account.interface'
+import { IAccount } from '~/contract/interfaces/account.interface'
 import Account from '~/models/account.models'
-import { IResonseObject } from '~/interfaces/response.interface'
+import { IResonseObject } from '~/contract/interfaces/response.interface'
 import { accountValid, createAccount } from '~/services/auth.service'
 import {
   IUserToken,

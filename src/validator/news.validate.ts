@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { INews } from '~/interfaces/news.interface'
+import { INews } from '~/contract/interfaces/news.interface'
 export const validateCreateNews = (data: INews) => {
   const news = Joi.object({
     title: Joi.string().required().trim(),

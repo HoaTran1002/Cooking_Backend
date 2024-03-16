@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { IResonseObject, IResponseErrorObject } from '~/interfaces/response.interface'
+import { IResonseObject, IResponseErrorObject } from '~/contract/interfaces/response.interface'
 
 export const asyncHandelError = (
   // eslint-disable-next-line prettier/prettier
