@@ -34,31 +34,31 @@ import {
 import { ICourse, IRoadmap } from '~/contract/interfaces/course.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-import { validateBody } from '~/middlewares/validate.middlewear'
+import { validator } from '~/middlewares/validate.middlewear'
 import { courseValidate, roadmapValidate } from '~/validator/course.validator'
 const router = Router()
 
 router.get('/getAll', asyncHandelError(getAll))
 router.get('/:courseId/getCourse', asyncHandelError(getCourseById))
-router.post('/create', authorize(['ADMIN']), validateBody<ICourse>(courseValidate), asyncHandelError(courseCreate))
+router.post('/create', authorize(['ADMIN']), validator<ICourse>(courseValidate), asyncHandelError(courseCreate))
 router.get('/:courseId/roadmap/getAll', asyncHandelError(courseCreateRoadmap))
 router.post(
   '/:courseId/roadmap/create',
   authorize(['ADMIN']),
-  validateBody<IRoadmap>(roadmapValidate),
+  validator<IRoadmap>(roadmapValidate),
   asyncHandelError(courseCreateRoadmap)
 )
 
 router.put(
   '/:courseId/update',
   authorize(['ADMIN']),
-  validateBody<ICourse>(courseValidate),
+  validator<ICourse>(courseValidate),
   asyncHandelError(courseUpdateById)
 )
 router.put(
   '/:courseId/roadmap/:roadmapId/update',
   authorize(['ADMIN']),
-  validateBody<IRoadmap>(roadmapValidate),
+  validator<IRoadmap>(roadmapValidate),
   asyncHandelError(updateRoadmapById)
 )
 router.delete('/:courseId/roadmap/:roadmapId/remove', authorize(['ADMIN']), asyncHandelError(removeRoadmapById))

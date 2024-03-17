@@ -25,14 +25,14 @@ import {
 import { authorize } from '~/middlewares/auth.middlewears'
 // import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-import { validateBody } from '~/middlewares/validate.middlewear'
+import { validator } from '~/middlewares/validate.middlewear'
 import { productValidator } from '~/validator/product.validate'
 const route = Router()
 // , authorize(['ADMIN'])
 route.post(
   '/create/:idCourse/:idCategory?',
   authorize(['ADMIN']),
-  validateBody(productValidator),
+  validator(productValidator),
   asyncHandelError(createProduct)
 )
 route.get('/getAll', asyncHandelError(getAllProduct))
@@ -40,7 +40,7 @@ route.get('/:idProduct/getProductById', asyncHandelError(getProductById))
 route.put(
   '/:idProduct/edit/:idCourse?/:idCategory?',
   authorize(['ADMIN']),
-  validateBody(productValidator),
+  validator(productValidator),
   asyncHandelError(editProductById)
 )
 

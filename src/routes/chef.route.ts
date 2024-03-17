@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { IChef } from '~/contract/interfaces/chef.interface'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-import { validateBody } from '~/middlewares/validate.middlewear'
+import { validator } from '~/middlewares/validate.middlewear'
 import { chefValidate } from '~/validator/chef.validator'
 import {
   createChef,
@@ -18,7 +18,7 @@ router.post('/create', authorize(['ADMIN']), uploadDisk.single('file'), asyncHan
 router.put(
   '/:id/updateTextDataChefById',
   authorize(['ADMIN']),
-  validateBody<IChef>(chefValidate),
+  validator<IChef>(chefValidate),
   asyncHandelError(updateTextDataChefById)
 )
 router.put('/:id/updateContentImage', uploadMemory.single('file'), asyncHandelError(updateContentImageVPS))

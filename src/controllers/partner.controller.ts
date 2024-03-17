@@ -6,13 +6,13 @@ import FactoryService from '~/services/index.service'
 class Partner {
   async create(req: Request<unknown, unknown, IPartner>, res: Response) {
     const partner = FactoryService.instance('partner', req.body)
-    const record = await partner!.createPartner()
+    const record = await partner!.create()
     const response = new IResponseSuccessObject('create partner sucess', record, 200)
     return res.status(200).json(response)
   }
-  async getAll(req: Request<unknown, unknown, IPartner>, res: Response) {
+  async getAll(req: Request<any, unknown, IPartner>, res: Response) {
     const partner = FactoryService.instance('partner')
-    const data = await partner!.getAllPartner()
+    const data = await partner!.getAll(req.params.page, req.params.size)
     const response = new IResponseSuccessObject('get all success', data, 200)
     return res.status(200).json(response)
   }

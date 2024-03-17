@@ -2,6 +2,8 @@ import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interfa
 import PartnerRepository from '~/repositories/partner.repository'
 import { IImage } from '~/contract/interfaces/course.interface'
 import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
+import PaginationResult from '~/contract/interfaces/pagination.interface'
+import partnerRepository from '~/repositories/partner.repository'
 
 class PartnerServices implements IPartner {
   name: string
@@ -25,7 +27,7 @@ class PartnerServices implements IPartner {
     }
   }
 
-  async createPartner(): Promise<IPartner> {
+  async create(): Promise<IPartner> {
     try {
       const body: IPartner = {
         name: this.name,
@@ -40,9 +42,15 @@ class PartnerServices implements IPartner {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async getAllPartner(): Promise<[IPartner] | any> {
-    const partner = await PartnerRepository.getAll()
-    return partner
+  async getAll(page: number, size: number): Promise<[PaginationResult] | any> {
+    const limit = size
+    const skip = (page - 1) * size
+    const data = await PartnerRepository.getAll(limit, skip)
+    const total_documents = await partnerRepository.partnerModel.countDocuments()
+    const total_pages = Math.ceil(total_documents / size)
+    const previous_pages = page > 1 ? page - 1 : null
+    const next_pages = skip + size < total_documents ? page + 1 : null
+    return { page, size, data, total_pages, previous_pages, next_pages }
   }
   async getById(id: string): Promise<IPartner> {
     try {

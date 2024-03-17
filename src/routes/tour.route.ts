@@ -6,21 +6,21 @@ import tourController from '~/controllers/tour.controller'
 import { ITourOverView } from '~/contract/interfaces/tour.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-import { validateBody } from '~/middlewares/validate.middlewear'
+import { validator } from '~/middlewares/validate.middlewear'
 import { tourValidator } from '~/validator/tour.validate'
 
 const route = Router()
 route.post(
   '/create/product/:idProduct',
   authorize(['ADMIN']),
-  validateBody<ITourOverView>(tourValidator),
+  validator<ITourOverView>(tourValidator),
   uploadDisk.single('file'),
   asyncHandelError(tourController.createTour)
 )
 route.put(
   '/:id/update',
   authorize(['ADMIN']),
-  validateBody<ITourOverView>(tourValidator),
+  validator<ITourOverView>(tourValidator),
   uploadMemory.single('file'),
   asyncHandelError(tourController.editTour)
 )

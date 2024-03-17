@@ -11,9 +11,9 @@ import {
 import { INews } from '~/contract/interfaces/news.interface'
 import { authorize } from '~/middlewares/auth.middlewears'
 import { asyncHandelError } from '~/middlewares/error.middlewear'
-import { validateBody } from '~/middlewares/validate.middlewear'
+import { validator } from '~/middlewares/validate.middlewear'
 import { validateCreateNews } from '~/validator/news.validate'
-// validateBody<INews>(validateCreateNews),
+// validator<INews>(validateCreateNews),
 const route = Router()
 route.post('/createNews', authorize(['ADMIN']), uploadDisk.single('file'), asyncHandelError(createNews))
 
@@ -24,12 +24,7 @@ route.put(
   uploadMemory.single('file'),
   asyncHandelError(updateContentImageVPS)
 )
-route.put(
-  '/:id/update',
-  authorize(['ADMIN']),
-  validateBody<INews>(validateCreateNews),
-  asyncHandelError(updateNewsById)
-)
+route.put('/:id/update', authorize(['ADMIN']), validator<INews>(validateCreateNews), asyncHandelError(updateNewsById))
 route.get('/:id/get', asyncHandelError(getNewsById))
 route.get('/getAll/:page/:size', asyncHandelError(getAllNews))
 export default route
