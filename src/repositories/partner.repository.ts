@@ -4,7 +4,7 @@ import PartnerRepositoryInterface from '~/contract/repositories/partner.reposito
 import partnerModel from '~/models/partner.model'
 
 class PartnerRepository implements PartnerRepositoryInterface {
-  partnerModel: Model<IPartner>
+  readonly partnerModel: Model<IPartner>
 
   constructor(partnerModel: Model<IPartner>) {
     this.partnerModel = partnerModel
