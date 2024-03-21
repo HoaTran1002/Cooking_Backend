@@ -7,7 +7,14 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+const corsOptions = {
+  origin: ['https://momvietnam.vn', 'http://localhost:5173'],
+  optionsSuccessStatus: 200,
+  credentials: true
+}
+
+app.use(cors(corsOptions))
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cookieParser())
