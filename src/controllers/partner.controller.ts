@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { IPartner } from '~/contract/interfaces/partner.interface'
-import { IResponseSuccessObject } from '~/contract/interfaces/response.interface'
 import FactoryService from '~/services/index.service'
+import { IResponseSuccessObject } from '~/contract/interfaces/response.interface'
+import { IPartner } from '~/contract/interfaces/partner.interface'
 
 class Partner {
   async create(req: Request<unknown, unknown, IPartner>, res: Response) {
@@ -29,8 +29,8 @@ class Partner {
     return res.status(200).json(response)
   }
   async updateById(req: Request<any, unknown, IPartner>, res: Response) {
-    const partner = FactoryService.instance('partner')
-    const updatePartner = await partner!.updateById(req.params.id, req.body)
+    const partner = FactoryService.instance('partner', req.body)
+    const updatePartner = await partner!.updateById(req.params.id)
     const response = new IResponseSuccessObject('update by id success', updatePartner, 200)
     return res.status(200).json(response)
   }

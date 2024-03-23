@@ -1,9 +1,9 @@
-import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interface'
 import PartnerRepository from '~/repositories/partner.repository'
-import { IImage } from '~/contract/interfaces/course.interface'
-import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
-import PaginationResult from '~/contract/interfaces/pagination.interface'
 import partnerRepository from '~/repositories/partner.repository'
+import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
+import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interface'
+import PaginationResult from '~/contract/interfaces/pagination.interface'
+import { IImage } from '~/contract/interfaces/course.interface'
 
 class PartnerServices implements IPartner {
   name: string
@@ -46,7 +46,7 @@ class PartnerServices implements IPartner {
     const limit = size
     const skip = (page - 1) * size
     const data = await PartnerRepository.getAll(limit, skip)
-    const total_documents = await partnerRepository.partnerModel.countDocuments()
+    const total_documents = await partnerRepository.Model.countDocuments()
     const total_pages = Math.ceil(total_documents / size)
     const previous_pages = page > 1 ? page - 1 : null
     const next_pages = skip + size < total_documents ? page + 1 : null
@@ -68,8 +68,15 @@ class PartnerServices implements IPartner {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async updateById(id: string, payload: IPartner): Promise<IPartner> {
+  async updateById(id: string): Promise<IPartner> {
     try {
+      const payload: IPartner = {
+        name: this.name,
+        logo: this.logo,
+        description: this.description,
+        position: this.position,
+        products: this.products
+      }
       const partner = await PartnerRepository.update(id, payload)
       return partner
     } catch (error: any) {

@@ -4,10 +4,10 @@ import PartnerRepositoryInterface from '~/contract/repositories/partner.reposito
 import partnerModel from '~/models/partner.model'
 
 class PartnerRepository implements PartnerRepositoryInterface {
-  readonly partnerModel: Model<IPartner>
+  readonly Model: Model<IPartner>
 
   constructor(partnerModel: Model<IPartner>) {
-    this.partnerModel = partnerModel
+    this.Model = partnerModel
   }
   create(payload: IPartner): Promise<any | IPartner> {
     const partner = partnerModel.create(payload)

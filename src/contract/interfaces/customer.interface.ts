@@ -1,12 +1,11 @@
 import { IImage } from './course.interface'
-
-interface IServiceCustomer {
+export interface IServiceCustomer {
   name: string
   description: string
   image: IImage
   position: number
 }
-export interface ICategoryCustomer {
+export interface ICategoryServices {
   name: string
   position: number
   items: [IServiceCustomer]
