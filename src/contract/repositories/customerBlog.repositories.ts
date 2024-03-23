@@ -6,6 +6,6 @@ abstract class CustomerRepositoryInterface extends BaseRepositoryInterface {
   abstract getById(id: string): Promise<ICustomer>
   abstract deleteById(id: string): Promise<ICustomer | any>
   abstract getAll(limit: number, skip: number): Promise<[ICustomer] | any>
-  abstract update(id: string, payload: any): Promise<ICustomer>
+  abstract update(id: string, payload: ICustomer): Promise<ICustomer>
 }
 export default CustomerRepositoryInterface

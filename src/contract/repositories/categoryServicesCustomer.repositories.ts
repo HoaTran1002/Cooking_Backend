@@ -6,6 +6,6 @@ abstract class CategoryServicesCustomerInterface extends BaseRepositoryInterface
   abstract getById(id: string): Promise<ICategoryServices>
   abstract deleteById(id: string): Promise<ICategoryServices | any>
   abstract getAll(limit: number, skip: number): Promise<[ICategoryServices] | any>
-  abstract update(id: string, payload: any): Promise<ICategoryServices>
+  abstract update(id: string, payload: ICategoryServices): Promise<ICategoryServices>
 }
 export default CategoryServicesCustomerInterface
