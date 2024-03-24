@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { ICandicateInfor } from '~/contract/interfaces/recruitment.interface'
 import { IResponseSuccessObject } from '~/contract/interfaces/response.interface'
 import FactoryService from '~/services/index.service'
-class CategoryServicesCustomer {
+class CandicateInfor {
   async create(req: Request<unknown, unknown, ICandicateInfor>, res: Response) {
     const instance = FactoryService.instance<ICandicateInfor>('CandicateInfor', req.body)
     const record = await instance!.create()
@@ -34,5 +34,5 @@ class CategoryServicesCustomer {
     return res.status(200).json(response)
   }
 }
-const CategoryServicesCustomerController = new CategoryServicesCustomer()
-export default CategoryServicesCustomerController
+const CandicateInforController = new CandicateInfor()
+export default CandicateInforController
