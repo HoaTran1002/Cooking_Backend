@@ -10,6 +10,8 @@ import InformationPopsitionRecruitment from './informationPositionRecruitment.se
 import RecruitmentBlog from './recruitmentBlog.service'
 import TermAndCondition from './termAndCondition.service'
 import { ITermAndCondition } from '~/contract/interfaces/termAndCondition.interface'
+import PolicyServices from './policy.service'
+import { IPolicy } from '~/contract/interfaces/policy.interface'
 type services =
   | 'partner'
   | 'customerBlog'
@@ -19,6 +21,7 @@ type services =
   | 'InformationPopsitionRecruitment'
   | 'RecruitmentBlog'
   | 'TermAndCondition'
+  | 'PolicyServices'
 class FactoryService {
   static instance<T>(service: services, payload?: T) {
     switch (service) {
@@ -38,6 +41,8 @@ class FactoryService {
         return new RecruitmentBlog(payload as IRecruitmentBlog)
       case 'TermAndCondition':
         return new TermAndCondition(payload as ITermAndCondition)
+      case 'PolicyServices':
+        return new PolicyServices(payload as IPolicy)
       default:
         throw new Error('not foud option services')
     }

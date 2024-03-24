@@ -1,5 +1,5 @@
 export interface IPolicy {
   title: string
-  descripton: string
+  description: string
   content: string
 }
