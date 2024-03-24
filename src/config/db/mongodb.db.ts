@@ -1,9 +1,12 @@
 import mongoose, { Error } from 'mongoose'
 import { env } from '../env.config'
-
+import dotenv from 'dotenv'
+dotenv.config()
 export const connectDB = () => {
-  // const mongoDbUri = `mongodb://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.MONGODB_ADDRESS}/Cooking`
-  const mongoDbUri = `mongodb://localhost:27017/Cooking`
+  const mongoDbUri =
+    process.env.NODE_ENV == 'development'
+      ? `mongodb://localhost:27017/Cooking`
+      : `mongodb://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.MONGODB_ADDRESS}/Cooking`
 
   mongoose
     .connect(mongoDbUri, {
