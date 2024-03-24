@@ -10,8 +10,9 @@ import courseRoutes from '~/routes/course.route'
 import chefRoutes from '~/routes/chef.route'
 import categoryRoutes from '~/routes/category.route'
 import authRoutes from '~/routes/auth.route'
+import categoryServicesCustomerRoutes from '~/routes/CategoryservicesCustomer.route'
 import { errorHandeler, notFound } from '~/middlewares/error.middlewear'
-import CategoryServicesCustomerRoutes from '~/routes/CategoryServicesCustomer.route'
+
 // import accountRoutes from '~/routes/account.route'
 // import upload from '~/routes/uploadToS3.route'
 
@@ -19,7 +20,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/informationBusiness', informationBusiness)
   app.use('/api/v1/category', categoryRoutes)
   app.use('/api/v1/customerBlog', customnerBlogRoutes)
-  app.use('/api/v1/CategoryServicesCustomer', CategoryServicesCustomerRoutes)
+  app.use('/api/v1/CategoryServicesCustomer', categoryServicesCustomerRoutes)
   app.use('/api/v1/product', productRoutes)
   app.use('/api/v1/partner', partnerRoutes)
   app.use('/api/v1/course', courseRoutes)

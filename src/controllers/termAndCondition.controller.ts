@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { ITermAndCondition } from '~/contract/interfaces/termAndCondition.interface'
 import { IResponseSuccessObject } from '~/contract/interfaces/response.interface'
 import FactoryService from '~/services/index.service'
-class RecruitmentBlog {
+class TermAndCondition {
   async create(req: Request<unknown, unknown, ITermAndCondition>, res: Response) {
     const instance = FactoryService.instance<ITermAndCondition>('TermAndCondition', req.body)
     const record = await instance!.create()
@@ -34,5 +34,5 @@ class RecruitmentBlog {
     return res.status(200).json(response)
   }
 }
-const RecruitmentBlogController = new RecruitmentBlog()
-export default RecruitmentBlogController
+const TermAndConditionController = new TermAndCondition()
+export default TermAndConditionController
