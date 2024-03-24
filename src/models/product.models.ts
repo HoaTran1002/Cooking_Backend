@@ -3,9 +3,6 @@ import { string } from 'joi'
 import mongoose, { Schema } from 'mongoose'
 import { IImage, IVideo } from '~/contract/interfaces/course.interface'
 import { IHightLight, IProduct } from '~/contract/interfaces/product.interface'
-import tourModels from './tour.models'
-import tourController from '~/controllers/tour.controller'
-import { ServicesFactory } from '~/services/factory.service'
 
 export const imageSchema = new Schema<IImage>({
   url: { type: String },
