@@ -4,7 +4,6 @@ import { IProduct } from '~/contract/interfaces/product.interface'
 import { IResonseObject } from '~/contract/interfaces/response.interface'
 import productModels from '~/models/product.models'
 import Products from '~/models/product.models'
-import { getAllImages } from '~/repositories/course.repository'
 import {
   addImageToProduct,
   addVideoToProduct,
