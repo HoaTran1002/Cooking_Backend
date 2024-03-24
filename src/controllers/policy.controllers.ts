@@ -35,5 +35,5 @@ class Policy {
     return res.status(200).json(response)
   }
 }
-const policyModule = new Policy()
-export default policyModule
+const policyController = new Policy()
+export default policyController
