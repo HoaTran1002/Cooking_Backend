@@ -10,8 +10,8 @@ class CategoryServicesCustomerRepository implements CategoryServicesCustomerInte
     this.Model = categoryServicesModel
   }
   create(payload: ICategoryServices): Promise<any | ICategoryServices> {
-    const category = categoryServicesModel.create(payload)
-    return category
+    const record = categoryServicesModel.create(payload)
+    return record
   }
   getById(id: string): Promise<ICategoryServices | any> {
     return categoryServicesModel.findById(id)

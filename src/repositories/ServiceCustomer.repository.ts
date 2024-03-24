@@ -9,8 +9,8 @@ class ServicesCustomerRepository implements ServicesCustomerInterface {
     this.Model = servicesCustomerModel
   }
   create(payload: IServiceCustomer): Promise<any | IServiceCustomer> {
-    const service = servicesCustomerModel.create(payload)
-    return service
+    const record = servicesCustomerModel.create(payload)
+    return record
   }
   getById(id: string): Promise<IServiceCustomer | any> {
     return servicesCustomerModel.findById(id)

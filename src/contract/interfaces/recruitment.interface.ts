@@ -2,13 +2,13 @@ export interface IInformationPosition {
   name: string
   description: string
 }
-export interface IRecruitment {
+export interface IRecruitmentBlog {
   title: string
   description: string
   recruitmentWorkingLocations: [string]
 }
-interface IFile {
-  link: string
+export interface IFile {
+  url: string
 }
 export interface ICandicateInfor {
   fisrtName: string

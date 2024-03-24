@@ -10,8 +10,8 @@ class PartnerRepository implements PartnerRepositoryInterface {
     this.Model = partnerModel
   }
   create(payload: IPartner): Promise<any | IPartner> {
-    const partner = partnerModel.create(payload)
-    return partner
+    const record = partnerModel.create(payload)
+    return record
   }
   getById(id: string): Promise<IPartner | any> {
     return partnerModel.findById(id)

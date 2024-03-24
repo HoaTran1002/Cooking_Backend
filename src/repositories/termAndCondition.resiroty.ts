@@ -10,8 +10,8 @@ class TermAndConditionRepository implements TermAndConditionRepositoryInterface 
     this.Model = termAndConditionModel
   }
   create(payload: ITermAndCondition): Promise<any | ITermAndCondition> {
-    const termAndCondition = termAndConditionModel.create(payload)
-    return termAndCondition
+    const record = termAndConditionModel.create(payload)
+    return record
   }
   getById(id: string): Promise<ITermAndCondition | any> {
     return termAndConditionModel.findById(id)

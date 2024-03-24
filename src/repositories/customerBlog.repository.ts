@@ -10,8 +10,8 @@ class customerBlogRepository implements CustomerRepositoryInterface {
     this.Model = customerBlogModel
   }
   create(payload: ICustomer): Promise<any | ICustomer> {
-    const partner = customerBlogModel.create(payload)
-    return partner
+    const record = customerBlogModel.create(payload)
+    return record
   }
   getById(id: string): Promise<ICustomer | any> {
     return customerBlogModel.findById(id)
