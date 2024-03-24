@@ -3,7 +3,7 @@ import { informationPositionModel } from '~/models/recruitment.models'
 import { IInformationPosition } from '~/contract/interfaces/recruitment.interface'
 import InformationPositionRepositoryInterface from '~/contract/repositories/informationPosition.repositories'
 
-class IRecruitmentBlogRepository implements InformationPositionRepositoryInterface {
+class InformationPositionRepository implements InformationPositionRepositoryInterface {
   readonly Model: Model<IInformationPosition>
 
   constructor(informationPositionModel: Model<IInformationPosition>) {
@@ -30,4 +30,4 @@ class IRecruitmentBlogRepository implements InformationPositionRepositoryInterfa
     return data
   }
 }
-export default new IRecruitmentBlogRepository(informationPositionModel)
+export default new InformationPositionRepository(informationPositionModel)

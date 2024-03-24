@@ -5,8 +5,15 @@ import { ICategoryServices, ICustomer, IServiceCustomer } from '~/contract/inter
 import CategoryServicesCustomer from './categoryServicesCustomer.service'
 import ServicesCustomer from './serviceCustomer.service'
 import CadicateInfor from './candicateInfor.service'
-import { ICandicateInfor } from '~/contract/interfaces/recruitment.interface'
-type services = 'partner' | 'customerBlog' | 'categoryServiceCategory' | 'ServiceCustomer' | 'CandicateInfor'
+import { ICandicateInfor, IInformationPosition } from '~/contract/interfaces/recruitment.interface'
+import InformationPopsitionRecruitment from './informationPositionRecruitment.service'
+type services =
+  | 'partner'
+  | 'customerBlog'
+  | 'categoryServiceCategory'
+  | 'ServiceCustomer'
+  | 'CandicateInfor'
+  | 'InformationPopsitionRecruitment'
 class FactoryService {
   static instance<T>(service: services, payload?: T) {
     switch (service) {
@@ -20,6 +27,8 @@ class FactoryService {
         return new ServicesCustomer(payload as IServiceCustomer)
       case 'CandicateInfor':
         return new CadicateInfor(payload as ICandicateInfor)
+      case 'InformationPopsitionRecruitment':
+        return new InformationPopsitionRecruitment(payload as IInformationPosition)
       default:
         throw new Error('not foud option services')
     }
