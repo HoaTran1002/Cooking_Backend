@@ -12,7 +12,6 @@ export const updateFileContent = async (file: Express.Multer.File, outPutPath: s
   if (!file.buffer) {
     throw new Error('No file data in memory')
   }
-
   fs.writeFile(outPutPath, file.buffer, 'utf8', (err: any) => {
     if (err) {
       throw new Error(`Error writing the file: ${err}`)

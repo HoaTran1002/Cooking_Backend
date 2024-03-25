@@ -27,6 +27,7 @@ class PolicyServices implements IPolicy {
         description: this.description,
         content: this.content
       }
+
       const partner = await PolicyRepository.create(body)
       return partner
     } catch (error: any) {

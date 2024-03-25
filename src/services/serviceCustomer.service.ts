@@ -3,6 +3,8 @@ import PaginationResult from '~/contract/interfaces/pagination.interface'
 import { IServiceCustomer } from '~/contract/interfaces/customer.interface'
 import ServicesCustomerRepository from '~/repositories/serviceCustomer.repository'
 import { IImage } from '~/contract/interfaces/course.interface'
+import { deleteFile, updateFileContent } from './file.service'
+import { File } from 'buffer'
 
 class ServicesCustomer implements IServiceCustomer {
   name: string
@@ -24,17 +26,23 @@ class ServicesCustomer implements IServiceCustomer {
     }
   }
 
-  async create(): Promise<IServiceCustomer> {
+  async create(path?: string): Promise<IServiceCustomer> {
     try {
+      if (path) {
+        this.image.url = path
+      }
       const body: IServiceCustomer = {
         name: this.name,
         position: this.position,
         description: this.description,
         image: this.image
       }
-      const customerBlog = await ServicesCustomerRepository.create(body)
-      return customerBlog
+      const record = await ServicesCustomerRepository.create(body)
+      return record
     } catch (error: any) {
+      if (path) {
+        await deleteFile(path)
+      }
       throw new IResponseErrorObject(error, 404)
     }
   }
@@ -50,31 +58,46 @@ class ServicesCustomer implements IServiceCustomer {
   }
   async getById(id: string): Promise<IServiceCustomer> {
     try {
-      const customerBlog = await ServicesCustomerRepository.getById(id)
-      return customerBlog
+      const record = await ServicesCustomerRepository.getById(id)
+      return record
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
     }
   }
   async deleteById(id: string): Promise<any> {
     try {
-      const customerBlog = await ServicesCustomerRepository.deleteById(id)
-      return customerBlog
+      const record = await ServicesCustomerRepository.deleteById(id)
+      return record
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async updateById(id: string): Promise<IServiceCustomer> {
+  async updateById(id: string, file?: Express.Multer.File): Promise<IServiceCustomer> {
     try {
+      const existed = await this.getById(id)
+      if (!existed) {
+        if (file?.path) {
+          await deleteFile(file?.path)
+        }
+        throw new IResponseErrorObject('not found by id', 404)
+      }
       const body: IServiceCustomer = {
         name: this.name,
         position: this.position,
         description: this.description,
         image: this.image
       }
-      const customerBlog = await ServicesCustomerRepository.update(id, body)
-      return customerBlog
+      if (file && this.image.url) {
+        await updateFileContent(file, this.image.url)
+      } else if (file) {
+        this.image.url = file.path
+      }
+      const record = await ServicesCustomerRepository.update(id, body)
+      return record
     } catch (error: any) {
+      if (file?.path) {
+        await deleteFile(file?.path)
+      }
       throw new IResponseErrorObject(error, 404)
     }
   }

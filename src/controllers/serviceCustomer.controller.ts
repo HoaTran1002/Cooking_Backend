@@ -5,7 +5,7 @@ import FactoryService from '~/services/index.service'
 class ServicesCustomer {
   async create(req: Request<unknown, unknown, IServiceCustomer>, res: Response) {
     const instance = FactoryService.instance<IServiceCustomer>('ServiceCustomer', req.body)
-    const record = await instance!.create()
+    const record = await instance!.create(req.file?.path)
     const response = new IResponseSuccessObject('create sucess', record, 200)
     return res.status(200).json(response)
   }
