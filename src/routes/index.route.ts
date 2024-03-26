@@ -13,6 +13,7 @@ import recruitmentBlogRoutes from '~/routes/recruitmentBlog.route'
 import partnerProductRoutes from '~/routes/partnerProduct.route'
 import candicateInforRoutes from '~/routes/candicateInfor.route'
 import customerBlogRoutes from '~/routes/customerBlog.route'
+import pageManageRoutes from '~/routes/pageManage.route'
 import categoryRoutes from '~/routes/category.route'
 import policyRoutes from '~/routes/policy.route'
 import courseRoutes from '~/routes/course.route'
@@ -21,7 +22,6 @@ import authRoutes from '~/routes/auth.route'
 import faqRoutes from '~/routes/faq.route'
 // import accountRoutes from '~/routes/account.route'
 // import upload from '~/routes/uploadToS3.route'
-
 const useRoutes = (app: Express) => {
   app.use('/api/v1/informationPositionRecruitment', informationPositionRecruitmentRoutes)
   app.use('/api/v1/CategoryServicesCustomer', categoryServicesCustomerRoutes)
@@ -32,6 +32,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/candicateInfor', candicateInforRoutes)
   app.use('/api/v1/partnerProduct', partnerProductRoutes)
   app.use('/api/v1/customerBlog', customerBlogRoutes)
+  app.use('/api/v1/pageManage', pageManageRoutes)
   app.use('/api/v1/category', categoryRoutes)
   app.use('/api/v1/product', productRoutes)
   app.use('/api/v1/partner', partnerRoutes)
