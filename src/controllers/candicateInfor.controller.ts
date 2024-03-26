@@ -5,7 +5,7 @@ import FactoryService from '~/services/index.service'
 class CandicateInfor {
   async create(req: Request<unknown, unknown, ICandicateInfor>, res: Response) {
     const instance = FactoryService.instance<ICandicateInfor>('CandicateInfor', req.body)
-    const record = await instance!.create()
+    const record = await instance!.create(req.file?.path)
     const response = new IResponseSuccessObject('create sucess', record, 200)
     return res.status(200).json(response)
   }

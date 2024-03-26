@@ -29,7 +29,7 @@ class ServicesCustomer {
   }
   async updateById(req: Request<any, unknown, IServiceCustomer>, res: Response) {
     const instance = FactoryService.instance<IServiceCustomer>('ServiceCustomer', req.body)
-    const updated = await instance!.updateById(req.params.id)
+    const updated = await instance!.updateById(req.params.id, req.file)
     const response = new IResponseSuccessObject('update by id success', updated, 200)
     return res.status(200).json(response)
   }

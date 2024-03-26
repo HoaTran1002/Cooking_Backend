@@ -10,7 +10,9 @@ import { IProduct } from '~/contract/interfaces/product.interface'
 
 export const imageSchema = new Schema<IImage>({
   url: { type: String },
-  key: { type: String }
+  key: { type: String },
+  mobile: { type: Boolean, default: false },
+  desktop: { type: Boolean, default: true }
 })
 
 export const videoSchema = new Schema<IVideo>({

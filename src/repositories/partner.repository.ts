@@ -1,7 +1,7 @@
 import { Model } from 'mongoose'
 import { IPartner } from '~/contract/interfaces/partner.interface'
 import PartnerRepositoryInterface from '~/contract/repositories/partner.repositories'
-import partnerModel from '~/models/partner.model'
+import { partnerModel } from '~/models/partner.model'
 
 class PartnerRepository implements PartnerRepositoryInterface {
   readonly Model: Model<IPartner>

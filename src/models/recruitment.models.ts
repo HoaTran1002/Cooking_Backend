@@ -5,6 +5,7 @@ import {
   IInformationPosition,
   IRecruitmentBlog
 } from '~/contract/interfaces/recruitment.interface'
+import { deleteFile } from '~/services/file.service'
 
 const file = new Schema<IFile>({ url: { type: String } })
 const informationPosition = new Schema<IInformationPosition>({
@@ -31,6 +32,17 @@ const candicateInfor = new Schema<ICandicateInfor>({
   minSalary: { type: String },
   expectedSalary: { type: String },
   file_cv: file
+})
+candicateInfor.pre('findOneAndDelete', async function (next) {
+  try {
+    const doc = (await this.model.findOne(this.getQuery())) as ICandicateInfor
+    if (doc.file_cv) {
+      await deleteFile(doc.file_cv.url)
+    }
+    next()
+  } catch (error: any) {
+    next(error)
+  }
 })
 export const candicateInforModel = mongoose.model('candicateInforModel', candicateInfor)
 export const recruitmentBlogModel = mongoose.model('recruitmentBlogModel', recruitmentBlog)

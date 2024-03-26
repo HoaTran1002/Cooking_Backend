@@ -7,6 +7,8 @@ export interface IParams {
 export interface IImage {
   url: string
   key?: string
+  mobile?: boolean
+  desktop?: boolean
 }
 export interface IVideo {
   url: string

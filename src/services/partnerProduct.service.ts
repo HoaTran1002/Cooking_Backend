@@ -1,47 +1,42 @@
-import PartnerRepository from '~/repositories/partner.repository'
-import partnerRepository from '~/repositories/partner.repository'
+import PartnerProductRepository from '~/repositories/partnerProduct.repository'
 import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
-import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interface'
+import { IPartnerProduct } from '~/contract/interfaces/partner.interface'
 import PaginationResult from '~/contract/interfaces/pagination.interface'
 import { IImage } from '~/contract/interfaces/course.interface'
 import { deleteFile, updateFileContent } from './file.service'
 
-class PartnerServices implements IPartner {
+class PartnerProductServices implements IPartnerProduct {
   name: string
-  logo: IImage
+  image: IImage
   description: string
   position: number
-  products: [IPartnerProduct]
-  constructor(payload?: IPartner) {
+  constructor(payload?: IPartnerProduct) {
     if (payload) {
       this.name = payload.name
-      this.logo = payload.logo
+      this.image = payload.image
       this.description = payload.description
       this.position = payload.position
-      this.products = payload.products
     } else {
       this.name = ''
-      this.logo = {} as IImage
+      this.image = {} as IImage
       this.description = ''
       this.position = 0
-      this.products = [] as unknown as [IPartnerProduct]
     }
   }
 
-  async create(path?: string): Promise<IPartner> {
+  async create(path?: string): Promise<IPartnerProduct> {
     try {
       if (path) {
-        this.logo.url = path
+        this.image.url = path
       }
-      const body: IPartner = {
+      const body: IPartnerProduct = {
         name: this.name,
-        logo: this.logo,
+        image: this.image,
         description: this.description,
-        position: this.position,
-        products: this.products
+        position: this.position
       }
-      const partner = await PartnerRepository.create(body)
-      return partner
+      const record = await PartnerProductRepository.create(body)
+      return record
     } catch (error: any) {
       if (path) {
         await deleteFile(path)
@@ -52,30 +47,30 @@ class PartnerServices implements IPartner {
   async getAll(page: number, size: number): Promise<[PaginationResult] | any> {
     const limit = size
     const skip = (page - 1) * size
-    const data = await PartnerRepository.getAll(limit, skip)
-    const total_documents = await partnerRepository.Model.countDocuments()
+    const data = await PartnerProductRepository.getAll(limit, skip)
+    const total_documents = await PartnerProductRepository.Model.countDocuments()
     const total_pages = Math.ceil(total_documents / size)
     const previous_pages = page > 1 ? page - 1 : null
     const next_pages = skip + size < total_documents ? page + 1 : null
     return { page, size, data, total_pages, previous_pages, next_pages }
   }
-  async getById(id: string): Promise<IPartner> {
+  async getById(id: string): Promise<IPartnerProduct> {
     try {
-      const partner = await PartnerRepository.getById(id)
-      return partner
+      const record = await PartnerProductRepository.getById(id)
+      return record
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
     }
   }
   async deleteById(id: string): Promise<any> {
     try {
-      const partner = await PartnerRepository.deleteById(id)
-      return partner
+      const record = await PartnerProductRepository.deleteById(id)
+      return record
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async updateById(id: string, file?: Express.Multer.File): Promise<IPartner> {
+  async updateById(id: string, file?: Express.Multer.File): Promise<IPartnerProduct> {
     try {
       const existed = await this.getById(id)
       if (!existed) {
@@ -84,20 +79,19 @@ class PartnerServices implements IPartner {
         }
         throw new IResponseErrorObject('not found by id', 404)
       }
-      const payload: IPartner = {
+      const payload: IPartnerProduct = {
         name: this.name,
-        logo: this.logo,
+        image: this.image,
         description: this.description,
-        position: this.position,
-        products: this.products
+        position: this.position
       }
-      if (file && this.logo.url) {
-        await updateFileContent(file, this.logo.url)
+      if (file && this.image.url) {
+        await updateFileContent(file, this.image.url)
       } else if (file) {
-        this.logo.url = file.path
+        this.image.url = file.path
       }
-      const partner = await PartnerRepository.update(id, payload)
-      return partner
+      const record = await PartnerProductRepository.update(id, payload)
+      return record
     } catch (error: any) {
       if (file?.path) {
         await deleteFile(file?.path)
@@ -106,4 +100,4 @@ class PartnerServices implements IPartner {
     }
   }
 }
-export default PartnerServices
+export default PartnerProductServices

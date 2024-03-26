@@ -1,46 +1,33 @@
-import PartnerRepository from '~/repositories/partner.repository'
-import partnerRepository from '~/repositories/partner.repository'
+import PageRepository from '~/repositories/pageManage.repository'
 import { IResponseErrorObject } from '~/contract/interfaces/response.interface'
-import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interface'
 import PaginationResult from '~/contract/interfaces/pagination.interface'
 import { IImage } from '~/contract/interfaces/course.interface'
 import { deleteFile, updateFileContent } from './file.service'
+import { IPageManager } from '~/contract/interfaces/pageManager.interface'
 
-class PartnerServices implements IPartner {
+class PagaManageService implements IPageManager {
   name: string
-  logo: IImage
-  description: string
-  position: number
-  products: [IPartnerProduct]
-  constructor(payload?: IPartner) {
+  baner: IImage
+  constructor(payload?: IPageManager) {
     if (payload) {
       this.name = payload.name
-      this.logo = payload.logo
-      this.description = payload.description
-      this.position = payload.position
-      this.products = payload.products
+      this.baner = payload.baner
     } else {
       this.name = ''
-      this.logo = {} as IImage
-      this.description = ''
-      this.position = 0
-      this.products = [] as unknown as [IPartnerProduct]
+      this.baner = {} as IImage
     }
   }
 
-  async create(path?: string): Promise<IPartner> {
+  async create(path?: string): Promise<IPageManager> {
     try {
       if (path) {
-        this.logo.url = path
+        this.baner.url = path
       }
-      const body: IPartner = {
+      const body: IPageManager = {
         name: this.name,
-        logo: this.logo,
-        description: this.description,
-        position: this.position,
-        products: this.products
+        baner: this.baner
       }
-      const partner = await PartnerRepository.create(body)
+      const partner = await PageRepository.create(body)
       return partner
     } catch (error: any) {
       if (path) {
@@ -52,16 +39,16 @@ class PartnerServices implements IPartner {
   async getAll(page: number, size: number): Promise<[PaginationResult] | any> {
     const limit = size
     const skip = (page - 1) * size
-    const data = await PartnerRepository.getAll(limit, skip)
-    const total_documents = await partnerRepository.Model.countDocuments()
+    const data = await PageRepository.getAll(limit, skip)
+    const total_documents = await PageRepository.Model.countDocuments()
     const total_pages = Math.ceil(total_documents / size)
     const previous_pages = page > 1 ? page - 1 : null
     const next_pages = skip + size < total_documents ? page + 1 : null
     return { page, size, data, total_pages, previous_pages, next_pages }
   }
-  async getById(id: string): Promise<IPartner> {
+  async getById(id: string): Promise<IPageManager> {
     try {
-      const partner = await PartnerRepository.getById(id)
+      const partner = await PageRepository.getById(id)
       return partner
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
@@ -69,13 +56,13 @@ class PartnerServices implements IPartner {
   }
   async deleteById(id: string): Promise<any> {
     try {
-      const partner = await PartnerRepository.deleteById(id)
+      const partner = await PageRepository.deleteById(id)
       return partner
     } catch (error: any) {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async updateById(id: string, file?: Express.Multer.File): Promise<IPartner> {
+  async updateById(id: string, file?: Express.Multer.File): Promise<IPageManager> {
     try {
       const existed = await this.getById(id)
       if (!existed) {
@@ -84,19 +71,16 @@ class PartnerServices implements IPartner {
         }
         throw new IResponseErrorObject('not found by id', 404)
       }
-      const payload: IPartner = {
+      const payload: IPageManager = {
         name: this.name,
-        logo: this.logo,
-        description: this.description,
-        position: this.position,
-        products: this.products
+        baner: this.baner
       }
-      if (file && this.logo.url) {
-        await updateFileContent(file, this.logo.url)
+      if (file && this.baner.url) {
+        await updateFileContent(file, this.baner.url)
       } else if (file) {
-        this.logo.url = file.path
+        this.baner.url = file.path
       }
-      const partner = await PartnerRepository.update(id, payload)
+      const partner = await PageRepository.update(id, payload)
       return partner
     } catch (error: any) {
       if (file?.path) {
@@ -106,4 +90,4 @@ class PartnerServices implements IPartner {
     }
   }
 }
-export default PartnerServices
+export default PagaManageService

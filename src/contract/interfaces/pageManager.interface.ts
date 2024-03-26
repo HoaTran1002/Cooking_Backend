@@ -1,9 +1,6 @@
 import { IImage } from './course.interface'
-interface background {
-  imageMobile: IImage
-  imageDesktop: IImage
-}
-export interface pageManager {
+
+export interface IPageManager {
   name: string
-  baner: background
+  baner: IImage
 }

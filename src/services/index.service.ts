@@ -1,6 +1,6 @@
 import PartnerServices from './partner.service'
 import CustomerBlog from './customerBlogServices.service'
-import { IPartner } from '~/contract/interfaces/partner.interface'
+import { IPartner, IPartnerProduct } from '~/contract/interfaces/partner.interface'
 import { ICategoryServices, ICustomer, IServiceCustomer } from '~/contract/interfaces/customer.interface'
 import CategoryServicesCustomer from './categoryServicesCustomer.service'
 import ServicesCustomer from './serviceCustomer.service'
@@ -12,6 +12,9 @@ import TermAndCondition from './termAndCondition.service'
 import { ITermAndCondition } from '~/contract/interfaces/termAndCondition.interface'
 import PolicyServices from './policy.service'
 import { IPolicy } from '~/contract/interfaces/policy.interface'
+import PartnerProductServices from './partnerProduct.service'
+import { IPageManager } from '~/contract/interfaces/pageManager.interface'
+import PagaManageService from './pageManage.service'
 type services =
   | 'partner'
   | 'customerBlog'
@@ -22,11 +25,15 @@ type services =
   | 'RecruitmentBlog'
   | 'TermAndCondition'
   | 'PolicyServices'
+  | 'PartnerProduct'
+  | 'PageManage'
 class FactoryService {
   static instance<T>(service: services, payload?: T) {
     switch (service) {
       case 'partner':
         return new PartnerServices(payload as IPartner)
+      case 'PartnerProduct':
+        return new PartnerProductServices(payload as IPartnerProduct)
       case 'customerBlog':
         return new CustomerBlog(payload as ICustomer)
       case 'categoryServiceCategory':
@@ -43,6 +50,8 @@ class FactoryService {
         return new TermAndCondition(payload as ITermAndCondition)
       case 'PolicyServices':
         return new PolicyServices(payload as IPolicy)
+      case 'PageManage':
+        return new PagaManageService(payload as IPageManager)
       default:
         throw new Error('not foud option services')
     }

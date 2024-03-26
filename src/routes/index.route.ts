@@ -1,24 +1,24 @@
 import { Express } from 'express'
 import tourRoutes from '~/routes/tour.route'
+import newsRoutes from '~/routes/news.route'
 import productRoutes from '~/routes/product.route'
 import partnerRoutes from '~/routes/partner.route'
-import newsRoutes from '~/routes/news.route'
-import informationBusiness from '~/routes/informationBusiness.route'
-import faqRoutes from '~/routes/faq.route'
-import customnerBlogRoutes from '~/routes/customerBlog.route'
-import courseRoutes from '~/routes/course.route'
-import chefRoutes from '~/routes/chef.route'
-import categoryRoutes from '~/routes/category.route'
-import authRoutes from '~/routes/auth.route'
+import informationPositionRecruitmentRoutes from '~/routes/InformationPositionRecruitment.route'
 import categoryServicesCustomerRoutes from '~/routes/categoryServicesCustomer.route'
 import { errorHandeler, notFound } from '~/middlewares/error.middlewear'
-import candicateInforRoutes from '~/routes/candicateInfor.route'
-import customerBlogRoutes from '~/routes/customerBlog.route'
-import informationPositionRecruitmentRoutes from '~/routes/InformationPositionRecruitment.route'
-import policyRoutes from '~/routes/policy.route'
+import informationBusiness from '~/routes/informationBusiness.route'
 import termAndConditionRoutes from '~/routes/termAndCondition.route'
 import servicesCustomerRoute from '~/routes/servicesCustomer.route'
 import recruitmentBlogRoutes from '~/routes/recruitmentBlog.route'
+import partnerProductRoutes from '~/routes/partnerProduct.route'
+import candicateInforRoutes from '~/routes/candicateInfor.route'
+import customerBlogRoutes from '~/routes/customerBlog.route'
+import categoryRoutes from '~/routes/category.route'
+import policyRoutes from '~/routes/policy.route'
+import courseRoutes from '~/routes/course.route'
+import chefRoutes from '~/routes/chef.route'
+import authRoutes from '~/routes/auth.route'
+import faqRoutes from '~/routes/faq.route'
 // import accountRoutes from '~/routes/account.route'
 // import upload from '~/routes/uploadToS3.route'
 
@@ -30,7 +30,7 @@ const useRoutes = (app: Express) => {
   app.use('/api/v1/servicesCustomer', servicesCustomerRoute)
   app.use('/api/v1/recruitmentBlog', recruitmentBlogRoutes)
   app.use('/api/v1/candicateInfor', candicateInforRoutes)
-  app.use('/api/v1/customerBlog', customnerBlogRoutes)
+  app.use('/api/v1/partnerProduct', partnerProductRoutes)
   app.use('/api/v1/customerBlog', customerBlogRoutes)
   app.use('/api/v1/category', categoryRoutes)
   app.use('/api/v1/product', productRoutes)

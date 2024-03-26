@@ -3,6 +3,7 @@ import PaginationResult from '~/contract/interfaces/pagination.interface'
 import { ICandicateInfor, IFile } from '~/contract/interfaces/recruitment.interface'
 import { IImage } from '~/contract/interfaces/course.interface'
 import CandicateInRepository from '~/repositories/candicateInfor.repository'
+import { deleteFile, updateFileContent } from './file.service'
 
 class CadicateInfor implements ICandicateInfor {
   fisrtName: string
@@ -36,8 +37,11 @@ class CadicateInfor implements ICandicateInfor {
     }
   }
 
-  async create(): Promise<ICandicateInfor> {
+  async create(path?: string): Promise<ICandicateInfor> {
     try {
+      if (path) {
+        this.file_cv.url = path
+      }
       const body: ICandicateInfor = {
         fisrtName: this.fisrtName,
         lastName: this.lastName,
@@ -80,8 +84,15 @@ class CadicateInfor implements ICandicateInfor {
       throw new IResponseErrorObject(error, 404)
     }
   }
-  async updateById(id: string): Promise<ICandicateInfor> {
+  async updateById(id: string, file?: Express.Multer.File): Promise<ICandicateInfor> {
     try {
+      const existed = await this.getById(id)
+      if (!existed) {
+        if (file?.path) {
+          await deleteFile(file?.path)
+        }
+        throw new IResponseErrorObject('not found by id', 404)
+      }
       const body: ICandicateInfor = {
         fisrtName: this.fisrtName,
         lastName: this.lastName,
@@ -91,6 +102,11 @@ class CadicateInfor implements ICandicateInfor {
         minSalary: this.minSalary,
         expectedSalary: this.expectedSalary,
         file_cv: this.file_cv
+      }
+      if (file && this.file_cv.url) {
+        await updateFileContent(file, this.file_cv.url)
+      } else if (file) {
+        this.file_cv.url = file.path
       }
       const customerBlog = await CandicateInRepository.update(id, body)
       return customerBlog
