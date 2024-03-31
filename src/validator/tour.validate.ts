@@ -1,7 +1,4 @@
 import Joi from 'joi'
-import { join } from 'path'
-import { IImage, IVideo } from '~/contract/interfaces/course.interface'
-import { IHightLight, IProduct } from '~/contract/interfaces/product.interface'
 import { ITourOverView } from '~/contract/interfaces/tour.interface'
 
 export const tourValidator = (data: ITourOverView) => {

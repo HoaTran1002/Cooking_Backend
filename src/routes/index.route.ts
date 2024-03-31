@@ -24,7 +24,7 @@ import faqRoutes from '~/routes/faq.route'
 // import upload from '~/routes/uploadToS3.route'
 const useRoutes = (app: Express) => {
   app.use('/api/v1/informationPositionRecruitment', informationPositionRecruitmentRoutes)
-  app.use('/api/v1/CategoryServicesCustomer', categoryServicesCustomerRoutes)
+  app.use('/api/v1/categoryServicesCustomer', categoryServicesCustomerRoutes)
   app.use('/api/v1/informationBusiness', informationBusiness)
   app.use('/api/v1/termAndCondition', termAndConditionRoutes)
   app.use('/api/v1/servicesCustomer', servicesCustomerRoute)
