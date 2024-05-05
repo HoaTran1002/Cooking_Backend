@@ -56,7 +56,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TourServices = void 0;
 var super_service_1 = require("./super.service");
-var response_interface_1 = require("../interfaces/response.interface");
+var response_interface_1 = require("../contract/interfaces/response.interface");
 var tour_models_1 = __importDefault(require("../models/tour.models"));
 var product_service_1 = require("./product.service");
 var TourServices = /** @class */ (function (_super) {

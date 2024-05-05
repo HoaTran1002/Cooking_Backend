@@ -71,7 +71,9 @@ var category_models_1 = __importDefault(require("./category.models"));
 var category_service_1 = require("../services/category.service");
 exports.imageSchema = new mongoose_1.Schema({
     url: { type: String },
-    key: { type: String }
+    key: { type: String },
+    mobile: { type: Boolean, default: false },
+    desktop: { type: Boolean, default: true }
 });
 exports.videoSchema = new mongoose_1.Schema({
     url: { type: String },

@@ -9,7 +9,7 @@ var multer_config_1 = require("../config/multer.config");
 var auth_middlewears_1 = require("../middlewares/auth.middlewears");
 var router = (0, express_1.Router)();
 router.post('/create', (0, auth_middlewears_1.authorize)(['ADMIN']), multer_config_1.uploadDisk.single('file'), (0, error_middlewear_1.asyncHandelError)(chef_controller_1.createChef));
-router.put('/:id/updateTextDataChefById', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, validate_middlewear_1.validateBody)(chef_validator_1.chefValidate), (0, error_middlewear_1.asyncHandelError)(chef_controller_1.updateTextDataChefById));
+router.put('/:id/updateTextDataChefById', (0, auth_middlewears_1.authorize)(['ADMIN']), (0, validate_middlewear_1.validator)(chef_validator_1.chefValidate), (0, error_middlewear_1.asyncHandelError)(chef_controller_1.updateTextDataChefById));
 router.put('/:id/updateContentImage', multer_config_1.uploadMemory.single('file'), (0, error_middlewear_1.asyncHandelError)(chef_controller_1.updateContentImageVPS));
 router.get('/:id/get', (0, error_middlewear_1.asyncHandelError)(chef_controller_1.getByIdChef));
 router.get('/getAll/:page/:size', (0, error_middlewear_1.asyncHandelError)(chef_controller_1.getAllChef));

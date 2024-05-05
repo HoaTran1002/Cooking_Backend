@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateBody = void 0;
-var response_interface_1 = require("../interfaces/response.interface");
-var validateBody = function (validate) {
+exports.validator = void 0;
+var response_interface_1 = require("../contract/interfaces/response.interface");
+var validator = function (validate) {
     var middleware = function (req, _, next) {
         var valid = validate(req.body);
         if (valid.error) {
@@ -12,4 +12,4 @@ var validateBody = function (validate) {
     };
     return middleware;
 };
-exports.validateBody = validateBody;
+exports.validator = validator;

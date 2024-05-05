@@ -57,7 +57,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FAQServices = void 0;
 var faq_model_1 = __importDefault(require("../models/faq.model"));
 var super_service_1 = require("./super.service");
-var response_interface_1 = require("../interfaces/response.interface");
+var response_interface_1 = require("../contract/interfaces/response.interface");
 var FAQServices = /** @class */ (function (_super) {
     __extends(FAQServices, _super);
     function FAQServices() {

@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteByIdProduct = exports.updateIdCategory = exports.deleteFIleVideoProduct = exports.deleteFIleImageProduct = exports.findAllProduct = exports.findProductById = void 0;
-var response_interface_1 = require("../interfaces/response.interface");
+var response_interface_1 = require("../contract/interfaces/response.interface");
 var product_models_1 = __importDefault(require("../models/product.models"));
 var file_service_1 = require("./file.service");
 var product_repository_1 = require("../repositories/product.repository");

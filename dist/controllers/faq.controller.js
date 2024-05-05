@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var response_interface_1 = require("../interfaces/response.interface");
+var response_interface_1 = require("../contract/interfaces/response.interface");
 var factory_service_1 = require("../services/factory.service");
 var FAQController = /** @class */ (function () {
     function FAQController() {

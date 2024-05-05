@@ -1,6 +1,6 @@
 "use strict";
 // import { Request, Response } from 'express'
-// import { IResonseObject } from '../interfaces/response.interface'
+// import { IResonseObject } from '~/interfaces/response.interface'
 // import {
 //   PutImageS3,
 //   deleteImageS3,
@@ -11,7 +11,7 @@
 //   uploadVideoS3
 // } from '../services/uploadToS3.service'
 // import Course from '../models/course.models'
-// import { ICourse, IImage, IVideo } from '../interfaces/course.interface'
+// import { ICourse, IImage, IVideo } from '~/interfaces/course.interface'
 // import {
 //   addImageToCourse,
 //   addVideoToCourse,

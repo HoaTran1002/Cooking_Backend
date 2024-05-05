@@ -40,11 +40,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeAllVideoByCourseById = exports.updateContentVideoVPS = exports.deleteVideoVPSByCourseId = exports.uploadVideoFromLocalToVPSByCourseId = exports.removeAllImageByCourseById = exports.updateContentImageVPS = exports.deleteImageFromVPSByCourseId = exports.uploadImageFromLocalToVPSByCourseId = exports.findOneById = exports.getAll = exports.removeCourseById = exports.removeRoadmaps = exports.removeRoadmapById = exports.updateRoadmapById = exports.courseUpdateById = exports.getCourseById = exports.courseCreateRoadmap = exports.courseCreate = void 0;
-var course_models_1 = __importDefault(require("../models/course.models"));
 var mongoose_1 = require("mongoose");
+var file_service_1 = require("../services/file.service");
 var course_service_1 = require("../services/course.service");
 var course_repository_1 = require("../repositories/course.repository");
-var file_service_1 = require("../services/file.service");
+var course_models_1 = __importDefault(require("../models/course.models"));
 //create
 var courseCreate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var course, response, error_1;

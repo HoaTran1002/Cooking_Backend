@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notFound = exports.errorHandeler = exports.asyncHandelError = void 0;
-var response_interface_1 = require("../interfaces/response.interface");
+var response_interface_1 = require("../contract/interfaces/response.interface");
 var asyncHandelError = function (
 // eslint-disable-next-line prettier/prettier
 callback) {
