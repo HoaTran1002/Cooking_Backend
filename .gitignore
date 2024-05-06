@@ -1,5 +1,5 @@
 node_modules/
-dist/
+# dist/
 src/config/env.config.ts
 docker-compose.yml
 Dockerfile
