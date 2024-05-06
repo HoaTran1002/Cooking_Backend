@@ -1,7 +1,7 @@
 node_modules/
 # dist/
-# src/config/env.config.ts
-# .env
+src/config/env.config.ts
+.env
 docker-compose.yml
 Dockerfile
 .dockerignore
