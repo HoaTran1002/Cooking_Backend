@@ -3,6 +3,7 @@ import { env } from '../env.config'
 import dotenv from 'dotenv'
 dotenv.config()
 export const connectDB = () => {
+  console.log(process.env.NODE_ENV)
   const mongoDbUri =
     process.env.NODE_ENV == 'development'
       ? `mongodb://localhost:27017/Cooking`
