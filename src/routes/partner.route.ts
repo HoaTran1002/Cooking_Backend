@@ -15,6 +15,6 @@ router.post(
 )
 router.get('/getAll/:page/:size', asyncHandelError(partnerModule.getAll))
 router.get('/:id/getById', asyncHandelError(partnerModule.getById))
-router.delete('/:id/deleteById', uploadMemory.single('file'), asyncHandelError(partnerModule.deleteById))
-router.patch('/:id/update', asyncHandelError(partnerModule.updateById))
+router.delete('/:id/deleteById', asyncHandelError(partnerModule.deleteById))
+router.patch('/:id/update', uploadMemory.single('file'), asyncHandelError(partnerModule.updateById))
 export default router

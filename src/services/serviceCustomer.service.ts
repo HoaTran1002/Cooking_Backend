@@ -17,12 +17,12 @@ class ServicesCustomer implements IServiceCustomer {
       this.name = payload.name
       this.position = payload.position
       this.description = payload.description
-      this.image = payload.image
+      this.image = payload.image || ({ url: '' /* Các thuộc tính khác của logo */ } as IImage)
     } else {
       this.name = ''
       this.position = 0
       this.description = ''
-      this.image = {} as unknown as IImage
+      this.image = { url: '' /* Các thuộc tính khác của logo */ } as IImage
     }
   }
 

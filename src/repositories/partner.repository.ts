@@ -10,23 +10,22 @@ class PartnerRepository implements PartnerRepositoryInterface {
     this.Model = partnerModel
   }
   create(payload: IPartner): Promise<any | IPartner> {
-    const record = partnerModel.create(payload)
-    return record
+    return this.Model.create(payload)
   }
   getById(id: string): Promise<IPartner | any> {
-    return partnerModel.findById(id)
+    return this.Model.findById(id)
   }
-  deleteById(id: string): Promise<any> {
-    return partnerModel.deleteOne({ _id: id })
+  async deleteById(id: string): Promise<any> {
+    await this.Model.deleteOne({ _id: id })
   }
   getAll(limit: number, skip: number): Promise<[IPartner] | any> {
-    const data = partnerModel.find().limit(limit).skip(skip)
+    const data = this.Model.find().limit(limit).skip(skip)
     return data
   }
-  update(id: string, payload: IPartner): Promise<IPartner | any> {
+  async update(id: string, payload: IPartner): Promise<IPartner | any> {
     const fillter = { _id: id }
     const options = { new: true }
-    const data = partnerModel.findOneAndUpdate(fillter, payload, options)
+    const data = await this.Model.findOneAndUpdate(fillter, payload, options)
     return data
   }
 }

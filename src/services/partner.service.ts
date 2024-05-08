@@ -15,13 +15,13 @@ class PartnerServices implements IPartner {
   constructor(payload?: IPartner) {
     if (payload) {
       this.name = payload.name
-      this.logo = payload.logo
+      this.logo = payload.logo || ({ url: '' /* Các thuộc tính khác của logo */ } as IImage)
       this.description = payload.description
       this.position = payload.position
-      this.products = payload.products
+      this.products = payload.products || []
     } else {
       this.name = ''
-      this.logo = {} as IImage
+      this.logo = { url: '' /* Các thuộc tính khác của logo */ } as IImage
       this.description = ''
       this.position = 0
       this.products = [] as unknown as [IPartnerProduct]
@@ -46,7 +46,7 @@ class PartnerServices implements IPartner {
       if (path) {
         await deleteFile(path)
       }
-      throw new IResponseErrorObject(error, 404)
+      throw new IResponseErrorObject(error.message, 404)
     }
   }
   async getAll(page: number, size: number): Promise<[PaginationResult] | any> {

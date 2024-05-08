@@ -13,12 +13,12 @@ class PartnerProductServices implements IPartnerProduct {
   constructor(payload?: IPartnerProduct) {
     if (payload) {
       this.name = payload.name
-      this.image = payload.image
+      this.image = payload.image || ({ url: '' /* Các thuộc tính khác của logo */ } as IImage)
       this.description = payload.description
       this.position = payload.position
     } else {
       this.name = ''
-      this.image = {} as IImage
+      this.image = { url: '' /* Các thuộc tính khác của logo */ } as IImage
       this.description = ''
       this.position = 0
     }
