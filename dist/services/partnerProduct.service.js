@@ -46,13 +46,13 @@ var PartnerProductServices = /** @class */ (function () {
     function PartnerProductServices(payload) {
         if (payload) {
             this.name = payload.name;
-            this.image = payload.image;
+            this.image = payload.image || { url: '' /* Các thuộc tính khác của logo */ };
             this.description = payload.description;
             this.position = payload.position;
         }
         else {
             this.name = '';
-            this.image = {};
+            this.image = { url: '' /* Các thuộc tính khác của logo */ };
             this.description = '';
             this.position = 0;
         }

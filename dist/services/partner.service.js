@@ -47,14 +47,14 @@ var PartnerServices = /** @class */ (function () {
     function PartnerServices(payload) {
         if (payload) {
             this.name = payload.name;
-            this.logo = payload.logo;
+            this.logo = payload.logo || { url: '' /* Các thuộc tính khác của logo */ };
             this.description = payload.description;
             this.position = payload.position;
-            this.products = payload.products;
+            this.products = payload.products || [];
         }
         else {
             this.name = '';
-            this.logo = {};
+            this.logo = { url: '' /* Các thuộc tính khác của logo */ };
             this.description = '';
             this.position = 0;
             this.products = [];
@@ -88,7 +88,7 @@ var PartnerServices = /** @class */ (function () {
                     case 3:
                         _a.sent();
                         _a.label = 4;
-                    case 4: throw new response_interface_1.IResponseErrorObject(error_1, 404);
+                    case 4: throw new response_interface_1.IResponseErrorObject(error_1.message, 404);
                     case 5: return [2 /*return*/];
                 }
             });
